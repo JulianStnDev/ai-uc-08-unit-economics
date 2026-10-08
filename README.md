@@ -2,7 +2,7 @@
 
 # UC8: Unit Economics, Pricing & Build-vs-Buy
 
-> Status 2026-10-08: number inventory done ([docs/INVENTUR.md](docs/INVENTUR.md), German), cost model still open.
+> Status 2026-10-08: number inventory ([docs/INVENTUR.md](docs/INVENTUR.md)) and cost model ([evals/modell.md](evals/modell.md), worked example: [docs/RECHENWEG.md](docs/RECHENWEG.md)), all in German. Pricing and build-vs-buy to follow.
 
 ## Problem
 The support agent from UC4/UC7 runs as a web demo on Cloud Run. The product question behind it is still open: **What does a support ticket cost with the agent, compared with a ticket handled entirely by a human?** And from that: how could it be priced, and does building it pay off compared with buying a product?
@@ -31,12 +31,26 @@ Number inventory, details in [docs/INVENTUR.md](docs/INVENTUR.md):
 | Gold set runs without any human | 29 of 45 (64 %) | UC6 gold set |
 | Real customer tickets in production | 0 | Neon: all 13 runs are test runs |
 
-The largest gaps: minutes per approval and per handover, minutes per ticket without the agent, and the real ticket mix.
+Cost model (10,000 tickets per month, human only 8 min × 0.4420 EUR/min = 3.54 EUR per ticket):
+
+| Scenario | Approval / handover (minutes factor 1.0 / 1.1 / 1.3, rework 5 / 14 / 20 %) | With agent per ticket | Monthly saving | Tipping point handover rate |
+|---|---|---|---|---|
+| optimistic | 10 % / 15 % | 0.74 EUR | 27,989 EUR (79.2 %) | none |
+| medium | 15 % / 30 % | 1.60 EUR | 19,342 EUR (54.7 %) | none (87 % > 85 % possible) |
+| pessimistic | 20 % / 50 % | 2.89 EUR | 6,415 EUR (18.1 %) | 66 % |
+
+![Saving per ticket over handover rate](docs/kipppunkt.svg)
+
+Minutes per handover = minutes without the agent × 1.0 / 1.1 / 1.3. Rework: share of autonomous tickets that a human still has to rework, justified in [docs/NACHARBEIT.md](docs/NACHARBEIT.md) (deployed agent in the gold set: 4 of 29 autonomous runs with a wrong core message = 14 %, 3 of them systematic in T04). Computing the deadline inside the tool would save about 1,546 EUR per month at 10,000 tickets (open option, [docs/decisions.md](docs/decisions.md)).
+
+Tokens cost 0.03 EUR per ticket, as much as 4 seconds of staff time. The saving moves most with minutes without the agent, staff cost and the handover rate:
+
+![Tornado: sensitivity of the saving per ticket](docs/tornado.svg)
 
 ## Cost & Latency
-- Cost per 1000 requests: open (follows from the cost model)
+- Cost per 1000 requests: 1,601.85 EUR per 1,000 tickets with the agent (medium scenario, staff included), of which tokens 32.09 USD
 - p95 latency: not applicable to a decision memo. Agent latency see UC7 (p95 39.7 s)
-- Quality metric: open
+- Quality metric: tipping point of the handover rate 66 % in the pessimistic scenario, measured in the gold set 22 %
 - UC8 cost so far: 0 USD (no API calls)
 
 ## Learnings

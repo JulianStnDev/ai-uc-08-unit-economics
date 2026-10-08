@@ -2,7 +2,7 @@
 
 # UC8: Unit Economics, Pricing & Build-vs-Buy
 
-> Stand 2026-10-08: Zahleninventur fertig ([docs/INVENTUR.md](docs/INVENTUR.md)), Modellrechnung noch offen.
+> Stand 2026-10-08: Zahleninventur ([docs/INVENTUR.md](docs/INVENTUR.md)) und Kostenmodell ([evals/modell.md](evals/modell.md), Rechenweg: [docs/RECHENWEG.md](docs/RECHENWEG.md)). Pricing und Build-vs-Buy folgen.
 
 ## Problem
 Der Support-Agent aus UC4/UC7 läuft als Web-Demo auf Cloud Run. Offen ist die Produktfrage dahinter: **Was kostet ein Support-Ticket mit dem Agent im Vergleich zu einem Ticket, das komplett ein Mensch bearbeitet?** Und daraus folgend: Wie ließe sich das bepreisen, und lohnt sich der Eigenbau gegenüber einem eingekauften Produkt?
@@ -31,12 +31,26 @@ Zahleninventur, Details in [docs/INVENTUR.md](docs/INVENTUR.md):
 | Goldset-Läufe ohne Menschen | 29 von 45 (64 %) | UC6 Goldset |
 | Echte Kundentickets im Betrieb | 0 | Neon: alle 13 Läufe sind Testläufe |
 
-Die größten Lücken: Minuten je Freigabe und je Übergabe, Minuten je Ticket ohne Agent und die echte Mischung der Tickets.
+Kostenmodell (10.000 Tickets im Monat, Mensch allein 8 min × 0,4420 EUR/min = 3,54 EUR je Ticket):
+
+| Szenario | Freigabe / Übergabe (Faktor Minuten 1,0 / 1,1 / 1,3, Nacharbeit 5 / 14 / 20 %) | mit Agent je Ticket | Ersparnis im Monat | Kipppunkt Übergabequote |
+|---|---|---|---|---|
+| optimistisch | 10 % / 15 % | 0,74 EUR | 27.989 EUR (79,2 %) | keiner |
+| mittel | 15 % / 30 % | 1,60 EUR | 19.342 EUR (54,7 %) | keiner (87 % > 85 % möglich) |
+| pessimistisch | 20 % / 50 % | 2,89 EUR | 6.415 EUR (18,1 %) | 66 % |
+
+![Ersparnis je Ticket über der Übergabequote](docs/kipppunkt.svg)
+
+Minuten je Übergabe = Minuten ohne Agent × 1,0 / 1,1 / 1,3. Nacharbeit: Anteil autonomer Tickets, die doch ein Mensch nacharbeitet, begründet in [docs/NACHARBEIT.md](docs/NACHARBEIT.md) (deployter Agent im Goldset: 4 von 29 autonomen Läufen mit falscher Kernaussage = 14 %, davon 3 systematisch bei T04). Würde die Frist im Werkzeug berechnet, sparte das etwa 1.546 EUR im Monat bei 10.000 Tickets (offene Option, [docs/decisions.md](docs/decisions.md)).
+
+Tokens kosten je Ticket 0,03 EUR, so viel wie 4 Sekunden Arbeitszeit. Am stärksten bewegen die Ersparnis die Minuten ohne Agent, die Personalkosten und die Übergabequote:
+
+![Tornado: Sensitivität der Ersparnis je Ticket](docs/tornado.svg)
 
 ## Kosten & Latenz
-- Kosten pro 1000 Requests: offen (folgt aus der Modellrechnung)
+- Kosten pro 1000 Requests: 1.601,85 EUR je 1.000 Tickets mit Agent (Szenario mittel, inklusive Personal), davon Tokens 32,09 USD
 - p95-Latenz: entfällt für eine Entscheidungsvorlage. Agent-Latenz siehe UC7 (p95 39,7 s)
-- Qualitätsmetrik: offen
+- Qualitätsmetrik: Kipppunkt der Übergabequote 66 % im pessimistischen Szenario, gemessen im Goldset 22 %
 - Kosten UC8 bisher: 0 USD (keine API-Aufrufe)
 
 ## Learnings

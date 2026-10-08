@@ -1,6 +1,6 @@
 # Zahleninventur: Was kostet ein Ticket mit dem UC7-Agent?
 
-Stand 2026-10-08. Nur Bestandsaufnahme, **noch keine Modellrechnung**. Alle Zahlen mit Quelle in [data/inventur.csv](../data/inventur.csv) (52 Zeilen), neu erzeugbar mit `scripts/inventur.py` (nur lesend, keine API-Kosten).
+Stand 2026-10-08. Nur Bestandsaufnahme, **noch keine Modellrechnung**. Alle Zahlen mit Quelle in [data/inventur.csv](../data/inventur.csv) (54 Zeilen), neu erzeugbar mit `scripts/inventur.py` (nur lesend, keine API-Kosten).
 
 Quellen und Stände:
 
@@ -68,13 +68,13 @@ Was hinter den Abweichungen steckt:
 | Cloud Run Instanzzeit | variabel, aber **nicht je Ticket**: Abrechnung pro Instanz, jede Instanz lebt nach der letzten Anfrage weiter | **40.585 Instanz-s** (≈ 11,3 h, je 1 vCPU + 1 GiB) seit Deploy bei 1.023 Anfragen und 13 Agent-Läufen | Cloud Monitoring `billable_instance_time` |
 | Cloud Run Freikontingent | fix (je Billing-Konto und Monat) | 180.000 vCPU-s + 360.000 GiB-s | UC7 `docs/plan.md` (Recherche 2026-09-28, cloud.google.com/run/pricing) |
 | Cloud Run Mindestinstanz | fix, wenn gesetzt | min. 0, also 0. Warmhalten wäre fix 13–18 USD/Monat (Recherche, nicht gemessen) | `docs/deploy.md`, `docs/plan.md` |
-| Cloud Run Kosten laut Rechnung | – | **Lücke**: kein Billing-Export nach BigQuery, die Cloud Billing API liefert keine Beträge. Nachsehen in der Console unter Abrechnung → Berichte, Projekt `focusflow-demo-510014`. Laut UC7 README lag es „im Freikontingent“, unklar ist zusätzlich, welches der zwei Billing-Konten das Startguthaben trägt | – |
-| Neon | fix 0 im Free-Plan (0,5 GB, 100 CU-h/Monat), solange die Grenzen halten | Datenbank 8,4 MB. Compute-Stunden: **Lücke** (kein Neon-API-Key lokal, per SQL nicht lesbar) | `docs/plan.md`, Neon-Abfrage |
+| Cloud Run Kosten laut Abrechnung | überwiegend fix (Seitenaufrufe, Leerlauf nach Anfragen) | **0,89 EUR vom 29.09. bis 08.10.** (10 Tage), etwa 3 EUR/Monat | Julian, Konsole, 08.10. |
+| Neon | fix 0 im Free-Plan (0,5 GB, 100 CU-h/Monat), solange die Grenzen halten | **0,53 h Compute, 0,05 GB, 0 EUR** (Dashboard). Per SQL: Datenbank 8,4 MB, etwa 5,7 KB je Lauf in `laeufe` | Julian, Konsole, 08.10.; Neon-Abfrage |
 | API-Budget | Deckel, kein Kostenposten | 4,50 USD/Monat plus 0,50 USD Reserve; Judge-Deckel 0,50 USD/Monat | `README_DE.md`, `app/pruefung.py` |
 
 Instanzzeit je Tag (Fenster enden 12:00 UTC): 29.09. 16.721 s · 30.09. 5.267 · 01.10. 5.525 · 02.10. 868 · 03.10. 5.092 · 04.10. 3.693 · 05.10. 11 · 06.10. 35 · 07.10. 1 · 08.10. 3.372.
 
-Befund: Die Instanzzeit hängt an **Seitenaufrufen, nicht an Agent-Läufen**. Seit dem 02.10. lief kein Agent mehr, trotzdem fielen am 03.10. 5.092 Instanz-s an (163 Anfragen, vermutlich Besuche der Aufzeichnung über die Portfolio-Seite). Für die Rechnung je Ticket ist Cloud Run damit eher ein Fixkostenblock je Monat als ein Betrag je Ticket. Einen Betrag in USD setze ich erst, wenn die Rechnung vorliegt.
+Befund: Die Instanzzeit hängt an **Seitenaufrufen, nicht an Agent-Läufen**. Seit dem 02.10. lief kein Agent mehr, trotzdem fielen am 03.10. 5.092 Instanz-s an (163 Anfragen, vermutlich Besuche der Aufzeichnung über die Portfolio-Seite). Für die Rechnung je Ticket ist Cloud Run damit eher ein Fixkostenblock je Monat als ein Betrag je Ticket. Laut Abrechnung sind das 0,89 EUR für 10 Tage.
 
 ## 4. Wendet UC7 im Betrieb einen Judge auf echte Tickets an?
 
@@ -123,7 +123,6 @@ Alles erledigt, der Entwurf geht in UC7 direkt an den Kunden.
 | **Kosten je Support-Minute** | Macht Minuten zu Geld. | Für Deutschland: Destatis, Arbeitskosten je geleistete Stunde bzw. Verdienste nach Berufen (Kundenservice). Alternativ die 0,41 USD/min von MetricNet als Vergleich. Beides als Spanne führen |
 | **Echte Mischung der Tickets** | Bestimmt, wie oft jede der drei Klassen vorkommt. Das ist die empfindlichste Stellschraube. | (a) UC2-Goldset (73 Tickets, Kategorien von Hand) als breitere Proxy-Mischung, fiktiv. (b) Öffentliche Kategorieverteilungen von Abo-Apps, z. B. aus Helpdesk-Benchmarks (Zendesk, Intercom), zu recherchieren. (c) Am ehrlichsten: **Szenarien** (z. B. 10 / 20 / 40 % Erstattungsfälle) statt einer Punktschätzung |
 | **Automatisierungsquote in der Praxis** | Prüft, ob 53–64 % „ohne Menschen“ realistisch sind. | Klarna (Pressemitteilung 27.02.2024): KI-Assistent bearbeitet zwei Drittel der Chats, Lösungszeit 2 statt 11 Minuten (Herstellerangabe, Chat, Kundensicht, keine Bearbeitungszeit je Mitarbeiter). Gute Größenordnung, aber Eigenwerbung |
-| Cloud Run und Neon laut Rechnung | Fixkostenblock je Monat | Console-Export (Abrechnung → Berichte als CSV) bzw. Neon-Dashboard, Verbrauch. Beides lesend, ich habe keinen Zugang über die CLI |
 | Neuschreiben ohne Zusage | Kosten und Häufigkeit unbekannt | Häufigkeit aus UC6: Wie viele Goldset-Entwürfe hätte die Zusage-Prüfung angehalten? Lässt sich aus den gespeicherten Entwürfen ohne API auszählen |
 
 Für den späteren Build-vs-Buy-Teil schon notiert: Intercom Fin wird mit 0,99 USD je gelöstem Gespräch angegeben (laut mehreren Preisübersichten 2026, z. B. [gleap.io](https://www.gleap.io/blog/intercom-fin-ai-pricing-2026)). Vor Verwendung auf der Intercom-Preisseite prüfen.

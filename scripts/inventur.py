@@ -27,6 +27,7 @@ UC6 = DEV / "ai-uc-06-prompt-injection"
 UC7 = DEV / "ai-uc-07-deployment"
 GCP_PROJEKT = "focusflow-demo-510014"
 HEUTE = date.today().isoformat()
+STICHTAG = "2026-10-08"  # Ende des Monitoring-Fensters, damit die Zahlen reproduzierbar bleiben
 OFFLINE = "--offline" in sys.argv
 
 FELDER = ["id", "gruppe", "kennzahl", "wert", "einheit", "modell", "gezaehlt", "n",
@@ -186,7 +187,7 @@ def monitoring(metrik, wertfeld):
     token = subprocess.run(["gcloud", "auth", "print-access-token"], capture_output=True, text=True).stdout.strip()
     params = urllib.parse.urlencode({
         "filter": f'metric.type="run.googleapis.com/{metrik}"',
-        "interval.startTime": "2026-09-01T00:00:00Z", "interval.endTime": f"{HEUTE}T12:00:00Z",
+        "interval.startTime": "2026-09-01T00:00:00Z", "interval.endTime": f"{STICHTAG}T12:00:00Z",
         "aggregation.alignmentPeriod": "86400s", "aggregation.perSeriesAligner": "ALIGN_SUM",
         "aggregation.crossSeriesReducer": "REDUCE_SUM"})
     req = urllib.request.Request(f"https://monitoring.googleapis.com/v3/projects/{GCP_PROJEKT}/timeSeries?{params}",
@@ -250,6 +251,18 @@ def main():
         zeile(id_, gruppe, was, wert, einheit, "—", gezaehlt, "—", f"{UC7.name}/{quelle_rel}",
               commit(UC7, quelle_rel), HEUTE if quelle_rel != "docs/plan.md" else "2026-09-28", art="dokumentiert")
 
+    # Nachgeliefert aus Cloud-Konsole und Neon-Dashboard (nicht per CLI lesbar)
+    q = "Julian, Konsole, 08.10."
+    for id_, was, wert, einheit, gezaehlt, datum in [
+        ("rechnung_cloudrun", "Cloud Run Kosten laut Abrechnung", 0.89, "EUR",
+         "Abrechnung → Berichte, Projekt focusflow-demo-510014, Zeitraum 29.09.–08.10. (10 Tage), etwa 3 EUR/Monat",
+         "2026-09-29..2026-10-08"),
+        ("neon_compute", "Neon Compute", 0.53, "h", "Neon-Dashboard, Verbrauch im Free-Plan", "2026-10-08"),
+        ("neon_speicher", "Neon Speicher", 0.05, "GB", "Neon-Dashboard, Verbrauch im Free-Plan", "2026-10-08"),
+        ("rechnung_neon", "Neon Kosten", 0, "EUR", "Free-Plan, keine Rechnung", "2026-10-08"),
+    ]:
+        zeile(id_, "Hosting", was, wert, einheit, "—", gezaehlt, "—", q, "—", datum, art="nachgeliefert")
+
     if OFFLINE:
         print("--offline: Live- und Monitoring-Zeilen fehlen")
     else:
@@ -267,10 +280,6 @@ def main():
         print("Anfragen je Tag:", reqs)
 
     for id_, gruppe, was, warum in [
-        ("luecke_rechnung_gcp", "Hosting", "Cloud Run Kosten laut Rechnung",
-         "kein Billing-Export nach BigQuery; Cloud Billing API liefert keine Beträge. Console: Abrechnung → Berichte"),
-        ("luecke_neon_verbrauch", "Hosting", "Neon Compute-Stunden und Tarif im Konto",
-         "kein Neon-API-Key/neonctl lokal; per SQL nur die Datenbankgröße lesbar"),
         ("luecke_minuten_freigabe", "Lücken", "Minuten je Freigabe (Mensch)", "nirgends gemessen; Klickzeiten sind Tests"),
         ("luecke_minuten_uebergabe", "Lücken", "Minuten je Übergabe (Mensch)", "nirgends gemessen; Übergaben werden nicht bearbeitet"),
         ("luecke_mischung", "Lücken", "Echte Mischung der Tickets", "keine echten Kunden; Goldset und Live sind ausgewählte Fälle"),
