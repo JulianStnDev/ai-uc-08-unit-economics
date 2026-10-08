@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 408" width="760" height="408" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Preiskorridor je Kundentyp in EUR je Monat, mit Intercom Fin als Vergleich">
+<style>:root{--bg:#fcfcfb;--t1:#0b0b0b;--t2:#52514e;--grid:#e6e5e1;--band:#2a78d6;--fin:#eb6834;}@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--t1:#ffffff;--t2:#c3c2b7;--grid:#34332f;--band:#3987e5;--fin:#d95926;}} text{fill:var(--t2);font-size:12px} .t1{fill:var(--t1)}</style>
+<rect width="760" height="408" fill="var(--bg)"/>
+<text x="24" y="26" class="t1" font-size="16" font-weight="600">Preiskorridor je Kundentyp</text>
+<text x="24" y="46">EUR je Monat bei 10.000 Tickets. Links: Vollkosten + 20 % Marge. Rechts: Kunde behält 50 % seiner Ersparnis.</text>
+<text x="24" y="64">Bei fester Menge ist der Korridor für Sitz, Ticket und gelöstes Ticket derselbe Monatsbetrag.</text>
+<rect x="24" y="78" width="22" height="10" rx="3" fill="var(--band)"/><text x="52" y="87">Korridor</text>
+<circle cx="140" cy="83" r="5" fill="var(--fin)" stroke="var(--bg)" stroke-width="2"/><text x="150" y="87">Fin, nur Lösungen</text>
+<circle cx="290" cy="83" r="5" fill="var(--bg)" stroke="var(--fin)" stroke-width="2"/><text x="300" y="87">Fin, zusätzlich jede Übergabe als Procedure Handoff</text>
+<line x1="160.0" y1="106" x2="160.0" y2="334" stroke="var(--grid)"/>
+<text x="160.0" y="352" text-anchor="middle">0</text>
+<line x1="300.0" y1="106" x2="300.0" y2="334" stroke="var(--grid)"/>
+<text x="300.0" y="352" text-anchor="middle">5.000</text>
+<line x1="440.0" y1="106" x2="440.0" y2="334" stroke="var(--grid)"/>
+<text x="440.0" y="352" text-anchor="middle">10.000</text>
+<line x1="580.0" y1="106" x2="580.0" y2="334" stroke="var(--grid)"/>
+<text x="580.0" y="352" text-anchor="middle">15.000</text>
+<line x1="720.0" y1="106" x2="720.0" y2="334" stroke="var(--grid)"/>
+<text x="720.0" y="352" text-anchor="middle">20.000</text>
+<text x="440" y="372" text-anchor="middle">EUR je Monat</text>
+<text x="148" y="134" text-anchor="end" class="t1">günstig</text>
+<text x="148" y="149" text-anchor="end" font-size="11">5 min ohne Agent</text>
+<rect x="184.5" y="122" width="140.4" height="24" rx="4" fill="var(--band)"><title>günstig: 876 bis 5.890 EUR je Monat</title></rect>
+<text x="184.5" y="162" text-anchor="start">876</text>
+<text x="324.9" y="162" text-anchor="end">5.890</text>
+<circle cx="314.5" cy="134" r="6" fill="var(--fin)" stroke="var(--bg)" stroke-width="2"><title>Fin nur Lösungen: 5.518 EUR je Monat</title></circle>
+<circle cx="388.9" cy="134" r="6" fill="var(--bg)" stroke="var(--fin)" stroke-width="2"><title>Fin mit Übergaben: 8.175 EUR je Monat</title></circle>
+<text x="148" y="208" text-anchor="end" class="t1">mittel</text>
+<text x="148" y="223" text-anchor="end" font-size="11">8 min ohne Agent</text>
+<rect x="184.5" y="196" width="250.5" height="24" rx="4" fill="var(--band)"><title>mittel: 876 bis 9.821 EUR je Monat</title></rect>
+<text x="184.5" y="236" text-anchor="start">876</text>
+<text x="435.0" y="236" text-anchor="end">9.821</text>
+<circle cx="314.5" cy="208" r="6" fill="var(--fin)" stroke="var(--bg)" stroke-width="2"><title>Fin nur Lösungen: 5.518 EUR je Monat</title></circle>
+<circle cx="388.9" cy="208" r="6" fill="var(--bg)" stroke="var(--fin)" stroke-width="2"><title>Fin mit Übergaben: 8.175 EUR je Monat</title></circle>
+<text x="148" y="282" text-anchor="end" class="t1">teuer</text>
+<text x="148" y="297" text-anchor="end" font-size="11">14,4 min ohne Agent</text>
+<rect x="184.5" y="270" width="485.3" height="24" rx="4" fill="var(--band)"><title>teuer: 876 bis 18.209 EUR je Monat</title></rect>
+<text x="184.5" y="310" text-anchor="start">876</text>
+<text x="669.8" y="310" text-anchor="end">18.209</text>
+<circle cx="314.5" cy="282" r="6" fill="var(--fin)" stroke="var(--bg)" stroke-width="2"><title>Fin nur Lösungen: 5.518 EUR je Monat</title></circle>
+<circle cx="388.9" cy="282" r="6" fill="var(--bg)" stroke="var(--fin)" stroke-width="2"><title>Fin mit Übergaben: 8.175 EUR je Monat</title></circle>
+<text x="24" y="400" font-size="11">Fin: 0,99 USD je Outcome (intercom.com, 08.10.2026), umgerechnet mit 1,1177 USD/EUR. Quelle: scripts/pricing.py</text>
+</svg>

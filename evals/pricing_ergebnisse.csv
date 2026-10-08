@@ -1,0 +1,10 @@
+kundentyp,abrechnung,einheiten_monat,untergrenze_einheit,obergrenze_einheit,untergrenze_monat,obergrenze_monat
+günstig,pro Sitz,6.25,140.148,942.344,875.93,5889.65
+günstig,pro Ticket,10000,0.0876,0.589,875.93,5889.65
+günstig,pro gelöstem Ticket,6230.0,0.1406,0.9454,875.93,5889.65
+mittel,pro Sitz,10.0,87.5925,982.124,875.93,9821.24
+mittel,pro Ticket,10000,0.0876,0.9821,875.93,9821.24
+mittel,pro gelöstem Ticket,6230.0,0.1406,1.5764,875.93,9821.24
+teuer,pro Sitz,18.0,48.6625,1011.5907,875.93,18208.63
+teuer,pro Ticket,10000,0.0876,1.8209,875.93,18208.63
+teuer,pro gelöstem Ticket,6230.0,0.1406,2.9227,875.93,18208.63

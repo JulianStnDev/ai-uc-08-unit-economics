@@ -110,3 +110,16 @@ Die realistische Zahl ist die dritte Zeile. Repariert bekommt die Kundin eine Em
 Grenzen: Die Basis sind 29 autonome Läufe, davon 3 T04. Wie häufig T04-artige Fälle im echten Mix sind (Verlängerung vergessen, noch in der Frist), ist offen. 1.546 EUR sind eine Größenordnung, keine Prognose. Nachweis nach der Reparatur: T04 dreimal im Goldset, dazu ein deterministischer Test für die Fristberechnung (Grenzfälle Tag 14 und 15).
 
 Status: offen, nicht umgesetzt.
+
+## 2026-10-08: Regeln des Pricing-Modells (Anbieter-Sicht)
+
+Kontext: Wir verkaufen den Support-Agent an andere Firmen. Gesucht ist je Kundentyp und Abrechnungsart ein Preiskorridor. Rechnung in `scripts/pricing.py`, Ergebnisse in [evals/pricing.md](../evals/pricing.md).
+
+- **Kundentypen über die Minuten ohne Agent** (5 / 8 / 14,4 min), den größten Hebel im Tornado. Alles andere steht auf „mittel“. Mit Nacharbeit 14 % ergeben sich Ersparnisse von 1,15 / 1,93 / 3,61 EUR je Ticket. Die Vorgabe „ca. 1,20 / 2,01 / 3,75“ stammte aus dem Tornado mit Nacharbeit 10 %.
+- **Obergrenze auf die Brutto-Ersparnis:** Kosten ohne Agent minus Personalkosten mit Agent. Tokens und Hosting trägt jetzt der Anbieter, der Kunde zahlt den Preis stattdessen. Obergrenze = 50 % davon.
+- **Untergrenze = Vollkosten × 1,2:** 20 % Aufschlag auf die Kosten, nicht 20 % Marge auf den Preis (das wäre Kosten / 0,8).
+- **Vollkosten des Anbieters:** Tokens und Hosting variabel, fester Hosting-Block, Einrichtung (40 h, auf 12 Monate verteilt) und Kundensupport (4 h/Monat) zum Stundensatz von 58,50 EUR. Einrichtung und Support sind Annahmen ohne Quelle.
+- **Gelöst = ohne Übergabe und ohne Nacharbeit**, laut Vorgabe. Freigaben zählen damit als gelöst (62,3 % im Szenario mittel).
+- **Sitze = Support-Stellen des Kunden ohne Agent** (Ticketminuten / 8.000 min je Stelle und Monat). Das ist der Stand bei Vertragsschluss.
+- **Fin geprüft in der Primärquelle:** 0,99 USD je Outcome (intercom.com/pricing, Hilfeartikel „Fin AI Agent outcomes“, 08.10.2026). Outcomes umfassen auch Übergaben über Prozeduren, eine Lösung zählt schon „assumed“. Verglichen wird deshalb mit zwei Werten: nur Lösungen sowie Lösungen plus alle Übergaben.
+- **Befund:** Bei fester Menge ist der Korridor in EUR je Monat für alle drei Abrechnungsarten gleich. Die Wahl der Abrechnungsart verschiebt nur, wer welches Risiko trägt. Pro Sitz verliert der Anbieter Umsatz, sobald der Agent wirkt (Stellenabbau).
