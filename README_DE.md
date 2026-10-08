@@ -57,7 +57,7 @@ Pricing aus Anbieter-Sicht (10.000 Tickets je Kunde und Monat). Untergrenze = un
 
 ![Preiskorridor je Kundentyp](docs/korridor.svg)
 
-Intercom Fin (0,99 USD je Outcome, geprüft auf intercom.com) liegt beim mittleren Kunden bei 52 % unseres Korridors je gelöstem Ticket. Bei Abrechnung pro Sitz kostet ein Stellenabbau von 30 % im zweiten Jahr den Anbieter 30 % des Umsatzes, obwohl die Ticketmenge gleich bleibt.
+Intercom Fin (0,99 USD je Outcome, geprüft auf intercom.com) liegt beim mittleren Kunden bei 52 % unseres Korridors je gelöstem Ticket. Entschieden: **450 EUR je Monat + 0,75 EUR je gelöstem Ticket** (ohne Übergabe, nicht innerhalb von 7 Tagen wieder geöffnet). Das ergibt beim mittleren Kunden 85,8 % Marge, der Kunde behält 73,9 % seiner Ersparnis. Verlust erst unter 3,7 % Lösungsquote ([docs/decisions.md](docs/decisions.md)). Bei Abrechnung pro Sitz kostet ein Stellenabbau von 30 % im zweiten Jahr den Anbieter 30 % des Umsatzes, obwohl die Ticketmenge gleich bleibt.
 
 ## Kosten & Latenz
 - Kosten pro 1000 Requests: 1.601,85 EUR je 1.000 Tickets mit Agent (Szenario mittel, inklusive Personal), davon Tokens 32,09 USD

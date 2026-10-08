@@ -15,7 +15,7 @@ Jede Zeile lässt sich mit dem Taschenrechner nachprüfen. Eingaben: [data/annah
 | Einrichtung | 40 h, auf 12 Monate verteilt | Annahme |
 | Kundensupport | 4 h je Monat | Annahme |
 | Stundensatz Anbieter | 58,50 EUR | Destatis 2025, Information und Kommunikation |
-| Marge | 20 % auf die Vollkosten | Vorgabe |
+| Aufschlag | 20 % auf die Vollkosten | Vorgabe |
 | Anteil, der beim Kunden bleibt | mindestens 50 % der Ersparnis | Vorgabe |
 
 ## Schritt 1: Was der Kunde mit Agent noch an Personal zahlt (je Ticket)

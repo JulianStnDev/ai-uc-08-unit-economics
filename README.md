@@ -57,7 +57,7 @@ Pricing from the vendor's view (10,000 tickets per customer and month). Floor = 
 
 ![Price corridor per customer type](docs/korridor.svg)
 
-Intercom Fin (0.99 USD per outcome, checked on intercom.com) sits at 52 % of our per-resolution corridor for the medium customer. With per-seat billing, a 30 % headcount cut in year two costs the vendor 30 % of revenue although ticket volume stays the same.
+Intercom Fin (0.99 USD per outcome, checked on intercom.com) sits at 52 % of our per-resolution corridor for the medium customer. Decided: **450 EUR per month + 0.75 EUR per resolved ticket** (no handover, not reopened within 7 days). For the medium customer that is an 85.8 % margin, and the customer keeps 73.9 % of the saving. Loss only below a 3.7 % resolution rate ([docs/decisions.md](docs/decisions.md)). With per-seat billing, a 30 % headcount cut in year two costs the vendor 30 % of revenue although ticket volume stays the same.
 
 ## Cost & Latency
 - Cost per 1000 requests: 1,601.85 EUR per 1,000 tickets with the agent (medium scenario, staff included), of which tokens 32.09 USD

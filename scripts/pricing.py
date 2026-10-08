@@ -4,7 +4,7 @@
 
 Schreibt evals/pricing.md, evals/pricing_ergebnisse.csv und docs/korridor.svg. Rechenweg: docs/RECHENWEG_PRICING.md.
 
-Untergrenze = unsere Vollkosten × (1 + Marge). Obergrenze = (1 − Mindestanteil Kunde) × Brutto-Ersparnis des Kunden.
+Untergrenze = unsere Vollkosten × (1 + Aufschlag). Obergrenze = (1 − Mindestanteil Kunde) × Brutto-Ersparnis des Kunden.
 Brutto-Ersparnis = Kosten ohne Agent − Personalkosten mit Agent (Freigabe, Übergabe, Nacharbeit). Tokens und Hosting
 trägt jetzt der Anbieter, der Kunde zahlt stattdessen den Preis.
 """
@@ -41,7 +41,7 @@ def rechnung(e: dict, menge: int = MENGE) -> dict:
     r["einrichtung_monat"] = e["einrichtung_h"] * e["stundensatz_anbieter"] / e["verteilung_monate"]
     r["kundensupport_monat"] = e["kundensupport_h"] * e["stundensatz_anbieter"]
     r["vollkosten_monat"] = r["variabel_monat"] + r["hosting_fix_monat"] + r["einrichtung_monat"] + r["kundensupport_monat"]
-    r["untergrenze_monat"] = r["vollkosten_monat"] * (1 + e["marge"])
+    r["untergrenze_monat"] = r["vollkosten_monat"] * (1 + e["aufschlag"])
     r["obergrenze_monat"] = (1 - e["anteil_kunde_min"]) * r["brutto_ersparnis_ticket"] * menge
     # Mengen je Abrechnungsart
     fte_min = e["stunden_jahr"] / 12 * 60
@@ -72,8 +72,8 @@ def erosion(e: dict, r: dict) -> list:
         umsatz2 = preis * sitze2
         zeilen.append({"preispunkt": name, "preis_sitz": preis, "sitze1": sitze1, "sitze2": sitze2,
                        "umsatz1": umsatz1, "umsatz2": umsatz2, "kosten1": kosten1, "kosten2": kosten2,
-                       "marge1": umsatz1 / kosten1 - 1, "marge2": umsatz2 / kosten2 - 1,
-                       "preis_sitz2_fuer_untergrenze": kosten2 * (1 + e["marge"]) / sitze2})
+                       "aufschlag1": umsatz1 / kosten1 - 1, "aufschlag2": umsatz2 / kosten2 - 1,
+                       "preis_sitz2_fuer_untergrenze": kosten2 * (1 + e["aufschlag"]) / sitze2})
     return zeilen
 
 
@@ -95,7 +95,7 @@ def korridor_svg(daten: dict) -> str:
              "--band:#3987e5;--fin:#d95926;}} text{fill:var(--t2);font-size:12px} .t1{fill:var(--t1)}</style>")
     s.append(f'<rect width="{B}" height="{H}" fill="var(--bg)"/>')
     s.append(f'<text x="24" y="26" class="t1" font-size="16" font-weight="600">Preiskorridor je Kundentyp</text>')
-    s.append(f'<text x="24" y="46">EUR je Monat bei {eur(MENGE, 0)} Tickets. Links: Vollkosten + 20 % Marge. '
+    s.append(f'<text x="24" y="46">EUR je Monat bei {eur(MENGE, 0)} Tickets. Links: Vollkosten + 20 % Aufschlag. '
              f'Rechts: Kunde behält 50 % seiner Ersparnis.</text>')
     s.append(f'<text x="24" y="64">Bei fester Menge ist der Korridor für Sitz, Ticket und gelöstes Ticket derselbe Monatsbetrag.</text>')
     s.append(f'<rect x="24" y="78" width="22" height="10" rx="3" fill="var(--band)"/><text x="52" y="87">Korridor</text>')
@@ -124,6 +124,88 @@ def korridor_svg(daten: dict) -> str:
              f'Quelle: scripts/pricing.py</text>')
     s.append("</svg>")
     return "\n".join(s)
+
+
+# ---------- Entscheidung: Grundgebühr + je gelöstem Ticket ----------
+
+STRESS_QUOTEN = [None, 0.45, 0.30]  # None = Lösungsquote aus dem Modell (62,3 %)
+
+
+def mit_loesungsquote(e: dict, quote) -> dict:
+    """Niedrigere Lösungsquote über mehr Übergaben: Freigabe-Anteil und Nacharbeit bleiben, die Übergabequote steigt.
+    gelöst = Freigabe + (1 − Freigabe − Übergabe) × (1 − Nacharbeit)  →  nach der Übergabe aufgelöst."""
+    if quote is None:
+        return e
+    q_u = 1 - e["anteil_freigabe"] - (quote - e["anteil_freigabe"]) / (1 - e["anteil_nacharbeit"])
+    return {**e, "anteil_uebergabe": q_u}
+
+
+def entscheidung(e: dict, quote=None, jahr: int = 1) -> dict:
+    r = rechnung(mit_loesungsquote(e, quote))
+    kosten = r["vollkosten_monat"] - (r["einrichtung_monat"] if jahr == 2 else 0)
+    umsatz = e["grundgebuehr"] + e["preis_geloest"] * r["einheiten"]["pro gelöstem Ticket"]
+    brutto = r["brutto_ersparnis_ticket"] * MENGE
+    return {"quote": r["geloest_anteil"], "uebergabe": mit_loesungsquote(e, quote)["anteil_uebergabe"],
+            "umsatz": umsatz, "kosten": kosten, "gewinn": umsatz - kosten,
+            "marge": (umsatz - kosten) / umsatz, "aufschlag": (umsatz - kosten) / kosten,
+            "brutto": brutto, "kunde_behaelt": (brutto - umsatz) / brutto if brutto > 0 else float("nan")}
+
+
+def verlust_ab(e: dict, jahr: int = 1) -> float:
+    """Lösungsquote, bei der Umsatz = Kosten. Unsere Kosten hängen nicht an der Lösungsquote."""
+    z = entscheidung(e, None, jahr)
+    return (z["kosten"] - e["grundgebuehr"]) / (e["preis_geloest"] * MENGE)
+
+
+def entscheidung_md() -> list:
+    e0 = kunde(wert("min_ohne_agent"))
+    r0 = rechnung(e0)
+    md = ["\n## Entscheidung 08.10.: Grundgebühr + je gelöstem Ticket\n",
+          f"Preis: **{eur(e0['grundgebuehr'], 0)} EUR je Monat + {eur(e0['preis_geloest'])} EUR je gelöstem Ticket** "
+          "(gelöst = ohne Übergabe und nicht innerhalb von 7 Tagen wieder geöffnet; im Modell: Freigaben plus autonome "
+          "Tickets ohne Nacharbeit). Begriffe: **Marge** = Gewinn / Umsatz, **Aufschlag** = Gewinn / Kosten.\n",
+          "### Nachrechnung je Kundentyp (Lösungsquote aus dem Modell, Jahr 1)\n",
+          "| Kundentyp | Umsatz je Monat | unsere Vollkosten | Gewinn | **Marge** | Aufschlag | Brutto-Ersparnis Kunde | **Kunde behält** |",
+          "|---|---|---|---|---|---|---|---|"]
+    for typ, mo in KUNDENTYPEN.items():
+        z = entscheidung(kunde(mo))
+        md.append(f"| {typ} | {eur(z['umsatz'])} | {eur(z['kosten'])} | {eur(z['gewinn'])} | **{pct(z['marge'], 1)}** | "
+                  f"{pct(z['aufschlag'])} | {eur(z['brutto'])} | **{pct(z['kunde_behaelt'], 1)}** |")
+    md.append("\nUmsatz und Kosten sind für alle Kundentypen gleich (gleiche Ticketmenge, gleiche Lösungsquote). "
+              "Unterschiedlich ist nur, wie viel der Kunde spart und damit behält.\n")
+
+    md.append("### Stresstest: schwierigere Tickets, weniger gelöst\n")
+    md.append("Weniger gelöste Tickets entstehen hier durch mehr Übergaben: Freigabe-Anteil (15 %) und Nacharbeit (14 %) "
+              "bleiben, die Übergabequote steigt. Unsere Token-Kosten bleiben gleich, der Kunde zahlt mehr Personal für die "
+              "Übergaben und spart entsprechend weniger.\n")
+    md.append("| Lösungsquote | Übergabequote | Umsatz je Monat | Kosten | **Marge** | effektiv je gelöstem Ticket (Fin: "
+              f"{eur(r0['fin_eur'])}) | Kunde behält: günstig | mittel | teuer |")
+    md.append("|---|---|---|---|---|---|---|---|---|")
+    for q in STRESS_QUOTEN:
+        zs = {typ: entscheidung(kunde(mo), q) for typ, mo in KUNDENTYPEN.items()}
+        z = zs["mittel"]
+        behaelt = []
+        for typ in KUNDENTYPEN:
+            k = zs[typ]["kunde_behaelt"]
+            behaelt.append("Kunde zahlt drauf" if k != k or k < 0 else pct(k, 1))
+        label = f"{pct(z['quote'], 1)} (Modell)" if q is None else pct(q)
+        effektiv = z["umsatz"] / (z["quote"] * MENGE)
+        md.append(f"| {label} | {pct(z['uebergabe'], 1)} | {eur(z['umsatz'])} | {eur(z['kosten'])} | **{pct(z['marge'], 1)}** | "
+                  f"{eur(effektiv)}{' (über Fin)' if effektiv > r0['fin_eur'] else ''} | {' | '.join(behaelt)} |")
+    v1, v2 = verlust_ab(e0, 1), verlust_ab(e0, 2)
+    fest = r0["hosting_fix_monat"] + r0["einrichtung_monat"] + r0["kundensupport_monat"]
+    md.append(f"\n**Verlust ab einer Lösungsquote von {pct(v1, 1)}** im ersten Jahr "
+              f"({eur(e0['grundgebuehr'], 0)} + {eur(e0['preis_geloest'])} × {eur(MENGE, 0)} × q = {eur(r0['vollkosten_monat'])}), "
+              f"ab {pct(v2, 1)} im zweiten Jahr (Einrichtung bezahlt). Die Grundgebühr ({eur(e0['grundgebuehr'], 0)} EUR) deckt die "
+              f"festen Kosten je Kunde ({eur(fest)} EUR) allein. Das Risiko „schwierigere Tickets“ trifft deshalb vor allem "
+              "den Kunden: Er bekommt weniger Lösungen und zahlt mehr Personal für Übergaben. Unsere Marge sinkt, bleibt aber positiv.\n")
+    z30 = entscheidung(e0, 0.30)
+    tok_grenze = (z30["umsatz"] - fest) / MENGE
+    heute = r0["variabel_monat"] / MENGE
+    md.append(f"Falls schwierigere Tickets auch mehr Tokens kosten: Bei 30 % Lösungsquote machen wir erst Verlust, wenn Tokens und "
+              f"Hosting je Ticket {eur(tok_grenze, 3)} EUR statt {eur(heute, 3)} EUR kosten, also das {eur(tok_grenze / heute, 1)}-Fache. "
+              "Zum Vergleich: Der teuerste Goldset-Lauf des deployten Stands (UC6) kostete 0,054 USD, das 1,9-Fache des Mittels.\n")
+    return md
 
 
 # ---------- main ----------
@@ -202,7 +284,7 @@ def main():
         md.append("|---|---|---|---|---|---|---|---|")
         for z in erosion(e, r):
             md.append(f"| {z['preispunkt']} | {eur(z['preis_sitz'], 0)} | {eur(z['umsatz1'], 0)} | {eur(z['umsatz2'], 0)} | "
-                      f"{eur(z['kosten1'], 0)} / {eur(z['kosten2'], 0)} | {pct(z['marge1'])} | {pct(z['marge2'])} | "
+                      f"{eur(z['kosten1'], 0)} / {eur(z['kosten2'], 0)} | {pct(z['aufschlag1'])} | {pct(z['aufschlag2'])} | "
                       f"{eur(z['preis_sitz2_fuer_untergrenze'], 0)} |")
         md.append("")
     rm = daten["mittel"]
@@ -213,6 +295,7 @@ def main():
               "Lösungsquote nichts ändert. Bei pro Sitz verliert der Anbieter genau dann Umsatz, wenn der Agent wirkt: "
               "Der Kunde braucht weniger Menschen.")
 
+    md += entscheidung_md()
     (HIER / "evals" / "pricing.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     with open(HIER / "evals" / "pricing_ergebnisse.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(csv_zeilen[0].keys()))

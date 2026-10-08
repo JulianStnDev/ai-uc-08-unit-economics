@@ -82,3 +82,32 @@ Preis je Sitz im ersten Jahr so gesetzt, dass er den Monatsbetrag an Unter-, Mit
 30 % Abbau ist dabei vorsichtig: Mit Agent bräuchte der mittlere Kunde nur noch 4,45 von 10 Stellen, könnte also bis zu 56 % abbauen. Dann fiele unser Sitz-Umsatz um denselben Anteil.
 
 Pro Ticket und pro gelöstem Ticket bleibt der Umsatz im zweiten Jahr gleich, weil sich an Ticketmenge und Lösungsquote nichts ändert. Bei pro Sitz verliert der Anbieter genau dann Umsatz, wenn der Agent wirkt: Der Kunde braucht weniger Menschen.
+
+## Entscheidung 08.10.: Grundgebühr + je gelöstem Ticket
+
+Preis: **450 EUR je Monat + 0,75 EUR je gelöstem Ticket** (gelöst = ohne Übergabe und nicht innerhalb von 7 Tagen wieder geöffnet; im Modell: Freigaben plus autonome Tickets ohne Nacharbeit). Begriffe: **Marge** = Gewinn / Umsatz, **Aufschlag** = Gewinn / Kosten.
+
+### Nachrechnung je Kundentyp (Lösungsquote aus dem Modell, Jahr 1)
+
+| Kundentyp | Umsatz je Monat | unsere Vollkosten | Gewinn | **Marge** | Aufschlag | Brutto-Ersparnis Kunde | **Kunde behält** |
+|---|---|---|---|---|---|---|---|
+| günstig | 5.122,50 | 729,94 | 4.392,56 | **85,8 %** | 602 % | 11.779,30 | **56,5 %** |
+| mittel | 5.122,50 | 729,94 | 4.392,56 | **85,8 %** | 602 % | 19.642,48 | **73,9 %** |
+| teuer | 5.122,50 | 729,94 | 4.392,56 | **85,8 %** | 602 % | 36.417,26 | **85,9 %** |
+
+Umsatz und Kosten sind für alle Kundentypen gleich (gleiche Ticketmenge, gleiche Lösungsquote). Unterschiedlich ist nur, wie viel der Kunde spart und damit behält.
+
+### Stresstest: schwierigere Tickets, weniger gelöst
+
+Weniger gelöste Tickets entstehen hier durch mehr Übergaben: Freigabe-Anteil (15 %) und Nacharbeit (14 %) bleiben, die Übergabequote steigt. Unsere Token-Kosten bleiben gleich, der Kunde zahlt mehr Personal für die Übergaben und spart entsprechend weniger.
+
+| Lösungsquote | Übergabequote | Umsatz je Monat | Kosten | **Marge** | effektiv je gelöstem Ticket (Fin: 0,89) | Kunde behält: günstig | mittel | teuer |
+|---|---|---|---|---|---|---|---|---|
+| 62,3 % (Modell) | 30,0 % | 5.122,50 | 729,94 | **85,8 %** | 0,82 | 56,5 % | 73,9 % | 85,9 % |
+| 45 % | 50,1 % | 3.825,00 | 729,94 | **80,9 %** | 0,85 | 49,1 % | 70,1 % | 84,1 % |
+| 30 % | 67,6 % | 2.700,00 | 729,94 | **73,0 %** | 0,90 (über Fin) | 29,2 % | 60,8 % | 80,0 % |
+
+**Verlust ab einer Lösungsquote von 3,7 %** im ersten Jahr (450 + 0,75 × 10.000 × q = 729,94), ab 1,1 % im zweiten Jahr (Einrichtung bezahlt). Die Grundgebühr (450 EUR) deckt die festen Kosten je Kunde (431,67 EUR) allein. Das Risiko „schwierigere Tickets“ trifft deshalb vor allem den Kunden: Er bekommt weniger Lösungen und zahlt mehr Personal für Übergaben. Unsere Marge sinkt, bleibt aber positiv.
+
+Falls schwierigere Tickets auch mehr Tokens kosten: Bei 30 % Lösungsquote machen wir erst Verlust, wenn Tokens und Hosting je Ticket 0,227 EUR statt 0,030 EUR kosten, also das 7,6-Fache. Zum Vergleich: Der teuerste Goldset-Lauf des deployten Stands (UC6) kostete 0,054 USD, das 1,9-Fache des Mittels.
+
