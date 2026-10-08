@@ -7,7 +7,7 @@ Erzeugt von `scripts/modell.py` aus `data/annahmen.csv`. Beträge in EUR, Tokens
 | Szenario | Freigabe | Übergabe | autonom | Nacharbeit (der autonomen) | min/Freigabe | Faktor Übergabe | min/Übergabe |
 |---|---|---|---|---|---|---|---|
 | optimistisch | 10 % | 15 % | 75 % | 5 % | 1 | 1,0 | 8,0 |
-| mittel | 15 % | 30 % | 55 % | 10 % | 2 | 1,1 | 8,8 |
+| mittel | 15 % | 30 % | 55 % | 14 % | 2 | 1,1 | 8,8 |
 | pessimistisch | 20 % | 50 % | 30 % | 20 % | 4 | 1,3 | 10,4 |
 
 ## Kosten je Ticket (EUR)
@@ -17,9 +17,9 @@ Erzeugt von `scripts/modell.py` aus `data/annahmen.csv`. Beträge in EUR, Tokens
 | optimistisch | 1.000 | 0,0285 | 0,0011 | 0,0442 | 0,5304 | 0,1326 | **0,7368** | 0,0027 | **0,7395** | **3,5360** | **2,7965** |
 | optimistisch | 10.000 | 0,0285 | 0,0011 | 0,0442 | 0,5304 | 0,1326 | **0,7368** | 0,0003 | **0,7371** | **3,5360** | **2,7989** |
 | optimistisch | 100.000 | 0,0285 | 0,0011 | 0,0442 | 0,5304 | 0,1326 | **0,7368** | 0,0000 | **0,7368** | **3,5360** | **2,7992** |
-| mittel | 1.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,1945 | **1,5238** | 0,0027 | **1,5265** | **3,5360** | **2,0095** |
-| mittel | 10.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,1945 | **1,5238** | 0,0003 | **1,5241** | **3,5360** | **2,0119** |
-| mittel | 100.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,1945 | **1,5238** | 0,0000 | **1,5238** | **3,5360** | **2,0122** |
+| mittel | 1.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,2723 | **1,6016** | 0,0027 | **1,6042** | **3,5360** | **1,9318** |
+| mittel | 10.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,2723 | **1,6016** | 0,0003 | **1,6018** | **3,5360** | **1,9342** |
+| mittel | 100.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,2723 | **1,6016** | 0,0000 | **1,6016** | **3,5360** | **1,9344** |
 | pessimistisch | 1.000 | 0,0289 | 0,0011 | 0,3536 | 2,2984 | 0,2122 | **2,8942** | 0,0027 | **2,8969** | **3,5360** | **0,6391** |
 | pessimistisch | 10.000 | 0,0289 | 0,0011 | 0,3536 | 2,2984 | 0,2122 | **2,8942** | 0,0003 | **2,8945** | **3,5360** | **0,6415** |
 | pessimistisch | 100.000 | 0,0289 | 0,0011 | 0,3536 | 2,2984 | 0,2122 | **2,8942** | 0,0000 | **2,8942** | **3,5360** | **0,6418** |
@@ -31,9 +31,9 @@ Erzeugt von `scripts/modell.py` aus `data/annahmen.csv`. Beträge in EUR, Tokens
 | optimistisch | 1.000 | 3.536,00 | 739,48 | 736,81 | 2,67 | 2.796,52 | 79,1 % |
 | optimistisch | 10.000 | 35.360,00 | 7.370,78 | 7.368,11 | 2,67 | 27.989,22 | 79,2 % |
 | optimistisch | 100.000 | 353.600,00 | 73.683,74 | 73.681,07 | 2,67 | 279.916,26 | 79,2 % |
-| mittel | 1.000 | 3.536,00 | 1.526,46 | 1.523,79 | 2,67 | 2.009,54 | 56,8 % |
-| mittel | 10.000 | 35.360,00 | 15.240,54 | 15.237,87 | 2,67 | 20.119,46 | 56,9 % |
-| mittel | 100.000 | 353.600,00 | 152.381,35 | 152.378,68 | 2,67 | 201.218,65 | 56,9 % |
+| mittel | 1.000 | 3.536,00 | 1.604,25 | 1.601,58 | 2,67 | 1.931,75 | 54,6 % |
+| mittel | 10.000 | 35.360,00 | 16.018,46 | 16.015,79 | 2,67 | 19.341,54 | 54,7 % |
+| mittel | 100.000 | 353.600,00 | 160.160,55 | 160.157,88 | 2,67 | 193.439,45 | 54,7 % |
 | pessimistisch | 1.000 | 3.536,00 | 2.896,87 | 2.894,20 | 2,67 | 639,13 | 18,1 % |
 | pessimistisch | 10.000 | 35.360,00 | 28.944,70 | 28.942,03 | 2,67 | 6.415,30 | 18,1 % |
 | pessimistisch | 100.000 | 353.600,00 | 289.422,95 | 289.420,28 | 2,67 | 64.177,05 | 18,1 % |
@@ -52,18 +52,30 @@ Die Personalkosten je Minute verschieben den Kipppunkt kaum: Tokens und Hosting 
 
 ## Sensitivität (Tornado)
 
-Szenario mittel, 10.000 Tickets/Monat, Ersparnis je Ticket 2,0119 EUR. Je Zeile wandert genau eine Annahme von niedrig auf hoch, alle anderen bleiben auf mittel. Diagramm: [docs/tornado.svg](../docs/tornado.svg).
+Szenario mittel, 10.000 Tickets/Monat, Ersparnis je Ticket 1,9342 EUR. Je Zeile wandert genau eine Annahme von niedrig auf hoch, alle anderen bleiben auf mittel. Diagramm: [docs/tornado.svg](../docs/tornado.svg).
 
 | Rang | Annahme | niedrig … hoch | Ersparnis bei niedrig | Ersparnis bei hoch | Ausschlag |
 |---|---|---|---|---|---|
-| 1 | Minuten ohne Agent (`min_ohne_agent`) | 5 … 14,4 | 1,1965 | 3,7517 | 2,5552 |
-| 2 | Personalkosten je Minute (`eur_je_minute`) | 0,37 … 0,75 | 1,6701 | 3,4349 | 1,7648 |
-| 3 | Übergabequote (`anteil_uebergabe`) | 0,15 … 0,50 | 2,5423 | 1,3047 | 1,2376 |
-| 4 | Faktor Minuten je Übergabe (`faktor_uebergabe`) | 1 … 1,3 | 2,1180 | 1,7998 | 0,3182 |
+| 1 | Minuten ohne Agent (`min_ohne_agent`) | 5 … 14,4 | 1,1478 | 3,6116 | 2,4638 |
+| 2 | Personalkosten je Minute (`eur_je_minute`) | 0,37 … 0,75 | 1,6053 | 3,3029 | 1,6976 |
+| 3 | Übergabequote (`anteil_uebergabe`) | 0,15 … 0,50 | 2,4433 | 1,2552 | 1,1881 |
+| 4 | Faktor Minuten je Übergabe (`faktor_uebergabe`) | 1 … 1,3 | 2,0402 | 1,7220 | 0,3182 |
 | 5 | Anteil Nacharbeit (`anteil_nacharbeit`) | 0,05 … 0,20 | 2,1092 | 1,8175 | 0,2917 |
-| 6 | Minuten je Freigabe (`min_freigabe`) | 1 … 4 | 2,0782 | 1,8793 | 0,1989 |
-| 7 | Freigabe-Anteil (`anteil_freigabe`) | 0,10 … 0,20 | 2,0387 | 1,9852 | 0,0535 |
-| 8 | Auslastung Cloud Run (`auslastung`) | 1 … 0,25 | 2,0125 | 2,0108 | 0,0017 |
+| 6 | Minuten je Freigabe (`min_freigabe`) | 1 … 4 | 2,0005 | 1,8016 | 0,1989 |
+| 7 | Freigabe-Anteil (`anteil_freigabe`) | 0,10 … 0,20 | 1,9538 | 1,9145 | 0,0393 |
+| 8 | Auslastung Cloud Run (`auslastung`) | 1 … 0,25 | 1,9347 | 1,9330 | 0,0017 |
+
+## Reparatur-Kandidat T04: Frist im Werkzeug berechnen
+
+Szenario mittel, 10.000 Tickets/Monat. Ohne T04 hätte der deployte Agent 1 von 26 autonomen Läufen mit falscher Kernaussage (3,9 % statt 14 %). Repariert bekäme T04 eine Empfehlung, also eine Freigabe: 10,3 % der autonomen Tickets (5,7 % aller Tickets) wandern von autonom zu Freigabe.
+
+| Variante | Freigabe | Nacharbeit | Nacharbeit je Ticket | Freigabe je Ticket | mit Agent je Ticket | Monat mit Agent | **Ersparnis gegenüber heute / Monat** |
+|---|---|---|---|---|---|---|---|
+| heute (T04-Fehler drin) | 15,0 % | 14,0 % | 0,2723 | 0,1326 | 1,6018 | 16.018,46 | **0,00** |
+| nur Nacharbeit sinkt | 15,0 % | 3,9 % | 0,0749 | 0,1326 | 1,4044 | 14.044,49 | **1.973,97** |
+| Nacharbeit sinkt, T04 wird Freigabe | 20,7 % | 3,9 % | 0,0671 | 0,1829 | 1,4472 | 14.472,25 | **1.546,20** |
+
+Die Erstattungen selbst sind nicht eingerechnet: Auf sie hat die Kundin Anspruch, ein Mensch ohne Agent würde sie ebenso auszahlen. Basis sind 29 autonome Goldset-Läufe, das ist eine Größenordnung, keine Prognose.
 
 ## Option „Doppelbuchung automatisch erstatten“: Erwartungswert je Fall
 

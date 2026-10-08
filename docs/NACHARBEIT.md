@@ -1,6 +1,6 @@
 # Nacharbeit: Was das Goldset über fehlerhafte autonome Läufe sagt
 
-Parameter `anteil_nacharbeit` in [data/annahmen.csv](../data/annahmen.csv): Anteil der autonomen Tickets (weder Freigabe noch Übergabe), bei denen später doch ein Mensch ran muss. Je Fall kostet das die vollen Minuten ohne Agent. Spanne 5 / 10 / 20 % (Vorgabe Julian, 08.10.).
+Parameter `anteil_nacharbeit` in [data/annahmen.csv](../data/annahmen.csv): Anteil der autonomen Tickets (weder Freigabe noch Übergabe), bei denen später doch ein Mensch ran muss. Je Fall kostet das die vollen Minuten ohne Agent. Spanne 5 / **14** / 20 %. „Mittel“ ist der gemessene Wert des deployten Agents (Entscheidung Julian, 08.10., vorher 10 %).
 
 ## Datenlage
 
@@ -16,8 +16,8 @@ Autonom heißt: Der Lauf hat weder eine Erstattungsempfehlung noch eine Übergab
 - **Falsche Kernaussage führt fast sicher zu Nacharbeit.** Der Kunde bekommt eine falsche Ablehnung oder eine irreführende Auskunft und meldet sich wieder. Das ist die Untergrenze dessen, was nachgearbeitet werden muss.
 - **Unbelegte Behauptungen führen manchmal zu Nacharbeit.** Ein Satz wie „5–10 Werktage“ ohne Beleg erzeugt Nachfragen, wenn er nicht stimmt. Wie oft das passiert, misst das Goldset nicht. Die 33–48 % sind deshalb eine weiche Obergrenze, nicht der Wert.
 - **Niedrig 5 %** entspricht dem alten Stand UC4 v3 (4 %).
-- **Mittel 10 %** liegt **unter** dem gemessenen Wert des deployten Agents (14 %). Ehrlich gesagt ist „mittel“ damit eher optimistisch. Vertretbar ist es nur, weil 3 der 4 Fehler auf ein einziges Ticket fallen (T04, systematisch in allen drei Läufen). Wie häufig dieser Fall im echten Mix ist, ist offen.
-- **Hoch 20 %** deckt den Großteil des Intervalls von UC6 ab (bis 31 %) und lässt Raum für Nachfragen wegen unbelegter Sätze.
+- **Mittel 14 %** ist der gemessene Wert des deployten Agents (4 von 29, 95-%-Intervall 5–31 %). 3 der 4 Fehler fallen auf T04. Das ist **kein Ausreißer, sondern ein systematischer Fehler**: Der Agent rechnet die 14-Tage-Frist in allen drei Läufen falsch, auch mit altem Code in der heutigen Umgebung (UC6, Gegenprobe). Ein systematischer Fehler tritt bei jedem Ticket dieser Art wieder auf und darf deshalb nicht herausgerechnet werden. Wie er sich beheben ließe, steht als offene Option in [decisions.md](decisions.md) („Frist im Werkzeug berechnen“).
+- **Hoch 20 %** liegt im Intervall von UC6, aber unter dessen Obergrenze (31 %). Wer vorsichtiger rechnen will, setzt hoch auf 31 %.
 - Mit n = 29 ist jede Punktschätzung schwach. Belastbar wird der Wert erst mit echten Tickets: Wiedereröffnungsquote autonomer Tickets innerhalb von 7 Tagen.
 
 ## Zwei echte Beispiele (UC6, deployter Stand)

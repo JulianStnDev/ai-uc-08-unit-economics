@@ -198,7 +198,7 @@ def tornado(menge: int) -> str:
     L, R, O = 230, 40, 104
     H = O + zeile_h * len(rows) + 56
     werte = [v for r in rows for v in r[4:6]] + [basis]
-    xmin, xmax = math.floor(min(werte)) - 0.0, math.ceil(max(werte))
+    xmin, xmax = math.floor(min(werte) - 0.4), math.ceil(max(werte))
     def X(v): return L + (v - xmin) / (xmax - xmin) * (B - L - R)
 
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {B} {H}" width="{B}" height="{H}" '
@@ -304,6 +304,30 @@ def main():
     md.append("| Rang | Annahme | niedrig … hoch | Ersparnis bei niedrig | Ersparnis bei hoch | Ausschlag |\n|---|---|---|---|---|---|")
     for i, (name, id_, lo, hi, s_lo, s_hi) in enumerate(rows, 1):
         md.append(f"| {i} | {name} (`{id_}`) | {zahl(lo)} … {zahl(hi)} | {eur(s_lo, 4)} | {eur(s_hi, 4)} | {eur(abs(s_hi - s_lo), 4)} |")
+
+    md.append("\n## Reparatur-Kandidat T04: Frist im Werkzeug berechnen\n")
+    e = eingaben("mittel")
+    m = 10_000
+    autonom = 1 - e["anteil_freigabe"] - e["anteil_uebergabe"]
+    verschoben = e["anteil_t04_an_autonom"] * autonom
+    varianten = [("heute (T04-Fehler drin)", e),
+                 ("nur Nacharbeit sinkt", {**e, "anteil_nacharbeit": e["nacharbeit_ohne_t04"]}),
+                 ("Nacharbeit sinkt, T04 wird Freigabe", {**e, "anteil_nacharbeit": e["nacharbeit_ohne_t04"],
+                                                          "anteil_freigabe": e["anteil_freigabe"] + verschoben})]
+    vorher = je_ticket(e, m)
+    md.append(f"Szenario mittel, {eur(m, 0)} Tickets/Monat. Ohne T04 hätte der deployte Agent 1 von 26 autonomen Läufen mit "
+              f"falscher Kernaussage ({pct(e['nacharbeit_ohne_t04'], 1)} statt {pct(e['anteil_nacharbeit'], 0)}). "
+              f"Repariert bekäme T04 eine Empfehlung, also eine Freigabe: {pct(e['anteil_t04_an_autonom'], 1)} der autonomen "
+              f"Tickets ({pct(verschoben, 1)} aller Tickets) wandern von autonom zu Freigabe.\n")
+    md.append("| Variante | Freigabe | Nacharbeit | Nacharbeit je Ticket | Freigabe je Ticket | mit Agent je Ticket | Monat mit Agent | **Ersparnis gegenüber heute / Monat** |")
+    md.append("|---|---|---|---|---|---|---|---|")
+    for name, e_ in varianten:
+        p = je_ticket(e_, m)
+        md.append(f"| {name} | {pct(e_['anteil_freigabe'], 1)} | {pct(e_['anteil_nacharbeit'], 1)} | {eur(p['nacharbeit'], 4)} | "
+                  f"{eur(p['freigabe'], 4)} | {eur(p['mit_agent'], 4)} | {eur(p['mit_agent'] * m)} | "
+                  f"**{eur((vorher['mit_agent'] - p['mit_agent']) * m)}** |")
+    md.append("\nDie Erstattungen selbst sind nicht eingerechnet: Auf sie hat die Kundin Anspruch, ein Mensch ohne Agent "
+              "würde sie ebenso auszahlen. Basis sind 29 autonome Goldset-Läufe, das ist eine Größenordnung, keine Prognose.")
 
     md.append("\n## Option „Doppelbuchung automatisch erstatten“: Erwartungswert je Fall\n")
     e = eingaben("mittel")

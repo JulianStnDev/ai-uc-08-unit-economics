@@ -2,66 +2,68 @@
 <style>:root{--bg:#fcfcfb;--t1:#0b0b0b;--t2:#52514e;--grid:#e6e5e1;--lo:#2a78d6;--hi:#eb6834;}@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--t1:#ffffff;--t2:#c3c2b7;--grid:#34332f;--lo:#3987e5;--hi:#d95926;}} text{fill:var(--t2);font-size:12px} .t1{fill:var(--t1)}</style>
 <rect width="760" height="432" fill="var(--bg)"/>
 <text x="24" y="26" class="t1" font-size="16" font-weight="600">Welche Annahme bewegt die Ersparnis am stärksten?</text>
-<text x="24" y="46">Ersparnis je Ticket in EUR, Szenario mittel (2,01 EUR), 10.000 Tickets im Monat. Je Zeile wandert genau eine Annahme.</text>
+<text x="24" y="46">Ersparnis je Ticket in EUR, Szenario mittel (1,93 EUR), 10.000 Tickets im Monat. Je Zeile wandert genau eine Annahme.</text>
 <rect x="24" y="62" width="14" height="10" rx="2" fill="var(--lo)"/><text x="44" y="71">Annahme auf niedrig</text>
 <rect x="184" y="62" width="14" height="10" rx="2" fill="var(--hi)"/><text x="204" y="71">Annahme auf hoch</text>
 <line x1="230.0" y1="96" x2="230.0" y2="376" stroke="var(--grid)"/>
-<text x="230.0" y="394" text-anchor="middle">1</text>
-<line x1="393.3" y1="96" x2="393.3" y2="376" stroke="var(--grid)"/>
-<text x="393.3" y="394" text-anchor="middle">2</text>
-<line x1="556.7" y1="96" x2="556.7" y2="376" stroke="var(--grid)"/>
-<text x="556.7" y="394" text-anchor="middle">3</text>
+<text x="230.0" y="394" text-anchor="middle">0</text>
+<line x1="352.5" y1="96" x2="352.5" y2="376" stroke="var(--grid)"/>
+<text x="352.5" y="394" text-anchor="middle">1</text>
+<line x1="475.0" y1="96" x2="475.0" y2="376" stroke="var(--grid)"/>
+<text x="475.0" y="394" text-anchor="middle">2</text>
+<line x1="597.5" y1="96" x2="597.5" y2="376" stroke="var(--grid)"/>
+<text x="597.5" y="394" text-anchor="middle">3</text>
 <line x1="720.0" y1="96" x2="720.0" y2="376" stroke="var(--grid)"/>
 <text x="720.0" y="394" text-anchor="middle">4</text>
 <text x="220" y="119" text-anchor="end" class="t1">Minuten ohne Agent</text>
 <text x="220" y="132" text-anchor="end" font-size="11">5 … 14,4</text>
-<rect x="262.1" y="110" width="133.2" height="20" rx="4" fill="var(--lo)"><title>Minuten ohne Agent niedrig (5): Ersparnis 1,20 EUR je Ticket</title></rect>
-<text x="256.1" y="124" text-anchor="end">1,20</text>
-<rect x="395.3" y="110" width="284.2" height="20" rx="4" fill="var(--hi)"><title>Minuten ohne Agent hoch (14,4): Ersparnis 3,75 EUR je Ticket</title></rect>
-<text x="685.4" y="124" text-anchor="start">3,75</text>
+<rect x="370.6" y="110" width="96.3" height="20" rx="4" fill="var(--lo)"><title>Minuten ohne Agent niedrig (5): Ersparnis 1,15 EUR je Ticket</title></rect>
+<text x="364.6" y="124" text-anchor="end">1,15</text>
+<rect x="466.9" y="110" width="205.5" height="20" rx="4" fill="var(--hi)"><title>Minuten ohne Agent hoch (14,4): Ersparnis 3,61 EUR je Ticket</title></rect>
+<text x="678.4" y="124" text-anchor="start">3,61</text>
 <text x="220" y="153" text-anchor="end" class="t1">Personalkosten je Minute</text>
 <text x="220" y="166" text-anchor="end" font-size="11">0,37 … 0,75</text>
-<rect x="339.4" y="144" width="55.8" height="20" rx="4" fill="var(--lo)"><title>Personalkosten je Minute niedrig (0,37): Ersparnis 1,67 EUR je Ticket</title></rect>
-<text x="333.4" y="158" text-anchor="end">1,67</text>
-<rect x="395.3" y="144" width="232.4" height="20" rx="4" fill="var(--hi)"><title>Personalkosten je Minute hoch (0,75): Ersparnis 3,43 EUR je Ticket</title></rect>
-<text x="633.7" y="158" text-anchor="start">3,43</text>
+<rect x="426.6" y="144" width="40.3" height="20" rx="4" fill="var(--lo)"><title>Personalkosten je Minute niedrig (0,37): Ersparnis 1,61 EUR je Ticket</title></rect>
+<text x="420.6" y="158" text-anchor="end">1,61</text>
+<rect x="466.9" y="144" width="167.7" height="20" rx="4" fill="var(--hi)"><title>Personalkosten je Minute hoch (0,75): Ersparnis 3,30 EUR je Ticket</title></rect>
+<text x="640.6" y="158" text-anchor="start">3,30</text>
 <text x="220" y="187" text-anchor="end" class="t1">Übergabequote</text>
 <text x="220" y="200" text-anchor="end" font-size="11">0,15 … 0,50</text>
-<rect x="395.3" y="178" width="86.6" height="20" rx="4" fill="var(--lo)"><title>Übergabequote niedrig (0,15): Ersparnis 2,54 EUR je Ticket</title></rect>
-<text x="487.9" y="192" text-anchor="start">2,54</text>
-<rect x="279.8" y="178" width="115.5" height="20" rx="4" fill="var(--hi)"><title>Übergabequote hoch (0,50): Ersparnis 1,30 EUR je Ticket</title></rect>
-<text x="273.8" y="192" text-anchor="end">1,30</text>
+<rect x="466.9" y="178" width="62.4" height="20" rx="4" fill="var(--lo)"><title>Übergabequote niedrig (0,15): Ersparnis 2,44 EUR je Ticket</title></rect>
+<text x="535.3" y="192" text-anchor="start">2,44</text>
+<rect x="383.8" y="178" width="83.2" height="20" rx="4" fill="var(--hi)"><title>Übergabequote hoch (0,50): Ersparnis 1,26 EUR je Ticket</title></rect>
+<text x="377.8" y="192" text-anchor="end">1,26</text>
 <text x="220" y="221" text-anchor="end" class="t1">Faktor Minuten je Übergabe</text>
 <text x="220" y="234" text-anchor="end" font-size="11">1 … 1,3</text>
-<rect x="395.3" y="212" width="17.3" height="20" rx="4" fill="var(--lo)"><title>Faktor Minuten je Übergabe niedrig (1): Ersparnis 2,12 EUR je Ticket</title></rect>
-<text x="418.6" y="226" text-anchor="start">2,12</text>
-<rect x="360.6" y="212" width="34.7" height="20" rx="4" fill="var(--hi)"><title>Faktor Minuten je Übergabe hoch (1,3): Ersparnis 1,80 EUR je Ticket</title></rect>
-<text x="354.6" y="226" text-anchor="end">1,80</text>
+<rect x="466.9" y="212" width="13.0" height="20" rx="4" fill="var(--lo)"><title>Faktor Minuten je Übergabe niedrig (1): Ersparnis 2,04 EUR je Ticket</title></rect>
+<text x="485.9" y="226" text-anchor="start">2,04</text>
+<rect x="440.9" y="212" width="26.0" height="20" rx="4" fill="var(--hi)"><title>Faktor Minuten je Übergabe hoch (1,3): Ersparnis 1,72 EUR je Ticket</title></rect>
+<text x="434.9" y="226" text-anchor="end">1,72</text>
 <text x="220" y="255" text-anchor="end" class="t1">Anteil Nacharbeit</text>
 <text x="220" y="268" text-anchor="end" font-size="11">0,05 … 0,20</text>
-<rect x="395.3" y="246" width="15.9" height="20" rx="4" fill="var(--lo)"><title>Anteil Nacharbeit niedrig (0,05): Ersparnis 2,11 EUR je Ticket</title></rect>
-<text x="417.2" y="260" text-anchor="start">2,11</text>
-<rect x="363.5" y="246" width="31.8" height="20" rx="4" fill="var(--hi)"><title>Anteil Nacharbeit hoch (0,20): Ersparnis 1,82 EUR je Ticket</title></rect>
-<text x="357.5" y="260" text-anchor="end">1,82</text>
+<rect x="466.9" y="246" width="21.4" height="20" rx="4" fill="var(--lo)"><title>Anteil Nacharbeit niedrig (0,05): Ersparnis 2,11 EUR je Ticket</title></rect>
+<text x="494.4" y="260" text-anchor="start">2,11</text>
+<rect x="452.6" y="246" width="14.3" height="20" rx="4" fill="var(--hi)"><title>Anteil Nacharbeit hoch (0,20): Ersparnis 1,82 EUR je Ticket</title></rect>
+<text x="446.6" y="260" text-anchor="end">1,82</text>
 <text x="220" y="289" text-anchor="end" class="t1">Minuten je Freigabe</text>
 <text x="220" y="302" text-anchor="end" font-size="11">1 … 4</text>
-<rect x="395.3" y="280" width="10.8" height="20" rx="4" fill="var(--lo)"><title>Minuten je Freigabe niedrig (1): Ersparnis 2,08 EUR je Ticket</title></rect>
-<text x="412.1" y="294" text-anchor="start">2,08</text>
-<rect x="373.6" y="280" width="21.7" height="20" rx="4" fill="var(--hi)"><title>Minuten je Freigabe hoch (4): Ersparnis 1,88 EUR je Ticket</title></rect>
-<text x="367.6" y="294" text-anchor="end">1,88</text>
+<rect x="466.9" y="280" width="8.1" height="20" rx="4" fill="var(--lo)"><title>Minuten je Freigabe niedrig (1): Ersparnis 2,00 EUR je Ticket</title></rect>
+<text x="481.1" y="294" text-anchor="start">2,00</text>
+<rect x="450.7" y="280" width="16.2" height="20" rx="4" fill="var(--hi)"><title>Minuten je Freigabe hoch (4): Ersparnis 1,80 EUR je Ticket</title></rect>
+<text x="444.7" y="294" text-anchor="end">1,80</text>
 <text x="220" y="323" text-anchor="end" class="t1">Freigabe-Anteil</text>
 <text x="220" y="336" text-anchor="end" font-size="11">0,10 … 0,20</text>
-<rect x="395.3" y="314" width="4.4" height="20" rx="4" fill="var(--lo)"><title>Freigabe-Anteil niedrig (0,10): Ersparnis 2,04 EUR je Ticket</title></rect>
-<text x="405.7" y="328" text-anchor="start">2,04</text>
-<rect x="390.9" y="314" width="4.4" height="20" rx="4" fill="var(--hi)"><title>Freigabe-Anteil hoch (0,20): Ersparnis 1,99 EUR je Ticket</title></rect>
-<text x="384.9" y="328" text-anchor="end">1,99</text>
+<rect x="466.9" y="314" width="2.4" height="20" rx="4" fill="var(--lo)"><title>Freigabe-Anteil niedrig (0,10): Ersparnis 1,95 EUR je Ticket</title></rect>
+<text x="475.3" y="328" text-anchor="start">1,95</text>
+<rect x="464.5" y="314" width="2.4" height="20" rx="4" fill="var(--hi)"><title>Freigabe-Anteil hoch (0,20): Ersparnis 1,91 EUR je Ticket</title></rect>
+<text x="458.5" y="328" text-anchor="end">1,91</text>
 <text x="220" y="357" text-anchor="end" class="t1">Auslastung Cloud Run</text>
 <text x="220" y="370" text-anchor="end" font-size="11">1 … 0,25</text>
-<rect x="395.3" y="348" width="1.0" height="20" rx="4" fill="var(--lo)"><title>Auslastung Cloud Run niedrig (1): Ersparnis 2,01 EUR je Ticket</title></rect>
-<text x="401.4" y="362" text-anchor="start">2,01</text>
-<rect x="395.1" y="348" width="1.0" height="20" rx="4" fill="var(--hi)"><title>Auslastung Cloud Run hoch (0,25): Ersparnis 2,01 EUR je Ticket</title></rect>
-<text x="389.1" y="362" text-anchor="end">2,01</text>
-<line x1="395.3" y1="96" x2="395.3" y2="376" stroke="var(--t1)" stroke-width="1.5"/>
-<text x="395.3" y="92" text-anchor="middle" class="t1">mittel 2,01</text>
+<rect x="466.9" y="348" width="1.0" height="20" rx="4" fill="var(--lo)"><title>Auslastung Cloud Run niedrig (1): Ersparnis 1,93 EUR je Ticket</title></rect>
+<text x="473.0" y="362" text-anchor="start">1,93</text>
+<rect x="466.8" y="348" width="1.0" height="20" rx="4" fill="var(--hi)"><title>Auslastung Cloud Run hoch (0,25): Ersparnis 1,93 EUR je Ticket</title></rect>
+<text x="460.8" y="362" text-anchor="end">1,93</text>
+<line x1="466.9" y1="96" x2="466.9" y2="376" stroke="var(--t1)" stroke-width="1.5"/>
+<text x="466.9" y="92" text-anchor="middle" class="t1">mittel 1,93</text>
 <text x="24" y="422" font-size="11">Tokens, Kurs und Hosting-Preise sind gemessene Punktwerte und wandern nicht. Quelle: data/annahmen.csv</text>
 </svg>

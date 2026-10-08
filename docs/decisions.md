@@ -82,3 +82,31 @@ Option (vorgeschlagen, nicht entschieden): **automatisch bis 10 EUR, darüber Fr
 - Bei 59 EUR bräuchte es 200 fehlerfreie Fälle, und der Gewinn je Fall wäre trotzdem klein (bei 1 % Fehlerquote 0,30 EUR).
 - Voraussetzungen: Die Erstattungsregel bleibt im Werkzeug (UC6, nicht im Prompt). Je Kunde gibt es eine Obergrenze, damit sich die Option nicht wiederholt ausnutzen lässt. Der Schutz gegen Social Engineering aus UC6 („telefonisch abgesprochen“) muss in den 34 Fällen mitgetestet sein.
 - Grenzen der Rechnung: Die Dreierregel setzt unabhängige, repräsentative Fälle voraus. Folgeschäden einer falschen Erstattung (Missbrauch, Nachahmer) sind nicht eingerechnet.
+
+## 2026-10-08: Nacharbeit „mittel“ = gemessene 14 %
+
+Kontext: „Mittel“ stand bei 10 % und damit unter dem gemessenen Wert des deployten Agents (4 von 29 autonomen Läufen mit falscher Kernaussage, 95-%-Intervall 5–31 %).
+
+Entscheidung (Julian): „Mittel“ = 14 %, Spanne 5 / 14 / 20 %.
+
+Begründung: 3 der 4 Fehler sind T04. Der Agent rechnet dort die 14-Tage-Frist falsch, in allen drei Läufen und auch mit altem Code. Das ist ein systematischer Fehler und kein Ausreißer, er darf nicht herausgerechnet werden. Folge im Szenario mittel (10.000 Tickets): Ersparnis 19.342 EUR statt 20.119 EUR im Monat (54,7 % statt 56,9 %). Der Kipppunkt bleibt knapp außerhalb des möglichen Bereichs (87,0 % gegen höchstens 85 %).
+
+## 2026-10-08: Offene Option „Frist im Werkzeug berechnen und dem Agent fertig liefern (Regel im Code)“
+
+Kontext: T04 („59 $ abgebucht, vergessen zu kündigen“) scheitert systematisch: Der Agent rechnet die 14-Tage-Frist ab Beginn des neuen Jahreszeitraums selbst aus und kommt falsch auf „abgelaufen“. Die Erstattungsregeln liegen seit UC6 schon im Werkzeug, die Frist aber nicht. Der Agent bekommt Rohdaten (Datum der Verlängerung) und muss selbst rechnen.
+
+Option: Das Werkzeug liefert zu jeder Zahlung das fertige Ergebnis, zum Beispiel `frist_14_tage_offen: true, endet_am: 2026-09-29`. Der Agent rechnet nicht mehr selbst. Das ist dasselbe Muster wie in UC4 und UC6: Was immer gelten muss, gehört in den Code.
+
+Abschätzung (nur gerechnet, UC7 nicht geändert; [evals/modell.md](../evals/modell.md), Abschnitt „Reparatur-Kandidat T04“), Szenario mittel, 10.000 Tickets im Monat:
+
+| Variante | Nacharbeit | Freigabe | Monat mit Agent | gespart gegenüber heute |
+|---|---|---|---|---|
+| heute | 14 % | 15 % | 16.018 EUR | – |
+| nur Nacharbeit sinkt | 3,9 % (1 von 26) | 15 % | 14.044 EUR | 1.974 EUR/Monat |
+| Nacharbeit sinkt, T04 wird Freigabe | 3,9 % | 20,7 % | 14.472 EUR | **1.546 EUR/Monat** |
+
+Die realistische Zahl ist die dritte Zeile. Repariert bekommt die Kundin eine Empfehlung, und die kostet eine Freigabe (2 min). Die berechtigten Erstattungen selbst sind nicht eingerechnet, ein Mensch ohne Agent würde sie ebenso auszahlen.
+
+Grenzen: Die Basis sind 29 autonome Läufe, davon 3 T04. Wie häufig T04-artige Fälle im echten Mix sind (Verlängerung vergessen, noch in der Frist), ist offen. 1.546 EUR sind eine Größenordnung, keine Prognose. Nachweis nach der Reparatur: T04 dreimal im Goldset, dazu ein deterministischer Test für die Fristberechnung (Grenzfälle Tag 14 und 15).
+
+Status: offen, nicht umgesetzt.
