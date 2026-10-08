@@ -2,7 +2,7 @@
 
 # UC8: Unit Economics, Pricing & Build-vs-Buy
 
-> Status 2026-10-08: number inventory ([docs/INVENTUR.md](docs/INVENTUR.md)) and cost model ([evals/modell.md](evals/modell.md), worked example: [docs/RECHENWEG.md](docs/RECHENWEG.md)), all in German. Pricing: [evals/pricing.md](evals/pricing.md), worked example [docs/RECHENWEG_PRICING.md](docs/RECHENWEG_PRICING.md). Build-vs-buy to follow.
+> Status 2026-10-08: number inventory ([docs/INVENTUR.md](docs/INVENTUR.md)) and cost model ([evals/modell.md](evals/modell.md), worked example: [docs/RECHENWEG.md](docs/RECHENWEG.md)), all in German. Pricing: [evals/pricing.md](evals/pricing.md), worked example [docs/RECHENWEG_PRICING.md](docs/RECHENWEG_PRICING.md). Build vs. buy: [evals/build_buy.md](evals/build_buy.md), worked example [docs/RECHENWEG_BUILD_BUY.md](docs/RECHENWEG_BUILD_BUY.md).
 
 ## Problem
 The support agent from UC4/UC7 runs as a web demo on Cloud Run. The product question behind it is still open: **What does a support ticket cost with the agent, compared with a ticket handled entirely by a human?** And from that: how could it be priced, and does building it pay off compared with buying a product?
@@ -58,6 +58,10 @@ Pricing from the vendor's view (10,000 tickets per customer and month). Floor = 
 ![Price corridor per customer type](docs/korridor.svg)
 
 Intercom Fin (0.99 USD per outcome, checked on intercom.com) sits at 52 % of our per-resolution corridor for the medium customer. Decided: **450 EUR per month + 0.75 EUR per resolved ticket** (no handover, not reopened within 7 days). For the medium customer that is an 85.8 % margin, and the customer keeps 73.9 % of the saving. Loss only below a 3.7 % resolution rate ([docs/decisions.md](docs/decisions.md)). With per-seat billing, a 30 % headcount cut in year two costs the vendor 30 % of revenue although ticket volume stays the same.
+
+Build vs. buy from the buyer's view (A run it yourself, B Intercom Fin, C our product, D classification only): running it yourself beats Fin from about 3,600 tickets per month and our product from about 5,400. Below that, C is cheapest. The tipping point depends mainly on the ongoing effort for A (21 to 100 h per month, assumption).
+
+![Run it yourself vs. buy](docs/build_buy_differenz.svg)
 
 ## Cost & Latency
 - Cost per 1000 requests: 1,601.85 EUR per 1,000 tickets with the agent (medium scenario, staff included), of which tokens 32.09 USD

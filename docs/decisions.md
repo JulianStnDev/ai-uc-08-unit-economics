@@ -159,3 +159,14 @@ Absicherung:
 - Design-Partner-Pilot im Schattenmodus. Die Lösungsquote wird am echten Ticketmix gemessen, bevor abgerechnet wird.
 - Preisanpassungsklausel nach 3 Monaten.
 - Keine langfristigen Verträge zum Pilotpreis.
+
+## 2026-10-08: Regeln für Build vs. Buy (Käufer-Sicht FocusFlow)
+
+Kontext: FocusFlow braucht einen Support-Agent. Verglichen werden A selbst betreiben (UC7-Agent), B Intercom Fin, C unser Produkt (450 EUR + 0,75 EUR je gelöstem Ticket) und D nur Klassifikation (UC1) plus Menschen. Rechnung in `scripts/build_buy.py`, Ergebnisse in [evals/build_buy.md](../evals/build_buy.md).
+
+- **Nur entscheidungsrelevante Kosten:** Menschliche Grundlast, die in jeder Option gleich ist (Teamleitung, Helpdesk-Lizenzen für Menschen, Schulung), fehlt. Drin sind die Minuten, die Menschen je Option an Tickets arbeiten (Freigabe, Übergabe, Nacharbeit, bei D jedes Ticket). Sie unterscheiden sich zwischen den Optionen.
+- **TCO für A** als laufender Aufwand in sieben Aufgaben aus UC2, UC4, UC6 und UC7: 21 / 45 / 100 h je Monat. Das sind alles Annahmen ohne Quelle, mit Bezug auf das, was in den Repos tatsächlich nötig war.
+- **Bauzeit A grob aus der Git-Historie:** UC4, UC6 und UC7 haben zusammen 51 Commits ohne Merges an 8 aktiven Repo-Tagen (24.09.–08.10.2026). Daraus 8 Tage × 8 h × Faktor 2 (Demo → Produktion) = 128 h, auf 24 Monate verteilt. Ausdrücklich eine grobe Näherung: Die Commits sind gebündelt, gebaut hat eine Person mit Claude Code an erfundenen Daten.
+- **B Fin** laut Primärquelle (intercom.com/pricing, 08.10.2026) neben dem eigenen Helpdesk: 0,99 USD je Outcome, Mindestabnahme etwa 50 Outcomes, „No seat costs“, „No setup, integration, or platform fees“. Sitzpreise (29 / 85 / 132 USD je Sitz und Monat) gelten nur für die Intercom-Suite und sind nicht modelliert. Abgerechnet werden alle nicht übergebenen Tickets, weil auch „assumed resolutions“ zählen, plus 50 % der Übergaben als Procedure Handoff (Annahme). Die Übergabequote von Fin ist unbekannt, als Annahme 20 / 30 / 40 %. Die Nacharbeit ist wie bei uns angesetzt.
+- **Interner Aufwand beim Käufer für B und C** (Einrichtung und laufend) ist als Annahme drin. Bei C ist er kleiner, weil wir einrichten.
+- **D:** Klassifikation 1,37 USD je 1.000 Tickets (UC1). Sie spart je Ticket 0,5 min (Annahme), dazu kommen 2 h Betrieb je Monat.

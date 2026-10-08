@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" width="760" height="500" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Gesamtkosten je Monat für die Optionen A bis D über der Ticketmenge">
+<style>:root{--bg:#fcfcfb;--t1:#0b0b0b;--t2:#52514e;--grid:#e6e5e1;--zero:#8a8984;--A:#2a78d6;--B:#eb6834;--C:#1baf7a;--D:#eda100;}@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--t1:#ffffff;--t2:#c3c2b7;--grid:#34332f;--A:#3987e5;--B:#d95926;--C:#199e70;--D:#c98500;}} text{fill:var(--t2);font-size:12px} .t1{fill:var(--t1)}</style>
+<rect width="760" height="500" fill="var(--bg)"/>
+<text x="24" y="26" class="t1" font-size="16" font-weight="600">Gesamtkosten je Monat nach Volumen</text>
+<text x="24" y="46">Tausend EUR je Monat, entscheidungsrelevante Kosten inklusive Personal an Tickets. Alle Annahmen auf „mittel“.</text>
+<line x1="24" y1="70" x2="46" y2="70" stroke="var(--A)" stroke-width="2"/><text x="52" y="74">A selbst betreiben</text>
+<line x1="174" y1="70" x2="196" y2="70" stroke="var(--B)" stroke-width="2"/><text x="202" y="74">B Intercom Fin</text>
+<line x1="324" y1="70" x2="346" y2="70" stroke="var(--C)" stroke-width="2"/><text x="352" y="74">C unser Produkt</text>
+<line x1="474" y1="70" x2="496" y2="70" stroke="var(--D)" stroke-width="2"/><text x="502" y="74">D nur Klassifikation</text>
+<line x1="84" y1="436.0" x2="610" y2="436.0" stroke="var(--grid)"/>
+<text x="76" y="440.0" text-anchor="end">0</text>
+<line x1="84" y1="399.1" x2="610" y2="399.1" stroke="var(--grid)"/>
+<text x="76" y="403.1" text-anchor="end">40</text>
+<line x1="84" y1="362.2" x2="610" y2="362.2" stroke="var(--grid)"/>
+<text x="76" y="366.2" text-anchor="end">80</text>
+<line x1="84" y1="325.3" x2="610" y2="325.3" stroke="var(--grid)"/>
+<text x="76" y="329.3" text-anchor="end">120</text>
+<line x1="84" y1="288.4" x2="610" y2="288.4" stroke="var(--grid)"/>
+<text x="76" y="292.4" text-anchor="end">160</text>
+<line x1="84" y1="251.6" x2="610" y2="251.6" stroke="var(--grid)"/>
+<text x="76" y="255.6" text-anchor="end">200</text>
+<line x1="84" y1="214.7" x2="610" y2="214.7" stroke="var(--grid)"/>
+<text x="76" y="218.7" text-anchor="end">240</text>
+<line x1="84" y1="177.8" x2="610" y2="177.8" stroke="var(--grid)"/>
+<text x="76" y="181.8" text-anchor="end">280</text>
+<line x1="84" y1="140.9" x2="610" y2="140.9" stroke="var(--grid)"/>
+<text x="76" y="144.9" text-anchor="end">320</text>
+<line x1="84" y1="104.0" x2="610" y2="104.0" stroke="var(--grid)"/>
+<text x="76" y="108.0" text-anchor="end">360</text>
+<line x1="84.0" y1="104" x2="84.0" y2="436" stroke="var(--grid)"/>
+<text x="84.0" y="454" text-anchor="middle">1.000</text>
+<line x1="163.2" y1="104" x2="163.2" y2="436" stroke="var(--grid)"/>
+<text x="163.2" y="454" text-anchor="middle">2.000</text>
+<line x1="267.8" y1="104" x2="267.8" y2="436" stroke="var(--grid)"/>
+<text x="267.8" y="454" text-anchor="middle">5.000</text>
+<line x1="347.0" y1="104" x2="347.0" y2="436" stroke="var(--grid)"/>
+<text x="347.0" y="454" text-anchor="middle">10.000</text>
+<line x1="426.2" y1="104" x2="426.2" y2="436" stroke="var(--grid)"/>
+<text x="426.2" y="454" text-anchor="middle">20.000</text>
+<line x1="530.8" y1="104" x2="530.8" y2="436" stroke="var(--grid)"/>
+<text x="530.8" y="454" text-anchor="middle">50.000</text>
+<line x1="610.0" y1="104" x2="610.0" y2="436" stroke="var(--grid)"/>
+<text x="610.0" y="454" text-anchor="middle">100.000</text>
+<text x="347" y="476" text-anchor="middle">Tickets je Monat (logarithmisch)</text>
+<polyline fill="none" stroke="var(--A)" stroke-width="2" stroke-linejoin="round" points="84.0,431.8 97.1,431.6 110.3,431.4 123.5,431.2 136.6,430.9 149.7,430.7 162.9,430.3 163.2,430.3 176.1,430.0 189.2,429.6 202.3,429.1 209.5,428.9 215.5,428.6 228.6,428.0 241.8,427.4 255.0,426.7 267.8,425.9 268.1,425.9 281.2,425.0 294.4,424.0 307.5,422.8 314.1,422.2 320.7,421.6 333.9,420.1 347.0,418.5 360.1,416.7 373.3,414.7 386.4,412.4 393.3,411.1 399.6,409.9 412.8,407.0 425.9,403.8 426.2,403.7 439.0,400.2 452.2,396.2 465.4,391.7 472.5,389.0 478.5,386.6 491.6,380.9 504.8,374.5 517.9,367.3 530.8,359.4 531.1,359.3 544.2,350.2 557.4,340.1 570.6,328.7 577.1,322.5 583.7,316.0 596.8,301.6 610.0,285.6"/>
+<circle cx="84.0" cy="431.8" r="7" fill="transparent"><title>A selbst betreiben, 1.000 Tickets: 5 EUR</title></circle>
+<circle cx="97.1" cy="431.6" r="7" fill="transparent"><title>A selbst betreiben, 1.122 Tickets: 5 EUR</title></circle>
+<circle cx="110.3" cy="431.4" r="7" fill="transparent"><title>A selbst betreiben, 1.259 Tickets: 5 EUR</title></circle>
+<circle cx="123.5" cy="431.2" r="7" fill="transparent"><title>A selbst betreiben, 1.413 Tickets: 5 EUR</title></circle>
+<circle cx="136.6" cy="430.9" r="7" fill="transparent"><title>A selbst betreiben, 1.585 Tickets: 5 EUR</title></circle>
+<circle cx="149.7" cy="430.7" r="7" fill="transparent"><title>A selbst betreiben, 1.778 Tickets: 6 EUR</title></circle>
+<circle cx="162.9" cy="430.3" r="7" fill="transparent"><title>A selbst betreiben, 1.995 Tickets: 6 EUR</title></circle>
+<circle cx="163.2" cy="430.3" r="7" fill="transparent"><title>A selbst betreiben, 2.000 Tickets: 6 EUR</title></circle>
+<circle cx="176.1" cy="430.0" r="7" fill="transparent"><title>A selbst betreiben, 2.239 Tickets: 7 EUR</title></circle>
+<circle cx="189.2" cy="429.6" r="7" fill="transparent"><title>A selbst betreiben, 2.512 Tickets: 7 EUR</title></circle>
+<circle cx="202.3" cy="429.1" r="7" fill="transparent"><title>A selbst betreiben, 2.818 Tickets: 7 EUR</title></circle>
+<circle cx="209.5" cy="428.9" r="7" fill="transparent"><title>A selbst betreiben, 3.000 Tickets: 8 EUR</title></circle>
+<circle cx="215.5" cy="428.6" r="7" fill="transparent"><title>A selbst betreiben, 3.162 Tickets: 8 EUR</title></circle>
+<circle cx="228.6" cy="428.0" r="7" fill="transparent"><title>A selbst betreiben, 3.548 Tickets: 9 EUR</title></circle>
+<circle cx="241.8" cy="427.4" r="7" fill="transparent"><title>A selbst betreiben, 3.981 Tickets: 9 EUR</title></circle>
+<circle cx="255.0" cy="426.7" r="7" fill="transparent"><title>A selbst betreiben, 4.467 Tickets: 10 EUR</title></circle>
+<circle cx="267.8" cy="425.9" r="7" fill="transparent"><title>A selbst betreiben, 5.000 Tickets: 11 EUR</title></circle>
+<circle cx="268.1" cy="425.9" r="7" fill="transparent"><title>A selbst betreiben, 5.012 Tickets: 11 EUR</title></circle>
+<circle cx="281.2" cy="425.0" r="7" fill="transparent"><title>A selbst betreiben, 5.623 Tickets: 12 EUR</title></circle>
+<circle cx="294.4" cy="424.0" r="7" fill="transparent"><title>A selbst betreiben, 6.310 Tickets: 13 EUR</title></circle>
+<circle cx="307.5" cy="422.8" r="7" fill="transparent"><title>A selbst betreiben, 7.079 Tickets: 14 EUR</title></circle>
+<circle cx="314.1" cy="422.2" r="7" fill="transparent"><title>A selbst betreiben, 7.500 Tickets: 15 EUR</title></circle>
+<circle cx="320.7" cy="421.6" r="7" fill="transparent"><title>A selbst betreiben, 7.943 Tickets: 16 EUR</title></circle>
+<circle cx="333.9" cy="420.1" r="7" fill="transparent"><title>A selbst betreiben, 8.913 Tickets: 17 EUR</title></circle>
+<circle cx="347.0" cy="418.5" r="7" fill="transparent"><title>A selbst betreiben, 10.000 Tickets: 19 EUR</title></circle>
+<circle cx="360.1" cy="416.7" r="7" fill="transparent"><title>A selbst betreiben, 11.220 Tickets: 21 EUR</title></circle>
+<circle cx="373.3" cy="414.7" r="7" fill="transparent"><title>A selbst betreiben, 12.589 Tickets: 23 EUR</title></circle>
+<circle cx="386.4" cy="412.4" r="7" fill="transparent"><title>A selbst betreiben, 14.125 Tickets: 26 EUR</title></circle>
+<circle cx="393.3" cy="411.1" r="7" fill="transparent"><title>A selbst betreiben, 15.000 Tickets: 27 EUR</title></circle>
+<circle cx="399.6" cy="409.9" r="7" fill="transparent"><title>A selbst betreiben, 15.849 Tickets: 28 EUR</title></circle>
+<circle cx="412.8" cy="407.0" r="7" fill="transparent"><title>A selbst betreiben, 17.783 Tickets: 31 EUR</title></circle>
+<circle cx="425.9" cy="403.8" r="7" fill="transparent"><title>A selbst betreiben, 19.953 Tickets: 35 EUR</title></circle>
+<circle cx="426.2" cy="403.7" r="7" fill="transparent"><title>A selbst betreiben, 20.000 Tickets: 35 EUR</title></circle>
+<circle cx="439.0" cy="400.2" r="7" fill="transparent"><title>A selbst betreiben, 22.387 Tickets: 39 EUR</title></circle>
+<circle cx="452.2" cy="396.2" r="7" fill="transparent"><title>A selbst betreiben, 25.119 Tickets: 43 EUR</title></circle>
+<circle cx="465.4" cy="391.7" r="7" fill="transparent"><title>A selbst betreiben, 28.184 Tickets: 48 EUR</title></circle>
+<circle cx="472.5" cy="389.0" r="7" fill="transparent"><title>A selbst betreiben, 30.000 Tickets: 51 EUR</title></circle>
+<circle cx="478.5" cy="386.6" r="7" fill="transparent"><title>A selbst betreiben, 31.623 Tickets: 54 EUR</title></circle>
+<circle cx="491.6" cy="380.9" r="7" fill="transparent"><title>A selbst betreiben, 35.481 Tickets: 60 EUR</title></circle>
+<circle cx="504.8" cy="374.5" r="7" fill="transparent"><title>A selbst betreiben, 39.811 Tickets: 67 EUR</title></circle>
+<circle cx="517.9" cy="367.3" r="7" fill="transparent"><title>A selbst betreiben, 44.668 Tickets: 74 EUR</title></circle>
+<circle cx="530.8" cy="359.4" r="7" fill="transparent"><title>A selbst betreiben, 50.000 Tickets: 83 EUR</title></circle>
+<circle cx="531.1" cy="359.3" r="7" fill="transparent"><title>A selbst betreiben, 50.119 Tickets: 83 EUR</title></circle>
+<circle cx="544.2" cy="350.2" r="7" fill="transparent"><title>A selbst betreiben, 56.234 Tickets: 93 EUR</title></circle>
+<circle cx="557.4" cy="340.1" r="7" fill="transparent"><title>A selbst betreiben, 63.096 Tickets: 104 EUR</title></circle>
+<circle cx="570.6" cy="328.7" r="7" fill="transparent"><title>A selbst betreiben, 70.795 Tickets: 116 EUR</title></circle>
+<circle cx="577.1" cy="322.5" r="7" fill="transparent"><title>A selbst betreiben, 75.000 Tickets: 123 EUR</title></circle>
+<circle cx="583.7" cy="316.0" r="7" fill="transparent"><title>A selbst betreiben, 79.433 Tickets: 130 EUR</title></circle>
+<circle cx="596.8" cy="301.6" r="7" fill="transparent"><title>A selbst betreiben, 89.125 Tickets: 146 EUR</title></circle>
+<circle cx="610.0" cy="285.6" r="7" fill="transparent"><title>A selbst betreiben, 100.000 Tickets: 163 EUR</title></circle>
+<polyline fill="none" stroke="var(--B)" stroke-width="2" stroke-linejoin="round" points="84.0,433.6 97.1,433.3 110.3,433.0 123.5,432.7 136.6,432.3 149.7,431.9 162.9,431.4 163.2,431.4 176.1,430.9 189.2,430.3 202.3,429.7 209.5,429.3 215.5,428.9 228.6,428.1 241.8,427.2 255.0,426.1 267.8,425.0 268.1,424.9 281.2,423.6 294.4,422.2 307.5,420.5 314.1,419.6 320.7,418.7 333.9,416.6 347.0,414.3 360.1,411.6 373.3,408.7 386.4,405.4 393.3,403.5 399.6,401.7 412.8,397.6 425.9,392.9 426.2,392.8 439.0,387.7 452.2,381.8 465.4,375.3 472.5,371.4 478.5,367.9 491.6,359.6 504.8,350.3 517.9,339.9 530.8,328.5 531.1,328.2 544.2,315.1 557.4,300.4 570.6,283.9 577.1,274.9 583.7,265.4 596.8,244.6 610.0,221.3"/>
+<circle cx="84.0" cy="433.6" r="7" fill="transparent"><title>B Intercom Fin, 1.000 Tickets: 3 EUR</title></circle>
+<circle cx="97.1" cy="433.3" r="7" fill="transparent"><title>B Intercom Fin, 1.122 Tickets: 3 EUR</title></circle>
+<circle cx="110.3" cy="433.0" r="7" fill="transparent"><title>B Intercom Fin, 1.259 Tickets: 3 EUR</title></circle>
+<circle cx="123.5" cy="432.7" r="7" fill="transparent"><title>B Intercom Fin, 1.413 Tickets: 4 EUR</title></circle>
+<circle cx="136.6" cy="432.3" r="7" fill="transparent"><title>B Intercom Fin, 1.585 Tickets: 4 EUR</title></circle>
+<circle cx="149.7" cy="431.9" r="7" fill="transparent"><title>B Intercom Fin, 1.778 Tickets: 4 EUR</title></circle>
+<circle cx="162.9" cy="431.4" r="7" fill="transparent"><title>B Intercom Fin, 1.995 Tickets: 5 EUR</title></circle>
+<circle cx="163.2" cy="431.4" r="7" fill="transparent"><title>B Intercom Fin, 2.000 Tickets: 5 EUR</title></circle>
+<circle cx="176.1" cy="430.9" r="7" fill="transparent"><title>B Intercom Fin, 2.239 Tickets: 6 EUR</title></circle>
+<circle cx="189.2" cy="430.3" r="7" fill="transparent"><title>B Intercom Fin, 2.512 Tickets: 6 EUR</title></circle>
+<circle cx="202.3" cy="429.7" r="7" fill="transparent"><title>B Intercom Fin, 2.818 Tickets: 7 EUR</title></circle>
+<circle cx="209.5" cy="429.3" r="7" fill="transparent"><title>B Intercom Fin, 3.000 Tickets: 7 EUR</title></circle>
+<circle cx="215.5" cy="428.9" r="7" fill="transparent"><title>B Intercom Fin, 3.162 Tickets: 8 EUR</title></circle>
+<circle cx="228.6" cy="428.1" r="7" fill="transparent"><title>B Intercom Fin, 3.548 Tickets: 9 EUR</title></circle>
+<circle cx="241.8" cy="427.2" r="7" fill="transparent"><title>B Intercom Fin, 3.981 Tickets: 10 EUR</title></circle>
+<circle cx="255.0" cy="426.1" r="7" fill="transparent"><title>B Intercom Fin, 4.467 Tickets: 11 EUR</title></circle>
+<circle cx="267.8" cy="425.0" r="7" fill="transparent"><title>B Intercom Fin, 5.000 Tickets: 12 EUR</title></circle>
+<circle cx="268.1" cy="424.9" r="7" fill="transparent"><title>B Intercom Fin, 5.012 Tickets: 12 EUR</title></circle>
+<circle cx="281.2" cy="423.6" r="7" fill="transparent"><title>B Intercom Fin, 5.623 Tickets: 13 EUR</title></circle>
+<circle cx="294.4" cy="422.2" r="7" fill="transparent"><title>B Intercom Fin, 6.310 Tickets: 15 EUR</title></circle>
+<circle cx="307.5" cy="420.5" r="7" fill="transparent"><title>B Intercom Fin, 7.079 Tickets: 17 EUR</title></circle>
+<circle cx="314.1" cy="419.6" r="7" fill="transparent"><title>B Intercom Fin, 7.500 Tickets: 18 EUR</title></circle>
+<circle cx="320.7" cy="418.7" r="7" fill="transparent"><title>B Intercom Fin, 7.943 Tickets: 19 EUR</title></circle>
+<circle cx="333.9" cy="416.6" r="7" fill="transparent"><title>B Intercom Fin, 8.913 Tickets: 21 EUR</title></circle>
+<circle cx="347.0" cy="414.3" r="7" fill="transparent"><title>B Intercom Fin, 10.000 Tickets: 24 EUR</title></circle>
+<circle cx="360.1" cy="411.6" r="7" fill="transparent"><title>B Intercom Fin, 11.220 Tickets: 26 EUR</title></circle>
+<circle cx="373.3" cy="408.7" r="7" fill="transparent"><title>B Intercom Fin, 12.589 Tickets: 30 EUR</title></circle>
+<circle cx="386.4" cy="405.4" r="7" fill="transparent"><title>B Intercom Fin, 14.125 Tickets: 33 EUR</title></circle>
+<circle cx="393.3" cy="403.5" r="7" fill="transparent"><title>B Intercom Fin, 15.000 Tickets: 35 EUR</title></circle>
+<circle cx="399.6" cy="401.7" r="7" fill="transparent"><title>B Intercom Fin, 15.849 Tickets: 37 EUR</title></circle>
+<circle cx="412.8" cy="397.6" r="7" fill="transparent"><title>B Intercom Fin, 17.783 Tickets: 42 EUR</title></circle>
+<circle cx="425.9" cy="392.9" r="7" fill="transparent"><title>B Intercom Fin, 19.953 Tickets: 47 EUR</title></circle>
+<circle cx="426.2" cy="392.8" r="7" fill="transparent"><title>B Intercom Fin, 20.000 Tickets: 47 EUR</title></circle>
+<circle cx="439.0" cy="387.7" r="7" fill="transparent"><title>B Intercom Fin, 22.387 Tickets: 52 EUR</title></circle>
+<circle cx="452.2" cy="381.8" r="7" fill="transparent"><title>B Intercom Fin, 25.119 Tickets: 59 EUR</title></circle>
+<circle cx="465.4" cy="375.3" r="7" fill="transparent"><title>B Intercom Fin, 28.184 Tickets: 66 EUR</title></circle>
+<circle cx="472.5" cy="371.4" r="7" fill="transparent"><title>B Intercom Fin, 30.000 Tickets: 70 EUR</title></circle>
+<circle cx="478.5" cy="367.9" r="7" fill="transparent"><title>B Intercom Fin, 31.623 Tickets: 74 EUR</title></circle>
+<circle cx="491.6" cy="359.6" r="7" fill="transparent"><title>B Intercom Fin, 35.481 Tickets: 83 EUR</title></circle>
+<circle cx="504.8" cy="350.3" r="7" fill="transparent"><title>B Intercom Fin, 39.811 Tickets: 93 EUR</title></circle>
+<circle cx="517.9" cy="339.9" r="7" fill="transparent"><title>B Intercom Fin, 44.668 Tickets: 104 EUR</title></circle>
+<circle cx="530.8" cy="328.5" r="7" fill="transparent"><title>B Intercom Fin, 50.000 Tickets: 117 EUR</title></circle>
+<circle cx="531.1" cy="328.2" r="7" fill="transparent"><title>B Intercom Fin, 50.119 Tickets: 117 EUR</title></circle>
+<circle cx="544.2" cy="315.1" r="7" fill="transparent"><title>B Intercom Fin, 56.234 Tickets: 131 EUR</title></circle>
+<circle cx="557.4" cy="300.4" r="7" fill="transparent"><title>B Intercom Fin, 63.096 Tickets: 147 EUR</title></circle>
+<circle cx="570.6" cy="283.9" r="7" fill="transparent"><title>B Intercom Fin, 70.795 Tickets: 165 EUR</title></circle>
+<circle cx="577.1" cy="274.9" r="7" fill="transparent"><title>B Intercom Fin, 75.000 Tickets: 175 EUR</title></circle>
+<circle cx="583.7" cy="265.4" r="7" fill="transparent"><title>B Intercom Fin, 79.433 Tickets: 185 EUR</title></circle>
+<circle cx="596.8" cy="244.6" r="7" fill="transparent"><title>B Intercom Fin, 89.125 Tickets: 208 EUR</title></circle>
+<circle cx="610.0" cy="221.3" r="7" fill="transparent"><title>B Intercom Fin, 100.000 Tickets: 233 EUR</title></circle>
+<polyline fill="none" stroke="var(--C)" stroke-width="2" stroke-linejoin="round" points="84.0,433.6 97.1,433.3 110.3,433.1 123.5,432.8 136.6,432.5 149.7,432.1 162.9,431.7 163.2,431.7 176.1,431.2 189.2,430.7 202.3,430.1 209.5,429.8 215.5,429.5 228.6,428.8 241.8,428.0 255.0,427.0 267.8,426.0 268.1,426.0 281.2,424.9 294.4,423.6 307.5,422.1 314.1,421.3 320.7,420.5 333.9,418.7 347.0,416.6 360.1,414.3 373.3,411.8 386.4,408.9 393.3,407.2 399.6,405.6 412.8,402.0 425.9,397.9 426.2,397.8 439.0,393.3 452.2,388.2 465.4,382.4 472.5,379.0 478.5,376.0 491.6,368.7 504.8,360.6 517.9,351.4 530.8,341.4 531.1,341.2 544.2,329.7 557.4,316.8 570.6,302.3 577.1,294.4 583.7,286.1 596.8,267.8 610.0,247.4"/>
+<circle cx="84.0" cy="433.6" r="7" fill="transparent"><title>C unser Produkt, 1.000 Tickets: 3 EUR</title></circle>
+<circle cx="97.1" cy="433.3" r="7" fill="transparent"><title>C unser Produkt, 1.122 Tickets: 3 EUR</title></circle>
+<circle cx="110.3" cy="433.1" r="7" fill="transparent"><title>C unser Produkt, 1.259 Tickets: 3 EUR</title></circle>
+<circle cx="123.5" cy="432.8" r="7" fill="transparent"><title>C unser Produkt, 1.413 Tickets: 3 EUR</title></circle>
+<circle cx="136.6" cy="432.5" r="7" fill="transparent"><title>C unser Produkt, 1.585 Tickets: 4 EUR</title></circle>
+<circle cx="149.7" cy="432.1" r="7" fill="transparent"><title>C unser Produkt, 1.778 Tickets: 4 EUR</title></circle>
+<circle cx="162.9" cy="431.7" r="7" fill="transparent"><title>C unser Produkt, 1.995 Tickets: 5 EUR</title></circle>
+<circle cx="163.2" cy="431.7" r="7" fill="transparent"><title>C unser Produkt, 2.000 Tickets: 5 EUR</title></circle>
+<circle cx="176.1" cy="431.2" r="7" fill="transparent"><title>C unser Produkt, 2.239 Tickets: 5 EUR</title></circle>
+<circle cx="189.2" cy="430.7" r="7" fill="transparent"><title>C unser Produkt, 2.512 Tickets: 6 EUR</title></circle>
+<circle cx="202.3" cy="430.1" r="7" fill="transparent"><title>C unser Produkt, 2.818 Tickets: 6 EUR</title></circle>
+<circle cx="209.5" cy="429.8" r="7" fill="transparent"><title>C unser Produkt, 3.000 Tickets: 7 EUR</title></circle>
+<circle cx="215.5" cy="429.5" r="7" fill="transparent"><title>C unser Produkt, 3.162 Tickets: 7 EUR</title></circle>
+<circle cx="228.6" cy="428.8" r="7" fill="transparent"><title>C unser Produkt, 3.548 Tickets: 8 EUR</title></circle>
+<circle cx="241.8" cy="428.0" r="7" fill="transparent"><title>C unser Produkt, 3.981 Tickets: 9 EUR</title></circle>
+<circle cx="255.0" cy="427.0" r="7" fill="transparent"><title>C unser Produkt, 4.467 Tickets: 10 EUR</title></circle>
+<circle cx="267.8" cy="426.0" r="7" fill="transparent"><title>C unser Produkt, 5.000 Tickets: 11 EUR</title></circle>
+<circle cx="268.1" cy="426.0" r="7" fill="transparent"><title>C unser Produkt, 5.012 Tickets: 11 EUR</title></circle>
+<circle cx="281.2" cy="424.9" r="7" fill="transparent"><title>C unser Produkt, 5.623 Tickets: 12 EUR</title></circle>
+<circle cx="294.4" cy="423.6" r="7" fill="transparent"><title>C unser Produkt, 6.310 Tickets: 13 EUR</title></circle>
+<circle cx="307.5" cy="422.1" r="7" fill="transparent"><title>C unser Produkt, 7.079 Tickets: 15 EUR</title></circle>
+<circle cx="314.1" cy="421.3" r="7" fill="transparent"><title>C unser Produkt, 7.500 Tickets: 16 EUR</title></circle>
+<circle cx="320.7" cy="420.5" r="7" fill="transparent"><title>C unser Produkt, 7.943 Tickets: 17 EUR</title></circle>
+<circle cx="333.9" cy="418.7" r="7" fill="transparent"><title>C unser Produkt, 8.913 Tickets: 19 EUR</title></circle>
+<circle cx="347.0" cy="416.6" r="7" fill="transparent"><title>C unser Produkt, 10.000 Tickets: 21 EUR</title></circle>
+<circle cx="360.1" cy="414.3" r="7" fill="transparent"><title>C unser Produkt, 11.220 Tickets: 23 EUR</title></circle>
+<circle cx="373.3" cy="411.8" r="7" fill="transparent"><title>C unser Produkt, 12.589 Tickets: 26 EUR</title></circle>
+<circle cx="386.4" cy="408.9" r="7" fill="transparent"><title>C unser Produkt, 14.125 Tickets: 29 EUR</title></circle>
+<circle cx="393.3" cy="407.2" r="7" fill="transparent"><title>C unser Produkt, 15.000 Tickets: 31 EUR</title></circle>
+<circle cx="399.6" cy="405.6" r="7" fill="transparent"><title>C unser Produkt, 15.849 Tickets: 33 EUR</title></circle>
+<circle cx="412.8" cy="402.0" r="7" fill="transparent"><title>C unser Produkt, 17.783 Tickets: 37 EUR</title></circle>
+<circle cx="425.9" cy="397.9" r="7" fill="transparent"><title>C unser Produkt, 19.953 Tickets: 41 EUR</title></circle>
+<circle cx="426.2" cy="397.8" r="7" fill="transparent"><title>C unser Produkt, 20.000 Tickets: 41 EUR</title></circle>
+<circle cx="439.0" cy="393.3" r="7" fill="transparent"><title>C unser Produkt, 22.387 Tickets: 46 EUR</title></circle>
+<circle cx="452.2" cy="388.2" r="7" fill="transparent"><title>C unser Produkt, 25.119 Tickets: 52 EUR</title></circle>
+<circle cx="465.4" cy="382.4" r="7" fill="transparent"><title>C unser Produkt, 28.184 Tickets: 58 EUR</title></circle>
+<circle cx="472.5" cy="379.0" r="7" fill="transparent"><title>C unser Produkt, 30.000 Tickets: 62 EUR</title></circle>
+<circle cx="478.5" cy="376.0" r="7" fill="transparent"><title>C unser Produkt, 31.623 Tickets: 65 EUR</title></circle>
+<circle cx="491.6" cy="368.7" r="7" fill="transparent"><title>C unser Produkt, 35.481 Tickets: 73 EUR</title></circle>
+<circle cx="504.8" cy="360.6" r="7" fill="transparent"><title>C unser Produkt, 39.811 Tickets: 82 EUR</title></circle>
+<circle cx="517.9" cy="351.4" r="7" fill="transparent"><title>C unser Produkt, 44.668 Tickets: 92 EUR</title></circle>
+<circle cx="530.8" cy="341.4" r="7" fill="transparent"><title>C unser Produkt, 50.000 Tickets: 103 EUR</title></circle>
+<circle cx="531.1" cy="341.2" r="7" fill="transparent"><title>C unser Produkt, 50.119 Tickets: 103 EUR</title></circle>
+<circle cx="544.2" cy="329.7" r="7" fill="transparent"><title>C unser Produkt, 56.234 Tickets: 115 EUR</title></circle>
+<circle cx="557.4" cy="316.8" r="7" fill="transparent"><title>C unser Produkt, 63.096 Tickets: 129 EUR</title></circle>
+<circle cx="570.6" cy="302.3" r="7" fill="transparent"><title>C unser Produkt, 70.795 Tickets: 145 EUR</title></circle>
+<circle cx="577.1" cy="294.4" r="7" fill="transparent"><title>C unser Produkt, 75.000 Tickets: 154 EUR</title></circle>
+<circle cx="583.7" cy="286.1" r="7" fill="transparent"><title>C unser Produkt, 79.433 Tickets: 163 EUR</title></circle>
+<circle cx="596.8" cy="267.8" r="7" fill="transparent"><title>C unser Produkt, 89.125 Tickets: 182 EUR</title></circle>
+<circle cx="610.0" cy="247.4" r="7" fill="transparent"><title>C unser Produkt, 100.000 Tickets: 205 EUR</title></circle>
+<polyline fill="none" stroke="var(--D)" stroke-width="2" stroke-linejoin="round" points="84.0,432.8 97.1,432.5 110.3,432.0 123.5,431.6 136.6,431.0 149.7,430.5 162.9,429.8 163.2,429.8 176.1,429.0 189.2,428.2 202.3,427.3 209.5,426.7 215.5,426.2 228.6,425.0 241.8,423.7 255.0,422.2 267.8,420.6 268.1,420.6 281.2,418.7 294.4,416.6 307.5,414.2 314.1,413.0 320.7,411.6 333.9,408.6 347.0,405.3 360.1,401.6 373.3,397.4 386.4,392.7 393.3,390.0 399.6,387.4 412.8,381.5 425.9,374.9 426.2,374.7 439.0,367.4 452.2,359.1 465.4,349.7 472.5,344.1 478.5,339.2 491.6,327.4 504.8,314.1 517.9,299.3 530.8,283.0 531.1,282.6 544.2,263.9 557.4,242.9 570.6,219.4 577.1,206.5 583.7,193.0 596.8,163.3 610.0,130.1"/>
+<circle cx="84.0" cy="432.8" r="7" fill="transparent"><title>D nur Klassifikation, 1.000 Tickets: 3 EUR</title></circle>
+<circle cx="97.1" cy="432.5" r="7" fill="transparent"><title>D nur Klassifikation, 1.122 Tickets: 4 EUR</title></circle>
+<circle cx="110.3" cy="432.0" r="7" fill="transparent"><title>D nur Klassifikation, 1.259 Tickets: 4 EUR</title></circle>
+<circle cx="123.5" cy="431.6" r="7" fill="transparent"><title>D nur Klassifikation, 1.413 Tickets: 5 EUR</title></circle>
+<circle cx="136.6" cy="431.0" r="7" fill="transparent"><title>D nur Klassifikation, 1.585 Tickets: 5 EUR</title></circle>
+<circle cx="149.7" cy="430.5" r="7" fill="transparent"><title>D nur Klassifikation, 1.778 Tickets: 6 EUR</title></circle>
+<circle cx="162.9" cy="429.8" r="7" fill="transparent"><title>D nur Klassifikation, 1.995 Tickets: 7 EUR</title></circle>
+<circle cx="163.2" cy="429.8" r="7" fill="transparent"><title>D nur Klassifikation, 2.000 Tickets: 7 EUR</title></circle>
+<circle cx="176.1" cy="429.0" r="7" fill="transparent"><title>D nur Klassifikation, 2.239 Tickets: 8 EUR</title></circle>
+<circle cx="189.2" cy="428.2" r="7" fill="transparent"><title>D nur Klassifikation, 2.512 Tickets: 8 EUR</title></circle>
+<circle cx="202.3" cy="427.3" r="7" fill="transparent"><title>D nur Klassifikation, 2.818 Tickets: 9 EUR</title></circle>
+<circle cx="209.5" cy="426.7" r="7" fill="transparent"><title>D nur Klassifikation, 3.000 Tickets: 10 EUR</title></circle>
+<circle cx="215.5" cy="426.2" r="7" fill="transparent"><title>D nur Klassifikation, 3.162 Tickets: 11 EUR</title></circle>
+<circle cx="228.6" cy="425.0" r="7" fill="transparent"><title>D nur Klassifikation, 3.548 Tickets: 12 EUR</title></circle>
+<circle cx="241.8" cy="423.7" r="7" fill="transparent"><title>D nur Klassifikation, 3.981 Tickets: 13 EUR</title></circle>
+<circle cx="255.0" cy="422.2" r="7" fill="transparent"><title>D nur Klassifikation, 4.467 Tickets: 15 EUR</title></circle>
+<circle cx="267.8" cy="420.6" r="7" fill="transparent"><title>D nur Klassifikation, 5.000 Tickets: 17 EUR</title></circle>
+<circle cx="268.1" cy="420.6" r="7" fill="transparent"><title>D nur Klassifikation, 5.012 Tickets: 17 EUR</title></circle>
+<circle cx="281.2" cy="418.7" r="7" fill="transparent"><title>D nur Klassifikation, 5.623 Tickets: 19 EUR</title></circle>
+<circle cx="294.4" cy="416.6" r="7" fill="transparent"><title>D nur Klassifikation, 6.310 Tickets: 21 EUR</title></circle>
+<circle cx="307.5" cy="414.2" r="7" fill="transparent"><title>D nur Klassifikation, 7.079 Tickets: 24 EUR</title></circle>
+<circle cx="314.1" cy="413.0" r="7" fill="transparent"><title>D nur Klassifikation, 7.500 Tickets: 25 EUR</title></circle>
+<circle cx="320.7" cy="411.6" r="7" fill="transparent"><title>D nur Klassifikation, 7.943 Tickets: 26 EUR</title></circle>
+<circle cx="333.9" cy="408.6" r="7" fill="transparent"><title>D nur Klassifikation, 8.913 Tickets: 30 EUR</title></circle>
+<circle cx="347.0" cy="405.3" r="7" fill="transparent"><title>D nur Klassifikation, 10.000 Tickets: 33 EUR</title></circle>
+<circle cx="360.1" cy="401.6" r="7" fill="transparent"><title>D nur Klassifikation, 11.220 Tickets: 37 EUR</title></circle>
+<circle cx="373.3" cy="397.4" r="7" fill="transparent"><title>D nur Klassifikation, 12.589 Tickets: 42 EUR</title></circle>
+<circle cx="386.4" cy="392.7" r="7" fill="transparent"><title>D nur Klassifikation, 14.125 Tickets: 47 EUR</title></circle>
+<circle cx="393.3" cy="390.0" r="7" fill="transparent"><title>D nur Klassifikation, 15.000 Tickets: 50 EUR</title></circle>
+<circle cx="399.6" cy="387.4" r="7" fill="transparent"><title>D nur Klassifikation, 15.849 Tickets: 53 EUR</title></circle>
+<circle cx="412.8" cy="381.5" r="7" fill="transparent"><title>D nur Klassifikation, 17.783 Tickets: 59 EUR</title></circle>
+<circle cx="425.9" cy="374.9" r="7" fill="transparent"><title>D nur Klassifikation, 19.953 Tickets: 66 EUR</title></circle>
+<circle cx="426.2" cy="374.7" r="7" fill="transparent"><title>D nur Klassifikation, 20.000 Tickets: 66 EUR</title></circle>
+<circle cx="439.0" cy="367.4" r="7" fill="transparent"><title>D nur Klassifikation, 22.387 Tickets: 74 EUR</title></circle>
+<circle cx="452.2" cy="359.1" r="7" fill="transparent"><title>D nur Klassifikation, 25.119 Tickets: 83 EUR</title></circle>
+<circle cx="465.4" cy="349.7" r="7" fill="transparent"><title>D nur Klassifikation, 28.184 Tickets: 94 EUR</title></circle>
+<circle cx="472.5" cy="344.1" r="7" fill="transparent"><title>D nur Klassifikation, 30.000 Tickets: 100 EUR</title></circle>
+<circle cx="478.5" cy="339.2" r="7" fill="transparent"><title>D nur Klassifikation, 31.623 Tickets: 105 EUR</title></circle>
+<circle cx="491.6" cy="327.4" r="7" fill="transparent"><title>D nur Klassifikation, 35.481 Tickets: 118 EUR</title></circle>
+<circle cx="504.8" cy="314.1" r="7" fill="transparent"><title>D nur Klassifikation, 39.811 Tickets: 132 EUR</title></circle>
+<circle cx="517.9" cy="299.3" r="7" fill="transparent"><title>D nur Klassifikation, 44.668 Tickets: 148 EUR</title></circle>
+<circle cx="530.8" cy="283.0" r="7" fill="transparent"><title>D nur Klassifikation, 50.000 Tickets: 166 EUR</title></circle>
+<circle cx="531.1" cy="282.6" r="7" fill="transparent"><title>D nur Klassifikation, 50.119 Tickets: 166 EUR</title></circle>
+<circle cx="544.2" cy="263.9" r="7" fill="transparent"><title>D nur Klassifikation, 56.234 Tickets: 187 EUR</title></circle>
+<circle cx="557.4" cy="242.9" r="7" fill="transparent"><title>D nur Klassifikation, 63.096 Tickets: 209 EUR</title></circle>
+<circle cx="570.6" cy="219.4" r="7" fill="transparent"><title>D nur Klassifikation, 70.795 Tickets: 235 EUR</title></circle>
+<circle cx="577.1" cy="206.5" r="7" fill="transparent"><title>D nur Klassifikation, 75.000 Tickets: 249 EUR</title></circle>
+<circle cx="583.7" cy="193.0" r="7" fill="transparent"><title>D nur Klassifikation, 79.433 Tickets: 264 EUR</title></circle>
+<circle cx="596.8" cy="163.3" r="7" fill="transparent"><title>D nur Klassifikation, 89.125 Tickets: 296 EUR</title></circle>
+<circle cx="610.0" cy="130.1" r="7" fill="transparent"><title>D nur Klassifikation, 100.000 Tickets: 332 EUR</title></circle>
+<text x="618" y="289.6" class="t1">A selbst betreiben</text>
+<text x="618" y="251.4" class="t1">C unser Produkt</text>
+<text x="618" y="225.3" class="t1">B Intercom Fin</text>
+<text x="618" y="134.1" class="t1">D nur Klassifikation</text>
+</svg>

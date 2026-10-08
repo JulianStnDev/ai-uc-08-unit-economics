@@ -2,7 +2,7 @@
 
 # UC8: Unit Economics, Pricing & Build-vs-Buy
 
-> Stand 2026-10-08: Zahleninventur ([docs/INVENTUR.md](docs/INVENTUR.md)) und Kostenmodell ([evals/modell.md](evals/modell.md), Rechenweg: [docs/RECHENWEG.md](docs/RECHENWEG.md)). Pricing: [evals/pricing.md](evals/pricing.md), Rechenweg [docs/RECHENWEG_PRICING.md](docs/RECHENWEG_PRICING.md). Build-vs-Buy folgt.
+> Stand 2026-10-08: Zahleninventur ([docs/INVENTUR.md](docs/INVENTUR.md)) und Kostenmodell ([evals/modell.md](evals/modell.md), Rechenweg: [docs/RECHENWEG.md](docs/RECHENWEG.md)). Pricing: [evals/pricing.md](evals/pricing.md), Rechenweg [docs/RECHENWEG_PRICING.md](docs/RECHENWEG_PRICING.md). Build vs. Buy: [evals/build_buy.md](evals/build_buy.md), Rechenweg [docs/RECHENWEG_BUILD_BUY.md](docs/RECHENWEG_BUILD_BUY.md).
 
 ## Problem
 Der Support-Agent aus UC4/UC7 läuft als Web-Demo auf Cloud Run. Offen ist die Produktfrage dahinter: **Was kostet ein Support-Ticket mit dem Agent im Vergleich zu einem Ticket, das komplett ein Mensch bearbeitet?** Und daraus folgend: Wie ließe sich das bepreisen, und lohnt sich der Eigenbau gegenüber einem eingekauften Produkt?
@@ -58,6 +58,10 @@ Pricing aus Anbieter-Sicht (10.000 Tickets je Kunde und Monat). Untergrenze = un
 ![Preiskorridor je Kundentyp](docs/korridor.svg)
 
 Intercom Fin (0,99 USD je Outcome, geprüft auf intercom.com) liegt beim mittleren Kunden bei 52 % unseres Korridors je gelöstem Ticket. Entschieden: **450 EUR je Monat + 0,75 EUR je gelöstem Ticket** (ohne Übergabe, nicht innerhalb von 7 Tagen wieder geöffnet). Das ergibt beim mittleren Kunden 85,8 % Marge, der Kunde behält 73,9 % seiner Ersparnis. Verlust erst unter 3,7 % Lösungsquote ([docs/decisions.md](docs/decisions.md)). Bei Abrechnung pro Sitz kostet ein Stellenabbau von 30 % im zweiten Jahr den Anbieter 30 % des Umsatzes, obwohl die Ticketmenge gleich bleibt.
+
+Build vs. Buy aus Sicht des Käufers (A selbst betreiben, B Intercom Fin, C unser Produkt, D nur Klassifikation): Selbst betreiben lohnt sich gegenüber Fin ab etwa 3.600 Tickets im Monat, gegenüber unserem Produkt ab etwa 5.400. Darunter ist C am günstigsten. Der Kipppunkt hängt vor allem am laufenden Aufwand für A (21 bis 100 h je Monat, Annahme).
+
+![Selbst betreiben gegen Kaufen](docs/build_buy_differenz.svg)
 
 ## Kosten & Latenz
 - Kosten pro 1000 Requests: 1.601,85 EUR je 1.000 Tickets mit Agent (Szenario mittel, inklusive Personal), davon Tokens 32,09 USD
