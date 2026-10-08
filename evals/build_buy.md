@@ -17,7 +17,9 @@ Erzeugt von `scripts/build_buy.py` aus `data/annahmen.csv`. Alle Annahmen auf �
 
 Zum Stundensatz von 58,50 EUR: 2.632 EUR je Monat (mittel), Spanne 1.228 bis 5.850 EUR.
 
-## Eigene Bauzeit (grobe Näherung aus der Git-Historie)
+## Bisherige Bauzeit: versunken, nicht entscheidungsrelevant
+
+Entscheidung 08.10.: Was schon gebaut ist, fällt für die Entscheidung weg. Neu drin ist nur der verbleibende Aufwand vom Prototyp zur Produktion: 80 h (Annahme, Spanne 40–160 h) × 58,50 EUR / 24 Monate = 195,00 EUR je Monat. Zur Einordnung die bisherige Bauzeit:
 
 | Repo | Zeitraum | Commits ohne Merges | aktive Tage (mit Commit) |
 |---|---|---|---|
@@ -26,13 +28,13 @@ Zum Stundensatz von 58,50 EUR: 2.632 EUR je Monat (mittel), Spanne 1.228 bis 5.8
 | UC7 Deployment | 28.09.–02.10.2026 | 28 | 4 |
 | **Summe** | 24.09.–08.10.2026 | **51** | **8** |
 
-8 Tage × 8 h × Faktor 2 (Demo → Produktion) = **128 h**, auf 24 Monate verteilt 312 EUR je Monat. Ausdrücklich grob: Commits sind gebündelt (UC4: 7 von 8 Commits an einem Tag), Arbeit ohne Commit fehlt, und gebaut hat eine Person mit Claude Code an erfundenen Kundendaten. UC5 (Text-to-SQL) ist kein Agent und nicht gezählt.
+Bisher: 8 Tage × 8 h = 64 h. In der ersten Fassung dieser Rechnung stand dafür mit Faktor 2 (Demo → Produktion) 128 h, verteilt 312 EUR je Monat; das ist jetzt ersetzt. Ausdrücklich grob: Commits sind gebündelt (UC4: 7 von 8 Commits an einem Tag), Arbeit ohne Commit fehlt, und gebaut hat eine Person mit Claude Code an erfundenen Kundendaten. UC5 (Text-to-SQL) ist kein Agent und nicht gezählt.
 
 ## Kosten je Monat bei 10.000 Tickets (EUR)
 
 | Option | Technik und Gebühren | interner Aufwand | Personal an Tickets | **gesamt** |
 |---|---|---|---|---|
-| A selbst betreiben | 300,94 | 2.944,50 | 15.717,52 | **18.962,96** |
+| A selbst betreiben | 300,94 | 2.827,50 | 15.717,52 | **18.845,96** |
 | B Intercom Fin | 7.528,85 | 331,50 | 15.717,52 | **23.577,87** |
 | C unser Produkt | 5.122,50 | 156,00 | 15.717,52 | **20.996,02** |
 | D nur Klassifikation | 12,26 | 117,00 | 33.150,00 | **33.279,26** |
@@ -43,30 +45,33 @@ B: 8.500 Outcomes (alle nicht übergebenen Tickets, weil Fin auch „assumed res
 
 | Tickets je Monat | A selbst betreiben | B Intercom Fin | C unser Produkt | D nur Klassifikation | günstigste |
 |---|---|---|---|---|---|
-| 1.000 | 4.549 | 2.656 | 2.645 | 3.433 | C |
-| 2.000 | 6.150 | 4.981 | 4.684 | 6.749 | C |
-| 3.000 | 7.752 | 7.305 | 6.723 | 10.066 | C |
-| 5.000 | 10.955 | 11.955 | 10.801 | 16.698 | C |
-| 7.500 | 14.959 | 17.766 | 15.899 | 24.989 | A |
-| 10.000 | 18.963 | 23.578 | 20.996 | 33.279 | A |
-| 15.000 | 26.971 | 35.201 | 31.191 | 49.860 | A |
-| 20.000 | 34.979 | 46.824 | 41.386 | 66.442 | A |
-| 30.000 | 50.995 | 70.071 | 61.776 | 99.604 | A |
-| 50.000 | 83.026 | 116.563 | 102.556 | 165.928 | A |
-| 75.000 | 123.066 | 174.679 | 153.531 | 248.834 | A |
-| 100.000 | 163.105 | 232.795 | 204.506 | 331.740 | A |
+| 1.000 | 4.432 | 2.656 | 2.645 | 3.433 | C |
+| 2.000 | 6.033 | 4.981 | 4.684 | 6.749 | C |
+| 3.000 | 7.635 | 7.305 | 6.723 | 10.066 | C |
+| 5.000 | 10.838 | 11.955 | 10.801 | 16.698 | C |
+| 7.500 | 14.842 | 17.766 | 15.899 | 24.989 | A |
+| 10.000 | 18.846 | 23.578 | 20.996 | 33.279 | A |
+| 15.000 | 26.854 | 35.201 | 31.191 | 49.860 | A |
+| 20.000 | 34.862 | 46.824 | 41.386 | 66.442 | A |
+| 30.000 | 50.878 | 70.071 | 61.776 | 99.604 | A |
+| 50.000 | 82.909 | 116.563 | 102.556 | 165.928 | A |
+| 75.000 | 122.949 | 174.679 | 153.531 | 248.834 | A |
+| 100.000 | 162.988 | 232.795 | 204.506 | 331.740 | A |
 
-**A wird günstiger als B ab 3.618 Tickets je Monat, günstiger als C ab 5.352 Tickets je Monat.** Die Personal-Minuten sind bei A und C gleich (derselbe Agent), bei B nur unter der Annahme gleicher Übergabequote. Der Kipppunkt entsteht deshalb aus Fixkosten (Betrieb von A) gegen Stückpreis (B, C).
+**A wird günstiger als B ab 3.456 Tickets je Monat, günstiger als C ab 5.085 Tickets je Monat.** Die Personal-Minuten sind bei A und C gleich (derselbe Agent), bei B nur unter der Annahme gleicher Übergabequote. Der Kipppunkt entsteht deshalb aus Fixkosten (Betrieb von A) gegen Stückpreis (B, C).
 
 Wie stark der Kipppunkt am TCO von A hängt:
 
-| TCO-Stunden für A | Stunden je Monat | A günstiger als B ab | A günstiger als C ab |
+| Pflegeaufwand für A | Stunden je Monat | A günstiger als B ab | A günstiger als C ab |
 |---|---|---|---|
-| niedrig | 21 | 1.676 | 2.142 |
-| mittel | 45 | 3.618 | 5.352 |
-| hoch | 100 | 8.067 | 12.708 |
+| niedrig | 21 | 1.514 | 1.875 |
+| mittel | 45 | 3.456 | 5.085 |
+| hoch | 100 | 7.906 | 12.440 |
 
-Fins Übergabequote (Annahme) verschiebt A gegen B stark, weil jede Übergabe Menschenzeit kostet: Bei 20 % statt 30 % ist A erst ab 6.113 Tickets günstiger, bei 40 % schon ab 2.569.
+Restaufwand zur Produktion (Annahme), A günstiger als C: 40 h → ab 4.862 · 80 h → ab 5.085 · 160 h → ab 5.531 Tickets je Monat. Er verschiebt den Kipppunkt weit weniger als der laufende Pflegeaufwand.
+
+
+Fins Übergabequote (Annahme) verschiebt A gegen B stark, weil jede Übergabe Menschenzeit kostet: Bei 20 % statt 30 % ist A erst ab 5.840 Tickets günstiger, bei 40 % schon ab 2.454.
 
 ## Qualitative Kriterien
 

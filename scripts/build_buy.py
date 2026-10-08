@@ -45,9 +45,9 @@ def kosten(e: dict, menge: int) -> dict:
     out = {}
     # A: selbst betreiben
     tco_h = sum(e[t] for t in TCO)
-    bau_h = e["bau_tage"] * e["bau_h_je_tag"] * e["faktor_produktion"]
+    bau_h = e["bau_tage"] * e["bau_h_je_tag"] * e["faktor_produktion"]  # versunken, nur zur Einordnung
     out["A"] = {"technik": menge * (p["tokens"] + p["hosting_variabel"]) + e["hosting_fix"] + e["neon_fix"],
-                "intern": tco_h * satz + bau_h * satz / e["abschreibung_monate"],
+                "intern": tco_h * satz + e["produktion_rest_h"] * satz / e["abschreibung_monate"],
                 "personal": personal(e, menge), "tco_h": tco_h, "bau_h": bau_h}
     # B: Fin neben dem eigenen Helpdesk
     q_u = e["fin_uebergabe"]
@@ -169,13 +169,17 @@ def main():
               f"Spanne {eur(summe['niedrig'] * e['stundensatz_intern'], 0)} bis {eur(summe['hoch'] * e['stundensatz_intern'], 0)} EUR.\n")
 
     k10 = kosten(e, 10_000)
-    md.append("## Eigene Bauzeit (grobe Näherung aus der Git-Historie)\n")
+    md.append("## Bisherige Bauzeit: versunken, nicht entscheidungsrelevant\n")
+    md.append(f"Entscheidung 08.10.: Was schon gebaut ist, fällt für die Entscheidung weg. Neu drin ist nur der verbleibende Aufwand "
+              f"vom Prototyp zur Produktion: {eur(e['produktion_rest_h'], 0)} h (Annahme, Spanne {eur(wert('produktion_rest_h', 'niedrig'), 0)}–"
+              f"{eur(wert('produktion_rest_h', 'hoch'), 0)} h) × {eur(e['stundensatz_intern'])} EUR / {eur(e['abschreibung_monate'], 0)} Monate = "
+              f"{eur(e['produktion_rest_h'] * e['stundensatz_intern'] / e['abschreibung_monate'], 2)} EUR je Monat. Zur Einordnung die bisherige Bauzeit:\n")
     md.append("| Repo | Zeitraum | Commits ohne Merges | aktive Tage (mit Commit) |\n|---|---|---|---|")
     md += ["| UC4 Agents/MCP | 24.09.–30.09.2026 | 8 | 2 |", "| UC6 Prompt Injection | 02.10.–08.10.2026 | 15 | 2 |",
            "| UC7 Deployment | 28.09.–02.10.2026 | 28 | 4 |", "| **Summe** | 24.09.–08.10.2026 | **51** | **8** |"]
-    md.append(f"\n{eur(e['bau_tage'], 0)} Tage × {eur(e['bau_h_je_tag'], 0)} h × Faktor {eur(e['faktor_produktion'], 0)} (Demo → Produktion) "
-              f"= **{eur(k10['A']['bau_h'], 0)} h**, auf {eur(e['abschreibung_monate'], 0)} Monate verteilt "
-              f"{eur(k10['A']['bau_h'] * e['stundensatz_intern'] / e['abschreibung_monate'], 0)} EUR je Monat. "
+    md.append(f"\nBisher: {eur(e['bau_tage'], 0)} Tage × {eur(e['bau_h_je_tag'], 0)} h = {eur(e['bau_tage'] * e['bau_h_je_tag'], 0)} h. "
+              f"In der ersten Fassung dieser Rechnung stand dafür mit Faktor 2 (Demo → Produktion) {eur(k10['A']['bau_h'], 0)} h, "
+              f"verteilt {eur(k10['A']['bau_h'] * e['stundensatz_intern'] / e['abschreibung_monate'], 0)} EUR je Monat; das ist jetzt ersetzt. "
               "Ausdrücklich grob: Commits sind gebündelt (UC4: 7 von 8 Commits an einem Tag), Arbeit ohne Commit fehlt, "
               "und gebaut hat eine Person mit Claude Code an erfundenen Kundendaten. UC5 (Text-to-SQL) ist kein Agent und "
               "nicht gezählt.\n")
@@ -204,10 +208,14 @@ def main():
               "Die Personal-Minuten sind bei A und C gleich (derselbe Agent), bei B nur unter der Annahme gleicher Übergabequote. "
               "Der Kipppunkt entsteht deshalb aus Fixkosten (Betrieb von A) gegen Stückpreis (B, C).\n")
     md.append("Wie stark der Kipppunkt am TCO von A hängt:\n")
-    md.append("| TCO-Stunden für A | Stunden je Monat | A günstiger als B ab | A günstiger als C ab |\n|---|---|---|---|")
+    md.append("| Pflegeaufwand für A | Stunden je Monat | A günstiger als B ab | A günstiger als C ab |\n|---|---|---|---|")
     for s in ("niedrig", "mittel", "hoch"):
         es = basis(s)
         md.append(f"| {s} | {eur(summe[s], 0)} | {eur(kipppunkt(es, 'A', 'B'), 0)} | {eur(kipppunkt(es, 'A', 'C'), 0)} |")
+    rest = " · ".join(f"{eur(wert('produktion_rest_h', st), 0)} h → ab {eur(kipppunkt({**e, 'produktion_rest_h': wert('produktion_rest_h', st)}, 'A', 'C'), 0)}"
+                      for st in ("niedrig", "mittel", "hoch"))
+    md.append(f"\nRestaufwand zur Produktion (Annahme), A günstiger als C: {rest} Tickets je Monat. "
+              "Er verschiebt den Kipppunkt weit weniger als der laufende Pflegeaufwand.\n")
     eb = {**e, "fin_uebergabe": wert("fin_uebergabe", "niedrig")}
     eb2 = {**e, "fin_uebergabe": wert("fin_uebergabe", "hoch")}
     md.append(f"\nFins Übergabequote (Annahme) verschiebt A gegen B stark, weil jede Übergabe Menschenzeit kostet: "
