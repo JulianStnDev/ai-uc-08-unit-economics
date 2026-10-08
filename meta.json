@@ -1,6 +1,6 @@
 {
   "title": "Unit Economics, Pricing & Build-vs-Buy",
-  "status": "active",
+  "status": "done",
   "tags": [
     "unit-economics",
     "pricing",
@@ -8,6 +8,10 @@
     "decision-memo",
     "agents"
   ],
-  "summary": "A decision memo on what a support ticket costs with the UC7 agent compared with a ticket handled entirely by a human, built on measured runs instead of assumptions.",
-  "metrics": []
+  "summary": "A decision memo on what a support ticket costs with the UC7 agent, how to price it and when running it yourself beats buying, built on measured runs instead of assumptions where possible.",
+  "metrics": [
+    "Tokens are 2 % of the cost per ticket – handoffs drive the business case",
+    "Build pays off above ~5,000 tickets/month – driven by one unsourced assumption"
+  ],
+  "screenshot": "docs/build_buy_differenz.svg"
 }

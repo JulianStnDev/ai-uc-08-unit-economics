@@ -159,3 +159,39 @@ Absicherung:
 - Design-Partner-Pilot im Schattenmodus. Die Lösungsquote wird am echten Ticketmix gemessen, bevor abgerechnet wird.
 - Preisanpassungsklausel nach 3 Monaten.
 - Keine langfristigen Verträge zum Pilotpreis.
+
+## 2026-10-08: Regeln für Build vs. Buy (Käufer-Sicht FocusFlow)
+
+Kontext: FocusFlow braucht einen Support-Agent. Verglichen werden A selbst betreiben (UC7-Agent), B Intercom Fin, C unser Produkt (450 EUR + 0,75 EUR je gelöstem Ticket) und D nur Klassifikation (UC1) plus Menschen. Rechnung in `scripts/build_buy.py`, Ergebnisse in [evals/build_buy.md](../evals/build_buy.md).
+
+- **Nur entscheidungsrelevante Kosten:** Menschliche Grundlast, die in jeder Option gleich ist (Teamleitung, Helpdesk-Lizenzen für Menschen, Schulung), fehlt. Drin sind die Minuten, die Menschen je Option an Tickets arbeiten (Freigabe, Übergabe, Nacharbeit, bei D jedes Ticket). Sie unterscheiden sich zwischen den Optionen.
+- **TCO für A** als laufender Aufwand in sieben Aufgaben aus UC2, UC4, UC6 und UC7: 21 / 45 / 100 h je Monat. Das sind alles Annahmen ohne Quelle, mit Bezug auf das, was in den Repos tatsächlich nötig war.
+- **Bauzeit A grob aus der Git-Historie:** UC4, UC6 und UC7 haben zusammen 51 Commits ohne Merges an 8 aktiven Repo-Tagen (24.09.–08.10.2026). Daraus 8 Tage × 8 h × Faktor 2 (Demo → Produktion) = 128 h, auf 24 Monate verteilt. Ausdrücklich eine grobe Näherung: Die Commits sind gebündelt, gebaut hat eine Person mit Claude Code an erfundenen Daten.
+- **B Fin** laut Primärquelle (intercom.com/pricing, 08.10.2026) neben dem eigenen Helpdesk: 0,99 USD je Outcome, Mindestabnahme etwa 50 Outcomes, „No seat costs“, „No setup, integration, or platform fees“. Sitzpreise (29 / 85 / 132 USD je Sitz und Monat) gelten nur für die Intercom-Suite und sind nicht modelliert. Abgerechnet werden alle nicht übergebenen Tickets, weil auch „assumed resolutions“ zählen, plus 50 % der Übergaben als Procedure Handoff (Annahme). Die Übergabequote von Fin ist unbekannt, als Annahme 20 / 30 / 40 %. Die Nacharbeit ist wie bei uns angesetzt.
+- **Interner Aufwand beim Käufer für B und C** (Einrichtung und laufend) ist als Annahme drin. Bei C ist er kleiner, weil wir einrichten.
+- **D:** Klassifikation 1,37 USD je 1.000 Tickets (UC1). Sie spart je Ticket 0,5 min (Annahme), dazu kommen 2 h Betrieb je Monat.
+
+## 2026-10-08: Entscheidung FocusFlow: A, selbst betreiben
+
+Entscheidung (Julian): FocusFlow betreibt den Support-Agent selbst (Option A).
+
+Begründung:
+- **Künftige Kosten, nicht versunkene.** Was in UC4, UC6 und UC7 schon gebaut ist, zählt nicht mehr (vorher 312 EUR/Monat in der Rechnung). Neu drin ist nur der verbleibende Aufwand vom Prototyp zur Produktion: echte Kundendaten und echtes Zahlungssystem anbinden, Datenschutz. Das sind 80 h als Annahme (Spanne 40–160 h), verteilt auf 24 Monate = 195 EUR/Monat.
+- **Bei 10.000 Tickets im Monat ist A am günstigsten:** 18.846 EUR gegen 20.996 EUR (C, unser Produkt) und 23.578 EUR (B, Fin). Das gilt erst ab dem Kipppunkt: A ist günstiger als C ab 5.085 Tickets im Monat, günstiger als B ab 3.456. Darunter wäre C die bessere Wahl.
+- **Daten bleiben unter eigener Kontrolle.** Tickets und Kundendaten gehen an den Modellanbieter (Anthropic) und an den eigenen Hoster (Google Cloud Run, Neon, beide Frankfurt), nicht zusätzlich an einen SaaS-Anbieter (Intercom oder uns). Ganz im Haus bleiben sie also nicht. Speicherort, Löschung und Protokoll bestimmt FocusFlow aber selbst.
+
+Trigger, neu zu entscheiden:
+1. Die Vollkosten von A liegen **drei Monate in Folge** über dem Angebot von C.
+2. Der Pflegeaufwand liegt **dauerhaft über 45 h je Monat**, gemessen als Durchschnitt über drei Monate.
+
+Was dafür jeden Monat gemessen wird:
+
+| Größe | Wie | Wofür |
+|---|---|---|
+| Manntage je Monat | Zeiterfassung je Pflegeaufgabe (Goldset/Evals, Judge, Sicherheit, Betrieb inkl. Bereitschaft, Modell-Updates, Datenschutz, Regeln) | Trigger 2; Pflegeaufwand × Tagessatz für Trigger 1 |
+| Tagessatz | interner Kostensatz (heute 58,50 EUR/h × 8 h = 468 EUR/Tag), einmal im Jahr prüfen | Trigger 1 |
+| Betrieb | Abrechnung Cloud Run und Neon | Trigger 1 |
+| Tokens | Anthropic-Abrechnung, gegengeprüft mit den Kosten im Protokoll (UC7 `laeufe.kosten_usd`, `antworten`, `pruefungen`) | Trigger 1 |
+| Gelöste Tickets | ohne Übergabe und nicht innerhalb von 7 Tagen wieder geöffnet | Vergleichswert C = 450 EUR + 0,75 EUR × gelöste Tickets + interner Aufwand für C (156 EUR) |
+
+Vollkosten A für Trigger 1 = Tokens + Betrieb + Manntage × Tagessatz + 195 EUR (Restaufwand zur Produktion, 24 Monate). Personal an Tickets ist in A und C gleich und fällt aus dem Vergleich heraus.
