@@ -2,7 +2,7 @@
 
 # UC8: Unit Economics, Pricing & Build-vs-Buy
 
-> Status 2026-10-08: number inventory ([docs/INVENTUR.md](docs/INVENTUR.md)) and cost model ([evals/modell.md](evals/modell.md), worked example: [docs/RECHENWEG.md](docs/RECHENWEG.md)), all in German. Pricing and build-vs-buy to follow.
+> Status 2026-10-08: number inventory ([docs/INVENTUR.md](docs/INVENTUR.md)) and cost model ([evals/modell.md](evals/modell.md), worked example: [docs/RECHENWEG.md](docs/RECHENWEG.md)), all in German. Pricing: [evals/pricing.md](evals/pricing.md), worked example [docs/RECHENWEG_PRICING.md](docs/RECHENWEG_PRICING.md). Build-vs-buy to follow.
 
 ## Problem
 The support agent from UC4/UC7 runs as a web demo on Cloud Run. The product question behind it is still open: **What does a support ticket cost with the agent, compared with a ticket handled entirely by a human?** And from that: how could it be priced, and does building it pay off compared with buying a product?
@@ -46,6 +46,18 @@ Minutes per handover = minutes without the agent × 1.0 / 1.1 / 1.3. Rework: sha
 Tokens cost 0.03 EUR per ticket, as much as 4 seconds of staff time. The saving moves most with minutes without the agent, staff cost and the handover rate:
 
 ![Tornado: sensitivity of the saving per ticket](docs/tornado.svg)
+
+Pricing from the vendor's view (10,000 tickets per customer and month). Floor = our full cost + 20 %, ceiling = the customer keeps 50 % of the saving:
+
+| Customer type | per seat (month) | per ticket | per resolved ticket | Corridor per month |
+|---|---|---|---|---|
+| low-cost (5 min) | 140 … 942 EUR | 0.09 … 0.59 EUR | 0.14 … 0.95 EUR | 876 … 5,890 EUR |
+| medium (8 min) | 88 … 982 EUR | 0.09 … 0.98 EUR | 0.14 … 1.58 EUR | 876 … 9,821 EUR |
+| expensive (14.4 min) | 49 … 1,012 EUR | 0.09 … 1.82 EUR | 0.14 … 2.92 EUR | 876 … 18,209 EUR |
+
+![Price corridor per customer type](docs/korridor.svg)
+
+Intercom Fin (0.99 USD per outcome, checked on intercom.com) sits at 52 % of our per-resolution corridor for the medium customer. Decided: **450 EUR per month + 0.75 EUR per resolved ticket** (no handover, not reopened within 7 days). For the medium customer that is an 85.8 % margin, and the customer keeps 73.9 % of the saving. Loss only below a 3.7 % resolution rate ([docs/decisions.md](docs/decisions.md)). With per-seat billing, a 30 % headcount cut in year two costs the vendor 30 % of revenue although ticket volume stays the same.
 
 ## Cost & Latency
 - Cost per 1000 requests: 1,601.85 EUR per 1,000 tickets with the agent (medium scenario, staff included), of which tokens 32.09 USD

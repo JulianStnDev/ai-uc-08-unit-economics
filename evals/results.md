@@ -5,3 +5,4 @@
 - Übervorsicht UC4 v3 gegen UC6: [uebervorsicht.md](uebervorsicht.md)
 - Rechenweg von Hand (mittel, 10.000 Tickets): [../docs/RECHENWEG.md](../docs/RECHENWEG.md)
 - Datengrundlage: [../data/inventur.csv](../data/inventur.csv), Annahmen: [../data/annahmen.csv](../data/annahmen.csv)
+- Pricing (Anbieter-Sicht): [pricing.md](pricing.md), Rohwerte [pricing_ergebnisse.csv](pricing_ergebnisse.csv), Diagramm [../docs/korridor.svg](../docs/korridor.svg), Rechenweg [../docs/RECHENWEG_PRICING.md](../docs/RECHENWEG_PRICING.md)

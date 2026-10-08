@@ -110,3 +110,52 @@ Die realistische Zahl ist die dritte Zeile. Repariert bekommt die Kundin eine Em
 Grenzen: Die Basis sind 29 autonome Läufe, davon 3 T04. Wie häufig T04-artige Fälle im echten Mix sind (Verlängerung vergessen, noch in der Frist), ist offen. 1.546 EUR sind eine Größenordnung, keine Prognose. Nachweis nach der Reparatur: T04 dreimal im Goldset, dazu ein deterministischer Test für die Fristberechnung (Grenzfälle Tag 14 und 15).
 
 Status: offen, nicht umgesetzt.
+
+## 2026-10-08: Regeln des Pricing-Modells (Anbieter-Sicht)
+
+Kontext: Wir verkaufen den Support-Agent an andere Firmen. Gesucht ist je Kundentyp und Abrechnungsart ein Preiskorridor. Rechnung in `scripts/pricing.py`, Ergebnisse in [evals/pricing.md](../evals/pricing.md).
+
+- **Kundentypen über die Minuten ohne Agent** (5 / 8 / 14,4 min), den größten Hebel im Tornado. Alles andere steht auf „mittel“. Mit Nacharbeit 14 % ergeben sich Ersparnisse von 1,15 / 1,93 / 3,61 EUR je Ticket. Die Vorgabe „ca. 1,20 / 2,01 / 3,75“ stammte aus dem Tornado mit Nacharbeit 10 %.
+- **Obergrenze auf die Brutto-Ersparnis:** Kosten ohne Agent minus Personalkosten mit Agent. Tokens und Hosting trägt jetzt der Anbieter, der Kunde zahlt den Preis stattdessen. Obergrenze = 50 % davon.
+- **Untergrenze = Vollkosten × 1,2:** 20 % Aufschlag auf die Kosten, nicht 20 % Marge auf den Preis (das wäre Kosten / 0,8).
+- **Vollkosten des Anbieters:** Tokens und Hosting variabel, fester Hosting-Block, Einrichtung (40 h, auf 12 Monate verteilt) und Kundensupport (4 h/Monat) zum Stundensatz von 58,50 EUR. Einrichtung und Support sind Annahmen ohne Quelle.
+- **Gelöst = ohne Übergabe und ohne Nacharbeit**, laut Vorgabe. Freigaben zählen damit als gelöst (62,3 % im Szenario mittel).
+- **Sitze = Support-Stellen des Kunden ohne Agent** (Ticketminuten / 8.000 min je Stelle und Monat). Das ist der Stand bei Vertragsschluss.
+- **Fin geprüft in der Primärquelle:** 0,99 USD je Outcome (intercom.com/pricing, Hilfeartikel „Fin AI Agent outcomes“, 08.10.2026). Outcomes umfassen auch Übergaben über Prozeduren, eine Lösung zählt schon „assumed“. Verglichen wird deshalb mit zwei Werten: nur Lösungen sowie Lösungen plus alle Übergaben.
+- **Befund:** Bei fester Menge ist der Korridor in EUR je Monat für alle drei Abrechnungsarten gleich. Die Wahl der Abrechnungsart verschiebt nur, wer welches Risiko trägt. Pro Sitz verliert der Anbieter Umsatz, sobald der Agent wirkt (Stellenabbau).
+
+## 2026-10-08: Pricing-Entscheidung: Grundgebühr + je gelöstem Ticket
+
+Begriffe ab hier: **Marge** = Gewinn / Umsatz. **Aufschlag** = Gewinn / Kosten. Die Untergrenze des Korridors ist ein Aufschlag (Vollkosten × 1,2), keine Marge.
+
+Entscheidung (Julian): **ca. 450 EUR je Monat Grundgebühr + ca. 0,75 EUR je gelöstem Ticket.** „Gelöst“ = ohne Übergabe und nicht innerhalb von 7 Tagen wieder geöffnet.
+
+Begründung:
+- Abrechnung pro Sitz verworfen: Baut der Kunde 30 % der Stellen ab, fällt unser Umsatz um 30 %, obwohl die Ticketmenge gleich bleibt.
+- Preis unter Fin: 0,75 EUR gegen 0,89 EUR je Outcome.
+- Die Grundgebühr deckt die Fixkosten je Kunde (431,67 EUR im Monat: Einrichtung, Kundensupport, Hosting fest).
+
+Nachgerechnet (10.000 Tickets, Lösungsquote aus dem Modell 62,3 %, Jahr 1; [evals/pricing.md](../evals/pricing.md)):
+
+| Kundentyp | Umsatz je Monat | Gewinn | Marge | Kunde behält |
+|---|---|---|---|---|
+| günstig | 5.122,50 EUR | 4.392,56 EUR | 85,8 % | 56,5 % |
+| mittel | 5.122,50 EUR | 4.392,56 EUR | 85,8 % | 73,9 % |
+| teuer | 5.122,50 EUR | 4.392,56 EUR | 85,8 % | 85,9 % |
+
+Risiko: schwierigere Tickets als im Goldset, also weniger gelöste Tickets bei gleichen Token-Kosten. Stresstest:
+
+| Lösungsquote | Marge | effektiv je gelöstem Ticket | Kunde behält (günstig / mittel / teuer) |
+|---|---|---|---|
+| 62,3 % (Modell) | 85,8 % | 0,82 EUR | 56,5 / 73,9 / 85,9 % |
+| 45 % | 80,9 % | 0,85 EUR | 49,1 / 70,1 / 84,1 % |
+| 30 % | 73,0 % | 0,90 EUR (über Fin) | 29,2 / 60,8 / 80,0 % |
+
+Verlust erst unter 3,7 % Lösungsquote (Jahr 1), weil die Grundgebühr die Fixkosten deckt. Bei 30 % Lösungsquote machen wir erst Verlust, wenn die Token-Kosten auf das 7,6-Fache steigen. Das Risiko trifft also vor allem den Kunden:
+- Beim günstigen Kunden fällt sein Anteil schon bei 45 % Lösungsquote unter die 50 %, die wir ihm zugesagt haben (49,1 %).
+- Bei 30 % Lösungsquote liegt der effektive Preis je gelöstem Ticket über Fin, weil sich die Grundgebühr auf weniger Lösungen verteilt.
+
+Absicherung:
+- Design-Partner-Pilot im Schattenmodus. Die Lösungsquote wird am echten Ticketmix gemessen, bevor abgerechnet wird.
+- Preisanpassungsklausel nach 3 Monaten.
+- Keine langfristigen Verträge zum Pilotpreis.
