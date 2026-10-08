@@ -1,7 +1,13 @@
 {
-  "title": "",
-  "status": "planned",
-  "tags": [],
-  "summary": "",
+  "title": "Unit Economics, Pricing & Build-vs-Buy",
+  "status": "active",
+  "tags": [
+    "unit-economics",
+    "pricing",
+    "build-vs-buy",
+    "decision-memo",
+    "agents"
+  ],
+  "summary": "A decision memo on what a support ticket costs with the UC7 agent compared with a ticket handled entirely by a human, built on measured runs instead of assumptions.",
   "metrics": []
 }
