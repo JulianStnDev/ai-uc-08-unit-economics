@@ -50,3 +50,35 @@ Kontext: Kostenmodell ohne Pricing und ohne Build-vs-Buy, Eingaben in `data/anna
 - **Tickets ohne Menschen kosten 0 Minuten.** Folgekosten falscher Antworten (Nachfragen, Wiedereröffnung, Kulanz, Kündigung) sind nicht modelliert. Das ist die größte optimistische Verzerrung des Modells und der nächste Kandidat für eine Annahme mit Quelle.
 - **Neon-Speicher bei Volumen nicht modelliert:** Etwa 5,7 KB je Lauf ergeben bei 100.000 Tickets rund 0,57 GB im Monat. Das sprengt den Free-Plan nach dem ersten Monat. Der Preis eines bezahlten Neon-Tarifs ist nicht recherchiert, die Speichermenge ist aber klein.
 - **Doppelbuchung automatisch erstatten:** Beträge in EUR laut Vorgabe (6,99 / 59 EUR), obwohl das Goldset in USD rechnet.
+
+## 2026-10-08: Übergabe-Minuten gekoppelt, Nacharbeit als Folgekosten
+
+Kontext: Im ersten Modell waren die Minuten je Übergabe ein eigener Wert (6 / 8 / 10). Damit konnte eine Übergabe billiger sein als das Ticket ohne Agent, und die Sensitivität auf die Minuten ohne Agent war verzerrt. Autonome Tickets kosteten 0 Minuten.
+
+Entscheidung:
+- Minuten je Übergabe = Minuten ohne Agent × Faktor (1,0 / 1,1 / 1,3). Eine Übergabe kostet nie weniger als das Ticket ohne Agent.
+- Neuer Parameter `anteil_nacharbeit` (5 / 10 / 20 % der autonomen Tickets), je Fall die vollen Minuten ohne Agent.
+
+Begründung: Goldset-Anker für die Nacharbeit ist der Anteil autonomer Läufe mit falscher Kernaussage. Beim deployten Stand (UC6) sind das 4 von 29 (14 %, 95-%-Intervall 5–31 %), bei UC4 v3 1 von 24 (4 %). „Mittel“ (10 %) liegt damit unter dem gemessenen Wert des deployten Agents, weil 3 der 4 Fehler auf T04 fallen. Details und zwei Beispiele: [docs/NACHARBEIT.md](NACHARBEIT.md).
+
+Folge: Ersparnis im Szenario mittel sinkt von 65,4 % auf 56,9 %. Der Kipppunkt im mittleren Szenario liegt jetzt bei 86,9 %, knapp über der möglichen Grenze von 85 %. Pessimistisch fällt er von 71 % auf 66 %.
+
+## 2026-10-08: Option „Doppelbuchung automatisch bis X EUR, darüber Freigabe“
+
+Kontext: Eine automatische Erstattung spart je Fall die Freigabe (2 min × 0,4420 EUR + Haiku-Antwort = 0,89 EUR). Dagegen steht der erwartete Verlust: Fehlerquote × Betrag. Die Gewinnschwelle ist gespart / Betrag. Nach der Dreierregel braucht man 3 / Schwelle fehlerfreie Fälle, um zu zeigen, dass die Fehlerquote darunter liegt.
+
+| Grenze X | Schwelle | fehlerfreie Fälle nötig (1 / 2 / 4 min je Freigabe) |
+|---|---|---|
+| bis 5 EUR | 17,8 % | 34 / **17** / 9 |
+| bis 10 EUR | 8,9 % | 68 / **34** / 17 |
+| bis 20 EUR | 4,4 % | 135 / **68** / 34 |
+| bis 59 EUR | 1,5 % | 397 / **200** / 100 |
+
+Bisher belegt: 6 Doppelbuchungs-Läufe ohne falsche Erstattung (UC6 T01, T02). Das zeigt nur eine Fehlerquote < 50 %.
+
+Option (vorgeschlagen, nicht entschieden): **automatisch bis 10 EUR, darüber Freigabe.**
+- 10 EUR deckt das Monatsabo (6,99) ab, also den häufigsten kleinen Fall. Jahresabos (59) bleiben bei der Freigabe.
+- 34 fehlerfreie Fälle sind im Schattenbetrieb erreichbar: Der Agent entscheidet mit, der Mensch gibt weiter frei, verglichen wird hinterher. Das Muster gibt es schon aus UC4 (Schattenmodus für Erstattungen).
+- Bei 59 EUR bräuchte es 200 fehlerfreie Fälle, und der Gewinn je Fall wäre trotzdem klein (bei 1 % Fehlerquote 0,30 EUR).
+- Voraussetzungen: Die Erstattungsregel bleibt im Werkzeug (UC6, nicht im Prompt). Je Kunde gibt es eine Obergrenze, damit sich die Option nicht wiederholt ausnutzen lässt. Der Schutz gegen Social Engineering aus UC6 („telefonisch abgesprochen“) muss in den 34 Fällen mitgetestet sein.
+- Grenzen der Rechnung: Die Dreierregel setzt unabhängige, repräsentative Fälle voraus. Folgeschäden einer falschen Erstattung (Missbrauch, Nachahmer) sind nicht eingerechnet.

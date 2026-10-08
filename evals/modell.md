@@ -4,51 +4,66 @@ Erzeugt von `scripts/modell.py` aus `data/annahmen.csv`. Beträge in EUR, Tokens
 
 ## Szenarien
 
-| Szenario | Freigabe | Übergabe | min/Freigabe | min/Übergabe |
-|---|---|---|---|---|
-| optimistisch | 10 % | 15 % | 1 | 6 |
-| mittel | 15 % | 30 % | 2 | 8 |
-| pessimistisch | 20 % | 50 % | 4 | 10 |
+| Szenario | Freigabe | Übergabe | autonom | Nacharbeit (der autonomen) | min/Freigabe | Faktor Übergabe | min/Übergabe |
+|---|---|---|---|---|---|---|---|
+| optimistisch | 10 % | 15 % | 75 % | 5 % | 1 | 1,0 | 8,0 |
+| mittel | 15 % | 30 % | 55 % | 10 % | 2 | 1,1 | 8,8 |
+| pessimistisch | 20 % | 50 % | 30 % | 20 % | 4 | 1,3 | 10,4 |
 
 ## Kosten je Ticket (EUR)
 
-| Szenario | Tickets/Monat | Tokens | Hosting variabel | Freigabe | Übergabe | **variabel** | Fix je Ticket | **mit Agent** | **ohne Agent** | **Ersparnis** |
-|---|---|---|---|---|---|---|---|---|---|---|
-| optimistisch | 1.000 | 0,0285 | 0,0011 | 0,0442 | 0,3978 | **0,4716** | 0,0027 | **0,4743** | **3,5360** | **3,0617** |
-| optimistisch | 10.000 | 0,0285 | 0,0011 | 0,0442 | 0,3978 | **0,4716** | 0,0003 | **0,4719** | **3,5360** | **3,0641** |
-| optimistisch | 100.000 | 0,0285 | 0,0011 | 0,0442 | 0,3978 | **0,4716** | 0,0000 | **0,4716** | **3,5360** | **3,0644** |
-| mittel | 1.000 | 0,0287 | 0,0011 | 0,1326 | 1,0608 | **1,2232** | 0,0027 | **1,2259** | **3,5360** | **2,3101** |
-| mittel | 10.000 | 0,0287 | 0,0011 | 0,1326 | 1,0608 | **1,2232** | 0,0003 | **1,2235** | **3,5360** | **2,3125** |
-| mittel | 100.000 | 0,0287 | 0,0011 | 0,1326 | 1,0608 | **1,2232** | 0,0000 | **1,2233** | **3,5360** | **2,3127** |
-| pessimistisch | 1.000 | 0,0289 | 0,0011 | 0,3536 | 2,2100 | **2,5936** | 0,0027 | **2,5963** | **3,5360** | **0,9397** |
-| pessimistisch | 10.000 | 0,0289 | 0,0011 | 0,3536 | 2,2100 | **2,5936** | 0,0003 | **2,5939** | **3,5360** | **0,9421** |
-| pessimistisch | 100.000 | 0,0289 | 0,0011 | 0,3536 | 2,2100 | **2,5936** | 0,0000 | **2,5937** | **3,5360** | **0,9423** |
+| Szenario | Tickets/Monat | Tokens | Hosting variabel | Freigabe | Übergabe | Nacharbeit | **variabel** | Fix je Ticket | **mit Agent** | **ohne Agent** | **Ersparnis** |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| optimistisch | 1.000 | 0,0285 | 0,0011 | 0,0442 | 0,5304 | 0,1326 | **0,7368** | 0,0027 | **0,7395** | **3,5360** | **2,7965** |
+| optimistisch | 10.000 | 0,0285 | 0,0011 | 0,0442 | 0,5304 | 0,1326 | **0,7368** | 0,0003 | **0,7371** | **3,5360** | **2,7989** |
+| optimistisch | 100.000 | 0,0285 | 0,0011 | 0,0442 | 0,5304 | 0,1326 | **0,7368** | 0,0000 | **0,7368** | **3,5360** | **2,7992** |
+| mittel | 1.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,1945 | **1,5238** | 0,0027 | **1,5265** | **3,5360** | **2,0095** |
+| mittel | 10.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,1945 | **1,5238** | 0,0003 | **1,5241** | **3,5360** | **2,0119** |
+| mittel | 100.000 | 0,0287 | 0,0011 | 0,1326 | 1,1669 | 0,1945 | **1,5238** | 0,0000 | **1,5238** | **3,5360** | **2,0122** |
+| pessimistisch | 1.000 | 0,0289 | 0,0011 | 0,3536 | 2,2984 | 0,2122 | **2,8942** | 0,0027 | **2,8969** | **3,5360** | **0,6391** |
+| pessimistisch | 10.000 | 0,0289 | 0,0011 | 0,3536 | 2,2984 | 0,2122 | **2,8942** | 0,0003 | **2,8945** | **3,5360** | **0,6415** |
+| pessimistisch | 100.000 | 0,0289 | 0,0011 | 0,3536 | 2,2984 | 0,2122 | **2,8942** | 0,0000 | **2,8942** | **3,5360** | **0,6418** |
 
 ## Kosten je Monat (EUR)
 
 | Szenario | Tickets/Monat | ohne Agent | mit Agent | davon variabel | davon fix | Ersparnis | Ersparnis in % |
 |---|---|---|---|---|---|---|---|
-| optimistisch | 1.000 | 3.536,00 | 474,28 | 471,61 | 2,67 | 3.061,72 | 86,6 % |
-| optimistisch | 10.000 | 35.360,00 | 4.718,78 | 4.716,11 | 2,67 | 30.641,22 | 86,7 % |
-| optimistisch | 100.000 | 353.600,00 | 47.163,74 | 47.161,07 | 2,67 | 306.436,26 | 86,7 % |
-| mittel | 1.000 | 3.536,00 | 1.225,90 | 1.223,23 | 2,67 | 2.310,10 | 65,3 % |
-| mittel | 10.000 | 35.360,00 | 12.234,94 | 12.232,27 | 2,67 | 23.125,06 | 65,4 % |
-| mittel | 100.000 | 353.600,00 | 122.325,35 | 122.322,68 | 2,67 | 231.274,65 | 65,4 % |
-| pessimistisch | 1.000 | 3.536,00 | 2.596,31 | 2.593,64 | 2,67 | 939,69 | 26,6 % |
-| pessimistisch | 10.000 | 35.360,00 | 25.939,10 | 25.936,43 | 2,67 | 9.420,90 | 26,6 % |
-| pessimistisch | 100.000 | 353.600,00 | 259.366,95 | 259.364,28 | 2,67 | 94.233,05 | 26,6 % |
+| optimistisch | 1.000 | 3.536,00 | 739,48 | 736,81 | 2,67 | 2.796,52 | 79,1 % |
+| optimistisch | 10.000 | 35.360,00 | 7.370,78 | 7.368,11 | 2,67 | 27.989,22 | 79,2 % |
+| optimistisch | 100.000 | 353.600,00 | 73.683,74 | 73.681,07 | 2,67 | 279.916,26 | 79,2 % |
+| mittel | 1.000 | 3.536,00 | 1.526,46 | 1.523,79 | 2,67 | 2.009,54 | 56,8 % |
+| mittel | 10.000 | 35.360,00 | 15.240,54 | 15.237,87 | 2,67 | 20.119,46 | 56,9 % |
+| mittel | 100.000 | 353.600,00 | 152.381,35 | 152.378,68 | 2,67 | 201.218,65 | 56,9 % |
+| pessimistisch | 1.000 | 3.536,00 | 2.896,87 | 2.894,20 | 2,67 | 639,13 | 18,1 % |
+| pessimistisch | 10.000 | 35.360,00 | 28.944,70 | 28.942,03 | 2,67 | 6.415,30 | 18,1 % |
+| pessimistisch | 100.000 | 353.600,00 | 289.422,95 | 289.420,28 | 2,67 | 64.177,05 | 18,1 % |
 
 ## Kipppunkt: Übergabequote, ab der der Agent nicht mehr günstiger ist
 
-Freigabe-Anteil und Minuten bleiben je Szenario fest, nur die Übergabequote wandert. Möglich sind höchstens 100 % minus Freigabe-Anteil. 10.000 Tickets/Monat.
+Freigabe-Anteil, Nacharbeit-Anteil und Faktor bleiben je Szenario fest, nur die Übergabequote wandert (die autonomen Tickets schrumpfen entsprechend). Möglich sind höchstens 100 % minus Freigabe-Anteil. Minuten je Übergabe wandern mit den Minuten ohne Agent. 10.000 Tickets/Monat.
 
 | Szenario | Mensch allein 5 min | **8 min (mittel)** | 14,4 min | Übergabequote des Szenarios |
 |---|---|---|---|---|
-| optimistisch | 81 % | **kein (> 90 %)** | kein (> 90 %) | 15 % |
-| mittel | 58 % | **kein (> 85 %)** | kein (> 85 %) | 30 % |
-| pessimistisch | 41 % | **71 %** | kein (> 80 %) | 50 % |
+| optimistisch | kein (> 90 %) | **kein (> 90 %)** | kein (> 90 %) | 15 % |
+| mittel | 84 % | **kein (> 85 %)** | kein (> 85 %) | 30 % |
+| pessimistisch | 61 % | **66 %** | 71 % | 50 % |
 
-Die Personalkosten je Minute verschieben den Kipppunkt kaum: Tokens und Hosting zusammen kosten je Ticket so viel wie wenige Sekunden Arbeitszeit. Entscheidend ist das Verhältnis Minuten je Übergabe zu Minuten ohne Agent.
+Die Personalkosten je Minute verschieben den Kipppunkt kaum: Tokens und Hosting zusammen kosten je Ticket so viel wie wenige Sekunden Arbeitszeit. Entscheidend sind Faktor je Übergabe und Nacharbeit. Für die Höhe der Ersparnis zählen die Personalkosten dagegen voll, siehe Tornado.
+
+## Sensitivität (Tornado)
+
+Szenario mittel, 10.000 Tickets/Monat, Ersparnis je Ticket 2,0119 EUR. Je Zeile wandert genau eine Annahme von niedrig auf hoch, alle anderen bleiben auf mittel. Diagramm: [docs/tornado.svg](../docs/tornado.svg).
+
+| Rang | Annahme | niedrig … hoch | Ersparnis bei niedrig | Ersparnis bei hoch | Ausschlag |
+|---|---|---|---|---|---|
+| 1 | Minuten ohne Agent (`min_ohne_agent`) | 5 … 14,4 | 1,1965 | 3,7517 | 2,5552 |
+| 2 | Personalkosten je Minute (`eur_je_minute`) | 0,37 … 0,75 | 1,6701 | 3,4349 | 1,7648 |
+| 3 | Übergabequote (`anteil_uebergabe`) | 0,15 … 0,50 | 2,5423 | 1,3047 | 1,2376 |
+| 4 | Faktor Minuten je Übergabe (`faktor_uebergabe`) | 1 … 1,3 | 2,1180 | 1,7998 | 0,3182 |
+| 5 | Anteil Nacharbeit (`anteil_nacharbeit`) | 0,05 … 0,20 | 2,1092 | 1,8175 | 0,2917 |
+| 6 | Minuten je Freigabe (`min_freigabe`) | 1 … 4 | 2,0782 | 1,8793 | 0,1989 |
+| 7 | Freigabe-Anteil (`anteil_freigabe`) | 0,10 … 0,20 | 2,0387 | 1,9852 | 0,0535 |
+| 8 | Auslastung Cloud Run (`auslastung`) | 1 … 0,25 | 2,0125 | 2,0108 | 0,0017 |
 
 ## Option „Doppelbuchung automatisch erstatten“: Erwartungswert je Fall
 
@@ -67,3 +82,14 @@ Gewinnschwelle (Fehlerquote, bei der Netto = 0), je nach Minuten je Freigabe:
 | 1 | 0,4463 | 6,4 % | 0,8 % |
 | 2 | 0,8883 | 12,7 % | 1,5 % |
 | 4 | 1,7723 | 25,4 % | 3,0 % |
+
+### Wie viele fehlerfreie Fälle braucht „automatisch bis X EUR“? (Dreierregel)
+
+Schwelle = gespart je Fall / X (der ungünstigste Betrag unter der Grenze). Nach der Dreierregel belegen n Fälle ohne Fehler eine Fehlerquote unter 3/n (95 %). Gebraucht werden also n = 3 / Schwelle fehlerfreie Fälle, aufgerundet. Bisher gemessen: 6 Doppelbuchungs-Läufe ohne falsche Erstattung (UC6 T01, T02), das belegt nur < 50 %.
+
+| Grenze X | Schwelle (2 min) | **n fehlerfrei (2 min)** | n bei 1 / 2 / 4 min je Freigabe |
+|---|---|---|---|
+| bis 5 EUR | 17,8 % | **17** | 34 / 17 / 9 |
+| bis 10 EUR | 8,9 % | **34** | 68 / 34 / 17 |
+| bis 20 EUR | 4,4 % | **68** | 135 / 68 / 34 |
+| bis 59 EUR | 1,5 % | **200** | 397 / 200 / 100 |

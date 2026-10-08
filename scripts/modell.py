@@ -2,19 +2,23 @@
 
     python3 scripts/modell.py
 
-Schreibt evals/modell_ergebnisse.csv, evals/modell.md und docs/kipppunkt.svg.
+Schreibt evals/modell_ergebnisse.csv, evals/modell.md, docs/kipppunkt.svg und docs/tornado.svg.
 Rechenweg von Hand für ein Szenario: docs/RECHENWEG.md.
 
 Tokens und Cloud-Run-Preise sind in USD und werden einmal mit usd_je_eur umgerechnet, Personal ist in EUR.
-Szenarien variieren nur Anteile (Freigabe, Übergabe) und Minuten je Eingriff. Alle anderen Eingaben stehen auf „mittel“.
+Szenarien variieren Anteile (Freigabe, Übergabe, Nacharbeit) und Minuten je Eingriff. Alle anderen Eingaben stehen
+auf „mittel“. Minuten je Übergabe = min_ohne_agent × faktor_uebergabe, Nacharbeit kostet je Fall min_ohne_agent.
 """
 import csv
+import math
 from pathlib import Path
 
 HIER = Path(__file__).resolve().parent.parent
 MENGEN = [1_000, 10_000, 100_000]
 SZENARIEN = {"optimistisch": "niedrig", "mittel": "mittel", "pessimistisch": "hoch"}
-SZENARIO_PARAMETER = ["anteil_freigabe", "anteil_uebergabe", "min_freigabe", "min_uebergabe"]
+SZENARIO_PARAMETER = ["anteil_freigabe", "anteil_uebergabe", "min_freigabe", "faktor_uebergabe", "anteil_nacharbeit"]
+BETRAGSGRENZEN = [5, 10, 20, 59]  # EUR, Option „automatisch bis X €“
+TORNADO_MENGE = 10_000
 
 
 def annahmen() -> dict:
@@ -43,25 +47,33 @@ def je_ticket(e: dict, menge: int) -> dict:
     tokens_usd = e["tok_agent"] + e["anteil_freigabe"] * e["tok_antwort"] + e["judge_quote"] * e["tok_judge"]
     instanz_s = e["laufzeit"] / e["auslastung"]
     hosting_usd = instanz_s * (e["cr_preis_vcpu"] * 1 + e["cr_preis_gib"] * 1)  # 1 vCPU, 1 GiB
+    autonom = 1 - e["anteil_freigabe"] - e["anteil_uebergabe"]
     p = {
         "tokens": tokens_usd / kurs,
         "hosting_variabel": hosting_usd / kurs,
         "freigabe": e["anteil_freigabe"] * e["min_freigabe"] * e["eur_je_minute"],
-        "uebergabe": e["anteil_uebergabe"] * e["min_uebergabe"] * e["eur_je_minute"],
+        "uebergabe": e["anteil_uebergabe"] * min_uebergabe(e) * e["eur_je_minute"],
+        "nacharbeit": autonom * e["anteil_nacharbeit"] * e["min_ohne_agent"] * e["eur_je_minute"],
         "fix": (e["hosting_fix"] + e["neon_fix"]) / menge,
     }
-    p["variabel"] = p["tokens"] + p["hosting_variabel"] + p["freigabe"] + p["uebergabe"]
+    p["variabel"] = p["tokens"] + p["hosting_variabel"] + p["freigabe"] + p["uebergabe"] + p["nacharbeit"]
     p["mit_agent"] = p["variabel"] + p["fix"]
     p["ohne_agent"] = e["min_ohne_agent"] * e["eur_je_minute"]
     p["ersparnis"] = p["ohne_agent"] - p["mit_agent"]
     return p
 
 
+def min_uebergabe(e: dict) -> float:
+    return e["min_ohne_agent"] * e["faktor_uebergabe"]
+
+
 def kipppunkt(e: dict, menge: int, min_ohne=None) -> float:
-    """Übergabequote, ab der mit Agent nicht mehr günstiger ist (Ersparnis = 0). Freigabe-Anteil bleibt fest."""
-    p = je_ticket({**e, "anteil_uebergabe": 0.0}, menge)
-    ohne = (min_ohne if min_ohne is not None else e["min_ohne_agent"]) * e["eur_je_minute"]
-    return (ohne - p["mit_agent"]) / (e["min_uebergabe"] * e["eur_je_minute"])
+    """Übergabequote, ab der mit Agent nicht mehr günstiger ist (Ersparnis = 0). Freigabe-Anteil bleibt fest.
+    Die Ersparnis ist linear in der Übergabequote; inf, wenn sie mit der Quote nicht sinkt."""
+    if min_ohne is not None:
+        e = {**e, "min_ohne_agent": min_ohne}
+    s0, s1 = ersparnis_bei(e, 0.0, menge), ersparnis_bei(e, 1.0, menge)
+    return s0 / (s0 - s1) if s0 > s1 else math.inf
 
 
 def ersparnis_bei(e: dict, quote: float, menge: int) -> float:
@@ -141,16 +153,86 @@ def diagramm(menge: int) -> str:
         if 0 <= k <= qmax:
             s.append(f'<circle cx="{X(k):.1f}" cy="{Y(0):.1f}" r="5" fill="var(--bg)" stroke="var(--{n})" stroke-width="2">'
                      f'<title>Kipppunkt {n}: {pct(k)}</title></circle>')
-        # Direktes Label am Linienende
-        y_end = Y(pts[-1][1])
-        while any(abs(y_end - y) < 15 for y in label_y):
-            y_end += 15
-        label_y.append(y_end)
-        rest = "kein Kipppunkt" if k > qmax else f"Kipppunkt {pct(k)}"
-        s.append(f'<text x="{X(qmax) + 8:.1f}" y="{y_end + 4:.1f}" class="t1">{n}</text>')
-        s.append(f'<text x="{X(qmax) + 8:.1f}" y="{y_end + 18:.1f}" font-size="11">{rest}</text>')
+        label_y.append((Y(pts[-1][1]), X(qmax) + 8, n, "kein Kipppunkt" if k > qmax else f"Kipppunkt {pct(k)}"))
+    # Direkte Labels am Linienende, von unten nach oben gesetzt, damit sie nach oben ausweichen
+    oben = H - U - 24
+    for y_end, x, n, rest in sorted(label_y, reverse=True):
+        y_end = min(y_end, oben)
+        oben = y_end - 32
+        s.append(f'<text x="{x:.1f}" y="{y_end + 4:.1f}" class="t1">{n}</text>')
+        s.append(f'<text x="{x:.1f}" y="{y_end + 18:.1f}" font-size="11">{rest}</text>')
     s.append(f'<text x="{L}" y="{H - 10}" font-size="11">Punkt = Übergabequote des Szenarios, Ring = Kipppunkt. '
              f'Linien enden bei 100 % minus Freigabe-Anteil.</text>')
+    s.append("</svg>")
+    return "\n".join(s)
+
+
+TORNADO_PARAMETER = {  # id: Beschriftung
+    "anteil_uebergabe": "Übergabequote", "faktor_uebergabe": "Faktor Minuten je Übergabe",
+    "min_ohne_agent": "Minuten ohne Agent", "anteil_nacharbeit": "Anteil Nacharbeit",
+    "anteil_freigabe": "Freigabe-Anteil", "min_freigabe": "Minuten je Freigabe",
+    "eur_je_minute": "Personalkosten je Minute", "auslastung": "Auslastung Cloud Run",
+}
+
+
+def tornado_daten(menge: int) -> tuple[float, list]:
+    basis_e = eingaben("mittel")
+    basis = je_ticket(basis_e, menge)["ersparnis"]
+    rows = []
+    for id_, name in TORNADO_PARAMETER.items():
+        lo, hi = wert(id_, "niedrig"), wert(id_, "hoch")
+        s_lo = je_ticket({**basis_e, id_: lo}, menge)["ersparnis"]
+        s_hi = je_ticket({**basis_e, id_: hi}, menge)["ersparnis"]
+        rows.append((name, id_, lo, hi, s_lo, s_hi))
+    rows.sort(key=lambda r: abs(r[5] - r[4]), reverse=True)
+    return basis, rows
+
+
+def zahl(x):
+    return eur(x, 2 if x < 1 else (1 if x != int(x) else 0))
+
+
+def tornado(menge: int) -> str:
+    basis, rows = tornado_daten(menge)
+    B, zeile_h = 760, 34
+    L, R, O = 230, 40, 104
+    H = O + zeile_h * len(rows) + 56
+    werte = [v for r in rows for v in r[4:6]] + [basis]
+    xmin, xmax = math.floor(min(werte)) - 0.0, math.ceil(max(werte))
+    def X(v): return L + (v - xmin) / (xmax - xmin) * (B - L - R)
+
+    s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {B} {H}" width="{B}" height="{H}" '
+         f'font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" role="img" '
+         f'aria-label="Tornado: Ausschlag der Ersparnis je Ticket, wenn eine Annahme von niedrig auf hoch geht">']
+    s.append("<style>:root{--bg:#fcfcfb;--t1:#0b0b0b;--t2:#52514e;--grid:#e6e5e1;--lo:#2a78d6;--hi:#eb6834;}"
+             "@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--t1:#ffffff;--t2:#c3c2b7;--grid:#34332f;"
+             "--lo:#3987e5;--hi:#d95926;}} text{fill:var(--t2);font-size:12px} .t1{fill:var(--t1)}</style>")
+    s.append(f'<rect width="{B}" height="{H}" fill="var(--bg)"/>')
+    s.append(f'<text x="24" y="26" class="t1" font-size="16" font-weight="600">Welche Annahme bewegt die Ersparnis am stärksten?</text>')
+    s.append(f'<text x="24" y="46">Ersparnis je Ticket in EUR, Szenario mittel ({eur(basis)} EUR), {eur(menge, 0)} Tickets im Monat. '
+             f'Je Zeile wandert genau eine Annahme.</text>')
+    s.append(f'<rect x="24" y="62" width="14" height="10" rx="2" fill="var(--lo)"/><text x="44" y="71">Annahme auf niedrig</text>')
+    s.append(f'<rect x="184" y="62" width="14" height="10" rx="2" fill="var(--hi)"/><text x="204" y="71">Annahme auf hoch</text>')
+    for v in range(int(xmin), int(xmax) + 1):
+        s.append(f'<line x1="{X(v):.1f}" y1="{O - 8}" x2="{X(v):.1f}" y2="{O + zeile_h * len(rows)}" stroke="var(--grid)"/>')
+        s.append(f'<text x="{X(v):.1f}" y="{O + zeile_h * len(rows) + 18}" text-anchor="middle">{eur(v, 0)}</text>')
+    for i, (name, id_, lo, hi, s_lo, s_hi) in enumerate(rows):
+        y = O + i * zeile_h
+        s.append(f'<text x="{L - 10}" y="{y + 15}" text-anchor="end" class="t1">{name}</text>')
+        s.append(f'<text x="{L - 10}" y="{y + 28}" text-anchor="end" font-size="11">{zahl(lo)} … {zahl(hi)}</text>')
+        for v, farbe, stufe, roh in [(s_lo, "lo", "niedrig", lo), (s_hi, "hi", "hoch", hi)]:
+            if abs(v - basis) < 1e-9:
+                continue
+            x0, x1 = sorted([X(basis), X(v)])
+            s.append(f'<rect x="{x0:.1f}" y="{y + 6}" width="{max(x1 - x0, 1):.1f}" height="20" rx="4" fill="var(--{farbe})">'
+                     f'<title>{name} {stufe} ({zahl(roh)}): Ersparnis {eur(v)} EUR je Ticket</title></rect>')
+            anker = "end" if v < basis else "start"
+            dx = -6 if v < basis else 6
+            s.append(f'<text x="{X(v) + dx:.1f}" y="{y + 20}" text-anchor="{anker}">{eur(v)}</text>')
+    s.append(f'<line x1="{X(basis):.1f}" y1="{O - 8}" x2="{X(basis):.1f}" y2="{O + zeile_h * len(rows)}" stroke="var(--t1)" stroke-width="1.5"/>')
+    s.append(f'<text x="{X(basis):.1f}" y="{O - 12}" text-anchor="middle" class="t1">mittel {eur(basis)}</text>')
+    s.append(f'<text x="24" y="{H - 10}" font-size="11">Tokens, Kurs und Hosting-Preise sind gemessene Punktwerte und wandern nicht. '
+             f'Quelle: data/annahmen.csv</text>')
     s.append("</svg>")
     return "\n".join(s)
 
@@ -168,14 +250,16 @@ def main():
     md.append("# Kostenmodell: Ergebnisse\n\nErzeugt von `scripts/modell.py` aus `data/annahmen.csv`. Beträge in EUR, "
               f"Tokens umgerechnet mit {eur(wert('usd_je_eur'), 4)} USD/EUR. Rechenweg von Hand: [docs/RECHENWEG.md](../docs/RECHENWEG.md).\n")
     md.append("## Szenarien\n")
-    md.append("| Szenario | Freigabe | Übergabe | min/Freigabe | min/Übergabe |\n|---|---|---|---|---|")
+    md.append("| Szenario | Freigabe | Übergabe | autonom | Nacharbeit (der autonomen) | min/Freigabe | Faktor Übergabe | min/Übergabe |\n|---|---|---|---|---|---|---|---|")
     for n in SZENARIEN:
         e = eingaben(n)
-        md.append(f"| {n} | {pct(e['anteil_freigabe'])} | {pct(e['anteil_uebergabe'])} | {eur(e['min_freigabe'], 0)} | {eur(e['min_uebergabe'], 0)} |")
+        md.append(f"| {n} | {pct(e['anteil_freigabe'])} | {pct(e['anteil_uebergabe'])} | "
+                  f"{pct(1 - e['anteil_freigabe'] - e['anteil_uebergabe'])} | {pct(e['anteil_nacharbeit'])} | "
+                  f"{eur(e['min_freigabe'], 0)} | {eur(e['faktor_uebergabe'], 1)} | {eur(min_uebergabe(e), 1)} |")
 
     md.append("\n## Kosten je Ticket (EUR)\n")
-    md.append("| Szenario | Tickets/Monat | Tokens | Hosting variabel | Freigabe | Übergabe | **variabel** | Fix je Ticket | **mit Agent** | **ohne Agent** | **Ersparnis** |")
-    md.append("|---|---|---|---|---|---|---|---|---|---|---|")
+    md.append("| Szenario | Tickets/Monat | Tokens | Hosting variabel | Freigabe | Übergabe | Nacharbeit | **variabel** | Fix je Ticket | **mit Agent** | **ohne Agent** | **Ersparnis** |")
+    md.append("|---|---|---|---|---|---|---|---|---|---|---|---|")
     for n in SZENARIEN:
         e = eingaben(n)
         for m in MENGEN:
@@ -185,7 +269,7 @@ def main():
                            "mit_agent_monat": round(p["mit_agent"] * m, 2), "ohne_agent_monat": round(p["ohne_agent"] * m, 2),
                            "ersparnis_monat": round(p["ersparnis"] * m, 2), "kipppunkt_uebergabe": round(kipppunkt(e, m), 4)})
             md.append(f"| {n} | {eur(m, 0)} | {eur(p['tokens'], 4)} | {eur(p['hosting_variabel'], 4)} | {eur(p['freigabe'], 4)} | "
-                      f"{eur(p['uebergabe'], 4)} | **{eur(p['variabel'], 4)}** | {eur(p['fix'], 4)} | **{eur(p['mit_agent'], 4)}** | "
+                      f"{eur(p['uebergabe'], 4)} | {eur(p['nacharbeit'], 4)} | **{eur(p['variabel'], 4)}** | {eur(p['fix'], 4)} | **{eur(p['mit_agent'], 4)}** | "
                       f"**{eur(p['ohne_agent'], 4)}** | **{eur(p['ersparnis'], 4)}** |")
 
     md.append("\n## Kosten je Monat (EUR)\n")
@@ -196,8 +280,9 @@ def main():
                   f"{eur(p['variabel'] * m)} | {eur(p['fix'] * m)} | {eur(p['ersparnis'] * m)} | {pct(p['ersparnis'] / p['ohne_agent'], 1)} |")
 
     md.append("\n## Kipppunkt: Übergabequote, ab der der Agent nicht mehr günstiger ist\n")
-    md.append("Freigabe-Anteil und Minuten bleiben je Szenario fest, nur die Übergabequote wandert. Möglich sind höchstens "
-              "100 % minus Freigabe-Anteil. 10.000 Tickets/Monat.\n")
+    md.append("Freigabe-Anteil, Nacharbeit-Anteil und Faktor bleiben je Szenario fest, nur die Übergabequote wandert "
+              "(die autonomen Tickets schrumpfen entsprechend). Möglich sind höchstens 100 % minus Freigabe-Anteil. "
+              "Minuten je Übergabe wandern mit den Minuten ohne Agent. 10.000 Tickets/Monat.\n")
     md.append("| Szenario | Mensch allein 5 min | **8 min (mittel)** | 14,4 min | Übergabequote des Szenarios |\n|---|---|---|---|---|")
     for n in SZENARIEN:
         e = eingaben(n); qmax = 1 - e["anteil_freigabe"]
@@ -208,7 +293,17 @@ def main():
         zellen[1] = f"**{zellen[1]}**"
         md.append(f"| {n} | {' | '.join(zellen)} | {pct(e['anteil_uebergabe'])} |")
     md.append("\nDie Personalkosten je Minute verschieben den Kipppunkt kaum: Tokens und Hosting zusammen kosten je Ticket so viel "
-              "wie wenige Sekunden Arbeitszeit. Entscheidend ist das Verhältnis Minuten je Übergabe zu Minuten ohne Agent.")
+              "wie wenige Sekunden Arbeitszeit. Entscheidend sind Faktor je Übergabe und Nacharbeit. Für die Höhe der Ersparnis "
+              "zählen die Personalkosten dagegen voll, siehe Tornado.")
+
+    md.append("\n## Sensitivität (Tornado)\n")
+    basis, rows = tornado_daten(TORNADO_MENGE)
+    md.append(f"Szenario mittel, {eur(TORNADO_MENGE, 0)} Tickets/Monat, Ersparnis je Ticket {eur(basis, 4)} EUR. "
+              "Je Zeile wandert genau eine Annahme von niedrig auf hoch, alle anderen bleiben auf mittel. "
+              "Diagramm: [docs/tornado.svg](../docs/tornado.svg).\n")
+    md.append("| Rang | Annahme | niedrig … hoch | Ersparnis bei niedrig | Ersparnis bei hoch | Ausschlag |\n|---|---|---|---|---|---|")
+    for i, (name, id_, lo, hi, s_lo, s_hi) in enumerate(rows, 1):
+        md.append(f"| {i} | {name} (`{id_}`) | {zahl(lo)} … {zahl(hi)} | {eur(s_lo, 4)} | {eur(s_hi, 4)} | {eur(abs(s_hi - s_lo), 4)} |")
 
     md.append("\n## Option „Doppelbuchung automatisch erstatten“: Erwartungswert je Fall\n")
     e = eingaben("mittel")
@@ -226,12 +321,26 @@ def main():
         g = mf * e["eur_je_minute"] + e["tok_antwort"] / e["usd_je_eur"]
         md.append(f"| {eur(mf, 0)} | {eur(g, 4)} | {pct(g / wert('betrag_auto', 'niedrig'), 1)} | {pct(g / wert('betrag_auto', 'hoch'), 1)} |")
 
+    md.append("\n### Wie viele fehlerfreie Fälle braucht „automatisch bis X EUR“? (Dreierregel)\n")
+    md.append("Schwelle = gespart je Fall / X (der ungünstigste Betrag unter der Grenze). Nach der Dreierregel belegen n Fälle "
+              "ohne Fehler eine Fehlerquote unter 3/n (95 %). Gebraucht werden also n = 3 / Schwelle fehlerfreie Fälle, "
+              "aufgerundet. Bisher gemessen: 6 Doppelbuchungs-Läufe ohne falsche Erstattung (UC6 T01, T02), das belegt nur < 50 %.\n")
+    kopf = " / ".join(eur(wert("min_freigabe", s), 0) for s in ("niedrig", "mittel", "hoch"))
+    md.append(f"| Grenze X | Schwelle (2 min) | **n fehlerfrei (2 min)** | n bei {kopf} min je Freigabe |\n|---|---|---|---|")
+    for x in BETRAGSGRENZEN:
+        ns = []
+        for mf in [wert("min_freigabe", s) for s in ("niedrig", "mittel", "hoch")]:
+            g = mf * e["eur_je_minute"] + e["tok_antwort"] / e["usd_je_eur"]
+            ns.append(str(math.ceil(3 / (g / x))))
+        md.append(f"| bis {eur(x, 0)} EUR | {pct(gespart / x, 1)} | **{math.ceil(3 / (gespart / x))}** | {' / '.join(ns)} |")
+
     (HIER / "evals").mkdir(exist_ok=True)
     with open(HIER / "evals" / "modell_ergebnisse.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(zeilen[0].keys()))
         w.writeheader(); w.writerows(zeilen)
     (HIER / "evals" / "modell.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     (HIER / "docs" / "kipppunkt.svg").write_text(diagramm(10_000) + "\n", encoding="utf-8")
+    (HIER / "docs" / "tornado.svg").write_text(tornado(TORNADO_MENGE) + "\n", encoding="utf-8")
     print("\n".join(md))
 
 

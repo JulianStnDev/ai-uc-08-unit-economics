@@ -17,7 +17,7 @@ Jede Zeile lässt sich mit dem Taschenrechner nachprüfen. Die Eingaben stehen i
 | Hosting fest | 2,67 EUR je Monat | Abrechnung: 0,89 EUR in 10 Tagen × 3 |
 | Personal je Minute | 0,4420 EUR | 2.922 EUR × 12 × 1,21 / 1.600 h / 60 |
 | Minuten ohne Agent | 8 min je Ticket | Annahme zwischen Branchenwerten |
-| **Szenario mittel** | Freigabe 15 %, Übergabe 30 %, 2 min je Freigabe, 8 min je Übergabe | Szenario |
+| **Szenario mittel** | Freigabe 15 %, Übergabe 30 %, 2 min je Freigabe, Faktor Übergabe 1,1, Nacharbeit 10 % der autonomen Tickets | Szenario |
 
 ## Schritt 1: Personal je Minute
 
@@ -47,36 +47,42 @@ In EUR: 0,0012509 / 1,1177 = **0,0011192 EUR**
 
 ## Schritt 5: Mit Agent, Menschenzeit je Ticket
 
+Minuten je Übergabe: 8 min × 1,1 = 8,8 min
+Anteil autonomer Tickets: 100 % − 15 % − 30 % = 55 %
+
 Freigabe: 0,15 × 2 min × 0,4420 EUR = **0,1326000 EUR**
-Übergabe: 0,30 × 8 min × 0,4420 EUR = **1,0608000 EUR**
-Ohne Menschen (55 % der Tickets): 0 EUR
+Übergabe: 0,30 × 8,8 min × 0,4420 EUR = **1,1668800 EUR**
+Nacharbeit: 0,55 × 0,10 × 8 min × 0,4420 EUR = **0,1944800 EUR**
 
 ## Schritt 6: Mit Agent, variabel und fix je Ticket
 
-Variabel: 0,0287076 + 0,0011192 + 0,1326000 + 1,0608000 = **1,2232268 EUR**
+Variabel: 0,0287076 + 0,0011192 + 0,1326000 + 1,1668800 + 0,1944800 = **1,5237868 EUR**
 Fix: 2,67 EUR / 10.000 Tickets = **0,0002670 EUR**
-Mit Agent gesamt: 1,2232268 + 0,0002670 = **1,2234938 EUR je Ticket**
+Mit Agent gesamt: 1,5237868 + 0,0002670 = **1,5240538 EUR je Ticket**
 
 ## Schritt 7: Monat und Ersparnis
 
 | | je Ticket | × 10.000 Tickets |
 |---|---|---|
 | Ohne Agent | 3,5360000 EUR | **35.360,00 EUR** |
-| Mit Agent | 1,2234938 EUR | **12.234,94 EUR** |
-| Ersparnis | 2,3125062 EUR | **23.125,06 EUR** |
+| Mit Agent | 1,5240538 EUR | **15.240,54 EUR** |
+| Ersparnis | 2,0119462 EUR | **20.119,46 EUR** |
 
-Ersparnis in Prozent: 2,3125062 / 3,5360 = **65,4 %**
+Ersparnis in Prozent: 2,0119462 / 3,5360 = **56,9 %**
 
-Woraus die Kosten mit Agent bestehen: Übergaben 1,0608 von 1,2235 EUR (86,7 %), Freigaben 10,8 %, Tokens 2,3 %, Hosting 0,1 %.
+Woraus die Kosten mit Agent bestehen: Übergaben 1,1669 von 1,5241 EUR (76,6 %), Nacharbeit 12,8 %, Freigaben 8,7 %, Tokens 1,9 %, Hosting 0,1 %.
 
 ## Schritt 8: Kipppunkt im Szenario mittel
 
-Gesucht ist die Übergabequote q, bei der mit Agent genauso viel kostet wie ohne:
+Gesucht ist die Übergabequote q, bei der mit Agent genauso viel kostet wie ohne. Steigt q, schrumpfen die autonomen Tickets und mit ihnen die Nacharbeit (1 − 0,15 − q).
 
-3,5360 = 0,0287076 + 0,0011192 + 0,1326000 + 0,0002670 + q × 8 × 0,4420
-3,5360 − 0,1626938 = q × 3,5360
-q = 3,3733062 / 3,5360 = **95,4 %**
+Fester Teil (hängt nicht von q ab): 0,0287076 + 0,0011192 + 0,1326000 + 0,0002670 = 0,1626938 EUR
+Nacharbeit bei q = 0: 0,85 × 0,10 × 8 × 0,4420 = 0,3005600 EUR
+Ersparnis bei q = 0: 3,5360 − 0,1626938 − 0,3005600 = 3,0727462 EUR
 
-Weil 15 % der Tickets Freigaben sind, kann die Übergabequote höchstens 85 % erreichen. Im Szenario mittel gibt es also **keinen Kipppunkt**. Der Grund: Eine Übergabe kostet hier genauso viele Minuten wie ein Ticket ohne Agent. Teurer wird der Agent erst, wenn eine Übergabe mehr Zeit kostet als die Bearbeitung ohne Agent oder wenn Tickets ohne Agent kürzer sind (siehe Tabelle in [evals/modell.md](../evals/modell.md)).
+Jeder Prozentpunkt mehr Übergabe kostet eine Übergabe und spart eine mögliche Nacharbeit:
+8,8 × 0,4420 − 0,10 × 8 × 0,4420 = 3,8896 − 0,3536 = 3,5360 EUR je 100 % Übergabequote
 
-Zum Vergleich pessimistisch (Freigabe 20 % × 4 min, Übergabe 10 min): q = (3,5360 − 0,0289 − 0,0011 − 0,3536 − 0,0003) / (10 × 0,4420) = 3,1521 / 4,4200 = **71,3 %**.
+q = 3,0727462 / 3,5360 = **86,9 %**
+
+Weil 15 % der Tickets Freigaben sind, kann die Übergabequote höchstens 85 % erreichen. Im Szenario mittel gibt es also weiterhin **keinen Kipppunkt**, aber nur noch knapp (86,9 % gegen 85 %). Im pessimistischen Szenario liegt er bei **66 %** (Tabelle in [evals/modell.md](../evals/modell.md)).
