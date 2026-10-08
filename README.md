@@ -2,7 +2,7 @@
 
 # UC8: Unit Economics, Pricing & Build-vs-Buy
 
-> Status 2026-10-08: number inventory done ([docs/INVENTUR.md](docs/INVENTUR.md), German), cost model still open.
+> Status 2026-10-08: number inventory ([docs/INVENTUR.md](docs/INVENTUR.md)) and cost model ([evals/modell.md](evals/modell.md), worked example: [docs/RECHENWEG.md](docs/RECHENWEG.md)), all in German. Pricing and build-vs-buy to follow.
 
 ## Problem
 The support agent from UC4/UC7 runs as a web demo on Cloud Run. The product question behind it is still open: **What does a support ticket cost with the agent, compared with a ticket handled entirely by a human?** And from that: how could it be priced, and does building it pay off compared with buying a product?
@@ -31,12 +31,22 @@ Number inventory, details in [docs/INVENTUR.md](docs/INVENTUR.md):
 | Gold set runs without any human | 29 of 45 (64 %) | UC6 gold set |
 | Real customer tickets in production | 0 | Neon: all 13 runs are test runs |
 
-The largest gaps: minutes per approval and per handover, minutes per ticket without the agent, and the real ticket mix.
+Cost model (10,000 tickets per month, human only 8 min × 0.4420 EUR/min = 3.54 EUR per ticket):
+
+| Scenario | Approval / handover | With agent per ticket | Monthly saving | Tipping point handover rate |
+|---|---|---|---|---|
+| optimistic | 10 % / 15 % | 0.47 EUR | 30,641 EUR (86.7 %) | none |
+| medium | 15 % / 30 % | 1.22 EUR | 23,125 EUR (65.4 %) | none (95 % > 85 % possible) |
+| pessimistic | 20 % / 50 % | 2.59 EUR | 9,421 EUR (26.6 %) | 71 % |
+
+![Saving per ticket over handover rate](docs/kipppunkt.svg)
+
+Tokens cost 0.03 EUR per ticket, as much as 4 seconds of staff time. Handovers decide the saving: minutes per handover relative to minutes without the agent. Follow-up costs of wrong autonomous answers are not modelled ([docs/decisions.md](docs/decisions.md)).
 
 ## Cost & Latency
-- Cost per 1000 requests: open (follows from the cost model)
+- Cost per 1000 requests: 1,223.49 EUR per 1,000 tickets with the agent (medium scenario, staff included), of which tokens 32.09 USD
 - p95 latency: not applicable to a decision memo. Agent latency see UC7 (p95 39.7 s)
-- Quality metric: open
+- Quality metric: tipping point of the handover rate 71 % in the pessimistic scenario, measured in the gold set 22 %
 - UC8 cost so far: 0 USD (no API calls)
 
 ## Learnings

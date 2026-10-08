@@ -2,7 +2,7 @@
 
 # UC8: Unit Economics, Pricing & Build-vs-Buy
 
-> Stand 2026-10-08: Zahleninventur fertig ([docs/INVENTUR.md](docs/INVENTUR.md)), Modellrechnung noch offen.
+> Stand 2026-10-08: Zahleninventur ([docs/INVENTUR.md](docs/INVENTUR.md)) und Kostenmodell ([evals/modell.md](evals/modell.md), Rechenweg: [docs/RECHENWEG.md](docs/RECHENWEG.md)). Pricing und Build-vs-Buy folgen.
 
 ## Problem
 Der Support-Agent aus UC4/UC7 läuft als Web-Demo auf Cloud Run. Offen ist die Produktfrage dahinter: **Was kostet ein Support-Ticket mit dem Agent im Vergleich zu einem Ticket, das komplett ein Mensch bearbeitet?** Und daraus folgend: Wie ließe sich das bepreisen, und lohnt sich der Eigenbau gegenüber einem eingekauften Produkt?
@@ -31,12 +31,22 @@ Zahleninventur, Details in [docs/INVENTUR.md](docs/INVENTUR.md):
 | Goldset-Läufe ohne Menschen | 29 von 45 (64 %) | UC6 Goldset |
 | Echte Kundentickets im Betrieb | 0 | Neon: alle 13 Läufe sind Testläufe |
 
-Die größten Lücken: Minuten je Freigabe und je Übergabe, Minuten je Ticket ohne Agent und die echte Mischung der Tickets.
+Kostenmodell (10.000 Tickets im Monat, Mensch allein 8 min × 0,4420 EUR/min = 3,54 EUR je Ticket):
+
+| Szenario | Freigabe / Übergabe | mit Agent je Ticket | Ersparnis im Monat | Kipppunkt Übergabequote |
+|---|---|---|---|---|
+| optimistisch | 10 % / 15 % | 0,47 EUR | 30.641 EUR (86,7 %) | keiner |
+| mittel | 15 % / 30 % | 1,22 EUR | 23.125 EUR (65,4 %) | keiner (95 % > 85 % möglich) |
+| pessimistisch | 20 % / 50 % | 2,59 EUR | 9.421 EUR (26,6 %) | 71 % |
+
+![Ersparnis je Ticket über der Übergabequote](docs/kipppunkt.svg)
+
+Tokens kosten je Ticket 0,03 EUR, so viel wie 4 Sekunden Arbeitszeit. Über die Ersparnis entscheiden die Übergaben: Minuten je Übergabe im Verhältnis zu den Minuten ohne Agent. Folgekosten falscher autonomer Antworten sind nicht modelliert ([docs/decisions.md](docs/decisions.md)).
 
 ## Kosten & Latenz
-- Kosten pro 1000 Requests: offen (folgt aus der Modellrechnung)
+- Kosten pro 1000 Requests: 1.223,49 EUR je 1.000 Tickets mit Agent (Szenario mittel, inklusive Personal), davon Tokens 32,09 USD
 - p95-Latenz: entfällt für eine Entscheidungsvorlage. Agent-Latenz siehe UC7 (p95 39,7 s)
-- Qualitätsmetrik: offen
+- Qualitätsmetrik: Kipppunkt der Übergabequote 71 % im pessimistischen Szenario, gemessen im Goldset 22 %
 - Kosten UC8 bisher: 0 USD (keine API-Aufrufe)
 
 ## Learnings

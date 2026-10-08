@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 490" width="760" height="490" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Ersparnis je Ticket über der Übergabequote, drei Szenarien">
+<style>:root{--bg:#fcfcfb;--t1:#0b0b0b;--t2:#52514e;--grid:#e6e5e1;--zero:#8a8984;--optimistisch:#2a78d6;--mittel:#eb6834;--pessimistisch:#1baf7a;}@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--t1:#ffffff;--t2:#c3c2b7;--grid:#34332f;--zero:#8a8984;--optimistisch:#3987e5;--mittel:#d95926;--pessimistisch:#199e70;}} text{fill:var(--t2);font-size:12px} .t1{fill:var(--t1)}</style>
+<rect width="760" height="490" fill="var(--bg)"/>
+<text x="70" y="26" class="t1" font-size="16" font-weight="600">Ersparnis je Ticket gegenüber Mensch allein</text>
+<text x="70" y="46">EUR je Ticket bei 10.000 Tickets im Monat. Unter 0 ist der Agent teurer. Mensch allein: 8 min × 0,442 EUR/min</text>
+<line x1="70" y1="70" x2="92" y2="70" stroke="var(--optimistisch)" stroke-width="2"/>
+<text x="98" y="74">optimistisch</text>
+<line x1="200" y1="70" x2="222" y2="70" stroke="var(--mittel)" stroke-width="2"/>
+<text x="228" y="74">mittel</text>
+<line x1="330" y1="70" x2="352" y2="70" stroke="var(--pessimistisch)" stroke-width="2"/>
+<text x="358" y="74">pessimistisch</text>
+<line x1="70" y1="412.0" x2="590" y2="412.0" stroke="var(--grid)" stroke-width="1"/>
+<text x="62" y="416.0" text-anchor="end">-1</text>
+<line x1="70" y1="380.4" x2="590" y2="380.4" stroke="var(--grid)" stroke-width="1"/>
+<line x1="70" y1="348.8" x2="590" y2="348.8" stroke="var(--zero)" stroke-width="1"/>
+<text x="62" y="352.8" text-anchor="end">0</text>
+<line x1="70" y1="317.2" x2="590" y2="317.2" stroke="var(--grid)" stroke-width="1"/>
+<line x1="70" y1="285.6" x2="590" y2="285.6" stroke="var(--grid)" stroke-width="1"/>
+<text x="62" y="289.6" text-anchor="end">1</text>
+<line x1="70" y1="254.0" x2="590" y2="254.0" stroke="var(--grid)" stroke-width="1"/>
+<line x1="70" y1="222.4" x2="590" y2="222.4" stroke="var(--grid)" stroke-width="1"/>
+<text x="62" y="226.4" text-anchor="end">2</text>
+<line x1="70" y1="190.8" x2="590" y2="190.8" stroke="var(--grid)" stroke-width="1"/>
+<line x1="70" y1="159.2" x2="590" y2="159.2" stroke="var(--grid)" stroke-width="1"/>
+<text x="62" y="163.2" text-anchor="end">3</text>
+<line x1="70" y1="127.6" x2="590" y2="127.6" stroke="var(--grid)" stroke-width="1"/>
+<line x1="70" y1="96.0" x2="590" y2="96.0" stroke="var(--grid)" stroke-width="1"/>
+<text x="62" y="100.0" text-anchor="end">4</text>
+<text x="70.0" y="430" text-anchor="middle">0 %</text>
+<text x="174.0" y="430" text-anchor="middle">20 %</text>
+<text x="278.0" y="430" text-anchor="middle">40 %</text>
+<text x="382.0" y="430" text-anchor="middle">60 %</text>
+<text x="486.0" y="430" text-anchor="middle">80 %</text>
+<text x="590.0" y="430" text-anchor="middle">100 %</text>
+<text x="330" y="450" text-anchor="middle">Übergabequote (Anteil der Tickets, die an einen Menschen gehen)</text>
+<line x1="185.6" y1="96" x2="185.6" y2="412" stroke="var(--t2)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="191.6" y="108">Goldset UC6 gemessen: 22 %</text>
+<polyline fill="none" stroke="var(--optimistisch)" stroke-width="2" stroke-linejoin="round" points="70.0,130.0 93.4,137.5 116.8,145.1 140.2,152.6 163.6,160.2 187.0,167.7 210.4,175.3 233.8,182.8 257.2,190.3 280.6,197.9 304.0,205.4 327.4,213.0 350.8,220.5 374.2,228.1 397.6,235.6 421.0,243.1 444.4,250.7 467.8,258.2 491.2,265.8 514.6,273.3 538.0,280.9"/>
+<circle cx="148.0" cy="155.1" r="5" fill="var(--optimistisch)" stroke="var(--bg)" stroke-width="2"><title>optimistisch: Übergabe 15 %, Ersparnis 3,06 EUR je Ticket</title></circle>
+<text x="546.0" y="284.9" class="t1">optimistisch</text>
+<text x="546.0" y="298.9" font-size="11">kein Kipppunkt</text>
+<polyline fill="none" stroke="var(--mittel)" stroke-width="2" stroke-linejoin="round" points="70.0,135.6 92.1,145.1 114.2,154.6 136.3,164.1 158.4,173.6 180.5,183.1 202.6,192.6 224.7,202.1 246.8,211.6 268.9,221.1 291.0,230.6 313.1,240.1 335.2,249.6 357.3,259.1 379.4,268.6 401.5,278.1 423.6,287.6 445.7,297.1 467.8,306.6 489.9,316.1 512.0,325.6"/>
+<circle cx="226.0" cy="202.6" r="5" fill="var(--mittel)" stroke="var(--bg)" stroke-width="2"><title>mittel: Übergabe 30 %, Ersparnis 2,31 EUR je Ticket</title></circle>
+<text x="520.0" y="329.6" class="t1">mittel</text>
+<text x="520.0" y="343.6" font-size="11">kein Kipppunkt</text>
+<polyline fill="none" stroke="var(--pessimistisch)" stroke-width="2" stroke-linejoin="round" points="70.0,149.6 90.8,160.8 111.6,171.9 132.4,183.1 153.2,194.3 174.0,205.5 194.8,216.6 215.6,227.8 236.4,239.0 257.2,250.2 278.0,261.3 298.8,272.5 319.6,283.7 340.4,294.8 361.2,306.0 382.0,317.2 402.8,328.4 423.6,339.5 444.4,350.7 465.2,361.9 486.0,373.1"/>
+<circle cx="330.0" cy="289.3" r="5" fill="var(--pessimistisch)" stroke="var(--bg)" stroke-width="2"><title>pessimistisch: Übergabe 50 %, Ersparnis 0,94 EUR je Ticket</title></circle>
+<circle cx="440.8" cy="348.8" r="5" fill="var(--bg)" stroke="var(--pessimistisch)" stroke-width="2"><title>Kipppunkt pessimistisch: 71 %</title></circle>
+<text x="494.0" y="377.1" class="t1">pessimistisch</text>
+<text x="494.0" y="391.1" font-size="11">Kipppunkt 71 %</text>
+<text x="70" y="480" font-size="11">Punkt = Übergabequote des Szenarios, Ring = Kipppunkt. Linien enden bei 100 % minus Freigabe-Anteil.</text>
+</svg>
